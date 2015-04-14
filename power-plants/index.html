@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>US Electric Power Generation Map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    
+    <script src="power-plants.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: "Times New Roman", Times, serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+            font-family: "Times New Roman", Times, serif;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            width: 80%;
+            height: 540px;
+            margin: 10px auto;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+         p.author-info {
+             font-style: italic;
+             text-align: right;
+             font-size: 0.9em;
+         }
+        /* Additional style rules go here! */
+        
+        .popup {
+            background: green; 
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>US Electric Power Generation: landscape of sustainability</h1>
+    </header>
+
+    <div id='map'></div>
+
+    <footer>
+        <p class = 'author-info'>Map authored by Laura Greenfield</p>
+        <p>This map is presented to Power Company. It displays natural gas, hydraulic, and nuclear power plants in the United States. Click once on the map to display power plants within 500 km of the click. Double-click to display plants within 200 km of the click. Power plants are proprotionally sized according to their capacity (megawatts). Click on a power plant for further information. </p>
+    </footer>
+
+    <script>
+        var options = {
+            center: [39.8282,-98.6],
+            zoom: 4
+        }
+        var map = L.map('map', options);
+        
+        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a   href="http://cartodb.com/attributions">CartoDB</a>',
+                    subdomains: 'abcd',
+                    minZoom: 0,
+                    maxZoom: 18
+        });
+        map.addLayer(tiles);
+
+                                                                              
+          var layerInfo = {
+            gasLayer: {source: "Natural Gas", color: '#91cf60'}, 
+            hydroLayer: {source:"Hydro", color:'#1f78b4'},    
+            nuclearLayer: {source:"Nuclear", color:'#FFFF00'} 
+        }                                          
+        
+         var geoJsonLayers = {};
+                                                  
+              
+        for(var layer in layerInfo) {     
+            geoJsonLayers[layer] = L.geoJson(plants, {
+                pointToLayer: function(feature,latlng) {
+                    return L.circleMarker(latlng, {
+                        width: 0.5,
+                        fillOpacity: 0.3
+                    });
+                },
+                filter: function(feature) {
+                    if(feature.properties.fuel_source[layerInfo[layer].source]) {
+                        return feature;
+                    }
+                },
+                style: function(feature) {
+                    return {
+                        color: layerInfo[layer].color,
+                        fillColor: layerInfo[layer].color,
+                        radius: getRadius(feature.properties.fuel_source[layerInfo[layer].source])
+                    } 
+                },            
+            }).addTo(map);
+        }   
+        
+//        console.log(geoJsonLayers[layer]);      
+        
+         map.on('click', function(e) {
+             
+            for(var r in geoJsonLayers) {                
+//                    console.log(r);                
+               geoJsonLayers[r].eachLayer(function (layer) {
+                   
+                    var props = layer.feature.properties;
+//                        console.log(props);//                   
+//                        console.log(layer.feature.geometry.coordinates);                   
+                    var coords = L.latLng([layer.feature.geometry.coordinates[1], layer.feature.geometry.coordinates[0]]);                   
+//                        console.log(e);//                 
+                    var distance = e.latlng.distanceTo(coords)/1000;
+                            if(distance > 500) {
+                                layer.setStyle({
+                                    stroke: false,
+                                    fill: false
+                            });
+                            }
+                            else {
+                                layer.setStyle({
+                                    stroke: true,
+                                    fill: true
+                            });
+                            layer.bindPopup("<b>"+props.plant_name+"</b><br>"+props.capacity_mw.toLocaleString()+" MW<br><b>"+"<b>"+"This plant is "+distance.toLocaleString()+" km</b><br> from the click point.");
+                            };                                           
+
+               });
+            }
+         });
+                                            
+         map.on('dblclick', function(e) {
+                            
+             for(var r in geoJsonLayers) {
+                 geoJsonLayers[r].eachLayer(function (layer) {
+                     var props = layer.feature.properties;
+                     var coords = L.latLng([layer.feature.geometry.coordinates[1], layer.feature.geometry.coordinates[0]]);
+                     var distance = e.latlng.distanceTo(coords)/1000; 
+                        if(distance > 200) {
+                            layer.setStyle({
+                                stroke: false,
+                                fill: false
+                            });
+                        }
+                        else {
+                            layer.setStyle ({
+                                stroke: true,
+                                fill: true
+                            });
+                           layer.bindPopup("<b>"+props.plant_name+"</b><br>"+props.capacity_mw.toLocaleString()+" MW<br><b>"+"<b>"+"This plant is "+distance.toLocaleString()+" km</b><br> from the click point.");  
+                        };
+                 });
+               }
+             }); 
+        
+        map.doubleClickZoom.disable();
+                           
+
+        function getRadius(val) {
+             var radius = Math.sqrt(val/Math.PI);
+             return radius;
+         }
+        
+
+        var sourcesLayers = {
+        "<b style='color:#1f78b4'>Hydro</b>": geoJsonLayers.hydroLayer,
+        "<b style='color:#91cf60'>Natural Gas</b>": geoJsonLayers.gasLayer,
+        "<b style='color:#FFFF00; text-shadow: 0px 0px 1px #333;'>Nuclear</b>": geoJsonLayers.nuclearLayer
+    }
+
+        L.control.layers(null, sourcesLayers, { collapsed:false }).addTo(map);
+        
+
+</script>
+    
+</body>
+
+</html>
