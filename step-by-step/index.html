@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Step-By-Step</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+ 
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+     
+    <script src="TESTServiceDatabase.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+        }
+        #map {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+        }
+        .leaflet-control-layers-expanded {
+            padding: 6px 8px;
+            color: 'black';
+        }
+        .leaflet-control-layers {
+            box-shadow: 0;
+            border-radius: 0px;
+            width: 370px;
+        }
+        leaflet-top .leaflet-control {
+            margin-top: 0;
+        }
+        leaflet-right. leaflet-control {
+            margin-right: 0;
+            float: none;
+        }
+        .leaflet-control {
+            position: relative;
+            top: 0px;
+            left: 0px;
+            bottom: 0;
+            z-index: 7;
+            pointer-events: auto;
+        }
+        _icon.style.backgroundColor {
+        }
+     
+        /* Additional style rules go here! */
+        
+        
+    </style>
+</head>
+
+<body>
+<!--
+    <header>
+        <h1>HEADER</h1>
+    </header>
+-->
+
+    <div id='map'></div>
+
+    <footer>
+        <p class = 'author-info'>AUTHOR</p>
+        <p>TEXT</p>
+    </footer>
+
+    <script>
+        var options = {
+            center: [38.0297,-84.4947],
+            zoom: 12
+        }
+        var map = L.map('map', options);
+        
+        
+          var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
+            subdomains: '0123',
+            minZoom: 5,
+            maxZoom: 18
+        });
+   
+        map.addLayer(tiles);
+        
+//       var myIcon = L.icon ({L.myIcon
+//            iconUrl: jdkalfjd
+//            iconSize:
+//        })
+//                                                                                    
+        var layerInfo2 = {
+            abuseSupport: {name: "Abuse Counseling and Support", color: '#FF0000'},
+            residentialAbuseHelp: {name: "Residential Substance Abuse Help", color: '#1f78b4'},
+            outpatientAbuseHelp: {name: "Outpatient Substance Abuse Assessment/Treatment/Support", color: '#006600'},
+            emergencyShelters: {name: "Emergency Shelters", color: '#993399'},
+            indigentHealthcare: {name: "Indigent Healthcare", color: '#FFFF00'},
+            mentalHealth: {name: "Mental Health Assessment\/Counseling\/Support Groups", color: '#FF6600'},
+            food: {name: "Food Assistance", color: '#000066'},
+            housing: {name: "Housing", color: '#996633'},
+            pregnancy: {name: "Pregnancy and Parenting", color: '#800000'},
+            education: {name: "Education", color: '#FF0066'}            
+        }
+        
+        var geoJsonLayers = {};
+        
+            
+        for (var layer in layerInfo2) {
+           geoJsonLayers[layer] = L.geoJson(serviceDatabase, {       
+            
+                pointToLayer: function(feature, latlng) {
+                    return L.circleMarker(latlng);
+                },
+                filter: function(feature) {
+                   
+                    if (feature.properties.ServiceCat == layerInfo2[layer].name) {
+                        return feature;
+                        
+                    }
+                },
+                onEachFeature: function(feature, layer) {
+                    var props = feature.properties;
+                    var content = "<b>"+props.ServiceNam+"</b><br>"+props.Address+"<br>";
+                
+                    layer.bindPopup(content);
+                    
+//                    layer.on('click', function () {
+//                                        
+//                        $.(".info").show();
+                        
+                    },       
+                style: function(feature) {
+                    return {
+                        color: layerInfo2[layer].color,
+                        fillColor: layerInfo2[layer].color
+                    }
+                }
+            
+          }).addTo(map); 
+           
+       }
+
+       
+        var categoryLayers = {
+            "Abuse Counseling & Support": geoJsonLayers.abuseSupport,
+            "Residential Substance Abuse Help": geoJsonLayers.residentialAbuseHelp,
+            "Outpatient Substance Abuse Assessment/Treatment/Support": geoJsonLayers.outpatientAbuseHelp,
+            "Emergency Shelters": geoJsonLayers.emergencyShelters,
+            "Indigent Healthcare": geoJsonLayers.indigentHealthcare,
+            "Mental Health Assessment/Counseling/Support Groups": geoJsonLayers.mentalHealth,
+            "Food Assistance": geoJsonLayers.food,
+            "Housing Services": geoJsonLayers.housing,
+            "Pregnancy and Parenting": geoJsonLayers.pregnancy,
+            "Education": geoJsonLayers.education
+          
+        }        
+        
+        L.control.layers(null, categoryLayers, {collapsed:false}).addTo(map);
+
+        
+        
+                                           
+  
+        
+
+</script>
+    
+</body>
+
+</html>
