@@ -7,12 +7,18 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
- 
-
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="l.control.geosearch.js"></script>
+    <script src="l.geosearch.provider.esri.js"></script>
+    <script src="leaflet.awesome-markers.js"></script>
+    
+    <link rel="stylesheet" href="l.geosearch.css" />    
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-     
-    <script src="TESTServiceDatabase.js"></script>
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+    <link rel="stylesheet" href="leaflet.awesome-markers.css">
+   
+    <script src="ServiceDatabase.js"></script>
 
     <style>
         body {
@@ -29,6 +35,7 @@
         .leaflet-control-layers-expanded {
             padding: 6px 8px;
             color: 'black';
+            background: #bfbfbf;
         }
         .leaflet-control-layers {
             box-shadow: 0;
@@ -50,72 +57,93 @@
             z-index: 7;
             pointer-events: auto;
         }
-        _icon.style.backgroundColor {
+        .info {
+            padding: 6px 8px;
+            font-size: 1em;
+            background: #bfbfbf;
+            box-shadow: 0;
+            border-radius: 0px;
+            text-align: left; 
+            height: 405px;
+            width: 370px;
         }
-     
-        /* Additional style rules go here! */
-        
-        
+        .logo {
+            background-image: url('http://sbs.cornettims.com/wp-content/uploads/2013/01/sbs-logo-pink3-on-transparent-01.png');
+            height:400px;
+            width: 300px;
+        }
     </style>
+    
 </head>
 
-<body>
-<!--
-    <header>
-        <h1>HEADER</h1>
-    </header>
--->
+<body>  
 
     <div id='map'></div>
 
-    <footer>
-        <p class = 'author-info'>AUTHOR</p>
-        <p>TEXT</p>
-    </footer>
-
     <script>
         var options = {
-            center: [38.0297,-84.4947],
+            center: [38.0400,-84.4650],
             zoom: 12
         }
+       
         var map = L.map('map', options);
         
-        
-          var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
-            attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
-            subdomains: '0123',
-            minZoom: 5,
-            maxZoom: 18
+        var tiles = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+	       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         });
    
-        map.addLayer(tiles);
+        map.addLayer(tiles); 
         
-//       var myIcon = L.icon ({L.myIcon
-//            iconUrl: jdkalfjd
-//            iconSize:
-//        })
-//                                                                                    
+//        var logo = L.Control.extend({
+//            options: {
+//                position: 'bottomleft'
+//            }
+//        });        
+
+//        logo.onAdd = function(map) {
+//            var container  = L.DomUtil.create('div', 'logo');
+//                
+//            return container;
+//           
+//        }
+//        
+//        logo.addTo(map);
+        
+////      map.addControl(new logo());
+        
+        new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Esri()
+        }).addTo(map);
+                                                                                       
         var layerInfo2 = {
-            abuseSupport: {name: "Abuse Counseling and Support", color: '#FF0000'},
-            residentialAbuseHelp: {name: "Residential Substance Abuse Help", color: '#1f78b4'},
-            outpatientAbuseHelp: {name: "Outpatient Substance Abuse Assessment/Treatment/Support", color: '#006600'},
-            emergencyShelters: {name: "Emergency Shelters", color: '#993399'},
-            indigentHealthcare: {name: "Indigent Healthcare", color: '#FFFF00'},
-            mentalHealth: {name: "Mental Health Assessment\/Counseling\/Support Groups", color: '#FF6600'},
-            food: {name: "Food Assistance", color: '#000066'},
-            housing: {name: "Housing", color: '#996633'},
-            pregnancy: {name: "Pregnancy and Parenting", color: '#800000'},
-            education: {name: "Education", color: '#FF0066'}            
+            abuseSupport: {name: "Abuse Counseling and Support", color: 'red'},
+            residentialAbuseHelp: {name: "Residential Substance Abuse Help", color: 'blue'},
+            outpatientAbuseHelp: {name: "Outpatient Substance Abuse Assessment/Treatment/Support", color: 'purple'},
+            emergencyShelters: {name: "Emergency Shelters", color: 'orange'},
+            indigentHealthcare: {name: "Indigent Healthcare", color: 'lightgreen'},
+            mentalHealth: {name: "Mental Health Assessment\/Counseling\/Support Groups", color: 'darkred'},
+            food: {name: "Food Assistance", color: 'green'},
+            housing: {name: "Housing", color: 'darkblue'},
+            pregnancy: {name: "Pregnancy and Parenting", color: 'darkpurple'},
+            education: {name: "Education", color: 'pink'},
+            childcare: {name: "Childcare", color: 'beige'},
+            employment: {name: "Employment", color: 'cadetblue'},
+            addtlResources: {name: "Additional Resources", color: 'lightgray'}        
         }
         
-        var geoJsonLayers = {};
-        
-            
+        var geoJsonLayers = {}; 
+               
         for (var layer in layerInfo2) {
            geoJsonLayers[layer] = L.geoJson(serviceDatabase, {       
             
                 pointToLayer: function(feature, latlng) {
-                    return L.circleMarker(latlng);
+                    
+                    var categoryMarker = L.AwesomeMarkers.icon({
+                        markerColor: layerInfo2[layer].color,
+                    });
+                    
+                    return L.marker (latlng, {icon: categoryMarker});                
+                    
                 },
                 filter: function(feature) {
                    
@@ -126,27 +154,20 @@
                 },
                 onEachFeature: function(feature, layer) {
                     var props = feature.properties;
-                    var content = "<b>"+props.ServiceNam+"</b><br>"+props.Address+"<br>";
+                    var content = "<b>"+props.ServiceNam+"</b><br>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"<br>";
                 
                     layer.bindPopup(content);
                     
-//                    layer.on('click', function () {
-//                                        
-//                        $.(".info").show();
+                    layer.on('click', function() {
+                        info.update(props);                         
+                    });
                         
                     },       
-                style: function(feature) {
-                    return {
-                        color: layerInfo2[layer].color,
-                        fillColor: layerInfo2[layer].color
-                    }
-                }
             
           }).addTo(map); 
            
-       }
-
-       
+        }
+        
         var categoryLayers = {
             "Abuse Counseling & Support": geoJsonLayers.abuseSupport,
             "Residential Substance Abuse Help": geoJsonLayers.residentialAbuseHelp,
@@ -157,19 +178,38 @@
             "Food Assistance": geoJsonLayers.food,
             "Housing Services": geoJsonLayers.housing,
             "Pregnancy and Parenting": geoJsonLayers.pregnancy,
-            "Education": geoJsonLayers.education
+            "Education": geoJsonLayers.education,
+            "Childcare": geoJsonLayers.childcare,
+            "Employment": geoJsonLayers.employment,
+            "Additional Resources": geoJsonLayers.addtlResources
           
         }        
         
         L.control.layers(null, categoryLayers, {collapsed:false}).addTo(map);
+        
+        var info = L.control();
 
+        info.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info');           
+            return div;
+        };
         
-        
-                                           
-  
-        
+        info.update = function (props) {
+           
+           var html = "<h3>"+props.ServiceNam+"</h3>"+
+                    "Category: <b>"+props.ServiceCat+"</b><br>"+
+                    "Address: <b>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"</b><br>"+
+                    "Primary Phone: <b>"+props.PrimaryPho+"</b><br>"+
+                    "Secondary Phone: <b>"+props.SecondaryP+"</b><br>"+
+                    "Website: <b>"+props.Website+"</b><br>"
+           
+           $(".info").html(html);
+               
+        };
 
-</script>
+        info.addTo(map);
+                                    
+       </script>
     
 </body>
 
