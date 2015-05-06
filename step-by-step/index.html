@@ -26,12 +26,27 @@
             padding: 0;
             background: whitesmoke;
         }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            position: absolute;
+            z-index: 100;
+            bottom: 15px;
+            left: 30px;
+            padding: 8px 15px;
+            margin: 0;
+            color: whitesmoke;
+            font-size: 1.5em;
+/*            background: rgba(25,25,25,0.8);*/
+            border-radius: 5px
+        }     
         #map {
             position: absolute;
             width: 100%;
             top: 0;
             bottom: 0;
-        }
+        }      
         .leaflet-control-layers-expanded {
             padding: 6px 8px;
             color: 'black';
@@ -40,7 +55,10 @@
         .leaflet-control-layers {
             box-shadow: 0;
             border-radius: 0px;
-            width: 370px;
+            width: 385px;
+        }
+        .leaflet-container {
+            font-size: 14px;
         }
         leaflet-top .leaflet-control {
             margin-top: 0;
@@ -64,19 +82,22 @@
             box-shadow: 0;
             border-radius: 0px;
             text-align: left; 
-            height: 405px;
-            width: 370px;
+            height: 300px;
+            width: 385px;
         }
         .logo {
-            background-image: url('http://sbs.cornettims.com/wp-content/uploads/2013/01/sbs-logo-pink3-on-transparent-01.png');
-            height:400px;
-            width: 300px;
+            width: 150px;
+            height: 75px;
         }
+      
     </style>
     
 </head>
 
 <body>  
+<!--    <image src ="images/lex-housing-landlords.PNG" alt="lex landlords map" class='project-image'>-->
+    
+    <h1><image src ="SBSLogo.png" alt="LOGO" class='logo'></image></h1>
 
     <div id='map'></div>
 
@@ -94,23 +115,6 @@
    
         map.addLayer(tiles); 
         
-//        var logo = L.Control.extend({
-//            options: {
-//                position: 'bottomleft'
-//            }
-//        });        
-
-//        logo.onAdd = function(map) {
-//            var container  = L.DomUtil.create('div', 'logo');
-//                
-//            return container;
-//           
-//        }
-//        
-//        logo.addTo(map);
-        
-////      map.addControl(new logo());
-        
         new L.Control.GeoSearch({
             provider: new L.GeoSearch.Provider.Esri()
         }).addTo(map);
@@ -122,8 +126,7 @@
             emergencyShelters: {name: "Emergency Shelters", color: 'orange'},
             indigentHealthcare: {name: "Indigent Healthcare", color: 'lightgreen'},
             mentalHealth: {name: "Mental Health Assessment\/Counseling\/Support Groups", color: 'darkred'},
-            food: {name: "Food Assistance", color: 'green'},
-            housing: {name: "Housing", color: 'darkblue'},
+            clothfoodhousing: {name: "Clothing, Food, Housing, Financial Aid", color: 'green'},
             pregnancy: {name: "Pregnancy and Parenting", color: 'darkpurple'},
             education: {name: "Education", color: 'pink'},
             childcare: {name: "Childcare", color: 'beige'},
@@ -171,12 +174,11 @@
         var categoryLayers = {
             "Abuse Counseling & Support": geoJsonLayers.abuseSupport,
             "Residential Substance Abuse Help": geoJsonLayers.residentialAbuseHelp,
-            "Outpatient Substance Abuse Assessment/Treatment/Support": geoJsonLayers.outpatientAbuseHelp,
+            "Outpatient Substance Abuse Treatment & Support": geoJsonLayers.outpatientAbuseHelp,
             "Emergency Shelters": geoJsonLayers.emergencyShelters,
             "Indigent Healthcare": geoJsonLayers.indigentHealthcare,
             "Mental Health Assessment/Counseling/Support Groups": geoJsonLayers.mentalHealth,
-            "Food Assistance": geoJsonLayers.food,
-            "Housing Services": geoJsonLayers.housing,
+            "Clothing, Food, Housing, Finance Aid": geoJsonLayers.clothfoodhousing,
             "Pregnancy and Parenting": geoJsonLayers.pregnancy,
             "Education": geoJsonLayers.education,
             "Childcare": geoJsonLayers.childcare,
@@ -188,7 +190,6 @@
         L.control.layers(null, categoryLayers, {collapsed:false}).addTo(map);
         
         var info = L.control();
-
         info.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info');           
             return div;
@@ -206,7 +207,6 @@
            $(".info").html(html);
                
         };
-
         info.addTo(map);
                                     
        </script>
