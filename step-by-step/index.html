@@ -11,14 +11,18 @@
     <script src="l.control.geosearch.js"></script>
     <script src="l.geosearch.provider.esri.js"></script>
     <script src="leaflet.awesome-markers.js"></script>
+    <script src="ServiceDatabase.js"></script>
     
+    <link rel="stylesheet" href="normalize.css" />
     <link rel="stylesheet" href="l.geosearch.css" />    
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
     <link rel="stylesheet" href="leaflet.awesome-markers.css">
+    
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
    
-    <script src="ServiceDatabase.js"></script>
+    
 
     <style>
         body {
@@ -29,12 +33,12 @@
             position: relative;
             height: 110px;
             width: 100%;
-            background: #302725;
+            background: #302725 url('images/bg_header_pattern.png');
+            border-bottom: 6px solid #d48983;
         }
         header img {
             margin: 10px 0 0 15px   
         }
-        
         h1 {
             position: absolute;
             z-index: 100;
@@ -50,18 +54,17 @@
             position: absolute;
             z-index: 100;
             width: 100%;
-            top: 110px;
+            top: 116px;
             bottom: 0;
         }    
-        .leaflet-control-layers-expanded {
+        .leaflet-control-layers{
+            font-family: "Ubuntu Condensed";
             padding: 6px 8px;
             color: 'black';
-            background: #bfbfbf;
-        }
-        .leaflet-control-layers {
-            box-shadow: 0;
+            background: #f6f6f6;
+            box-shadow: 0px;
             border-radius: 0px;
-            width: 385px;
+            width: 260px;
         }
         .leaflet-container {
             font-size: 14px;
@@ -82,24 +85,30 @@
             pointer-events: auto;
         }
         .info {
+            font-family: "Ubuntu Condensed";
             padding: 6px 8px;
             font-size: 1em;
-            background: #bfbfbf;
-            box-shadow: 0;
-            border-radius: 0px;
-            text-align: left; 
-            height: 300px;
-            width: 385px;
+            background: #f6f6f6; 
+            max-width: 260px;
+            color: rgb(70, 67, 58);
+        }
+        .info h3 {
+            text-transform: uppercase;
+            font-weight: normal; 
+            line-height: 1.2em;
+            margin: 0 0 10px 0;
+            padding: 0;
         }
         .leaflet-control-geosearch {
             position: absolute;
-            right: 10px;
+            right: 15px;
             bottom: 10px;
-            width: 400px;
+            width: 270px;
         }
         .leaflet-control-geosearch input {
             width: 96%; 
-            padding: 3px 6px;
+            padding: 5px 8px;
+            background: #302725;
         }
       
     </style>
@@ -177,10 +186,13 @@
                     var props = feature.properties;
                     var content = "<b>"+props.ServiceNam+"</b><br>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"<br>";
                 
-                    layer.bindPopup(content);
+                    //layer.bindPopup(content);
                     
-                    layer.on('click', function() {
+                    layer.on('mouseover', function() {
                         info.update(props);                         
+                    });
+                    layer.on('mouseout', function(){
+                        //$(".info").hide(); 
                     });
                         
                     },       
@@ -208,24 +220,38 @@
         L.control.layers(null, categoryLayers, {collapsed:false}).addTo(map);
         
         var info = L.control();
+        
         info.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info');           
             return div;
         };
         
+        
         info.update = function (props) {
            
+           $(".info").show();
+//           $(".info").
+            
            var html = "<h3>"+props.ServiceNam+"</h3>"+
                     "Category: <b>"+props.ServiceCat+"</b><br>"+
-                    "Address: <b>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"</b><br>"+
-                    "Primary Phone: <b>"+props.PrimaryPho+"</b><br>"+
-                    "Secondary Phone: <b>"+props.SecondaryP+"</b><br>"+
-                    "Website: <b>"+props.Website+"</b><br>"
-           
+                    "Address: <b>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"</b><br>"+"Primary Phone: <b>"+props.PrimaryPho+"</b><br>";
+            
+            if(props.SecondaryP != null){
+                html+= "Secondary Phone: <b>"+props.SecondaryP+"</b><br>";
+            }
+            if(props.Website != null){
+                html += "Website: <b>"+props.Website+"</b><br>"
+            }
+
            $(".info").html(html);
                
         };
+        
         info.addTo(map);
+        
+        // hide the info box on initialize
+        $(".info").hide();
+        
                                     
        </script>
     
