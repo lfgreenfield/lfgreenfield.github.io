@@ -60,8 +60,8 @@
         .leaflet-control-layers {
             font-family: "Ubuntu Condensed";
             padding: 6px 8px;
-            color: 'black';
-            background: #f6f6f6;
+            color: #f4f4f4;
+            background: #302725 url('images/bg_header_pattern.png');
             box-shadow: 0px;
             border-radius: 0px;
             width: 260px;
@@ -213,25 +213,25 @@
         }
         
         var categoryLayers = {
-            "Abuse Counseling & Support": geoJsonLayers.abuseSupport,
-            "Residential Substance Abuse Help": geoJsonLayers.residentialAbuseHelp,
-            "Outpatient Substance Abuse Treatment & Support": geoJsonLayers.outpatientAbuseHelp,
-            "Emergency Shelters": geoJsonLayers.emergencyShelters,
-            "Indigent Healthcare": geoJsonLayers.indigentHealthcare,
-            "Mental Health Assessment/Counseling/Support Groups": geoJsonLayers.mentalHealth,
-            "Clothing, Food, Housing, Finance Aid": geoJsonLayers.clothfoodhousing,
-            "Pregnancy and Parenting": geoJsonLayers.pregnancy,
-            "Education": geoJsonLayers.education,
-            "Childcare": geoJsonLayers.childcare,
-            "Employment": geoJsonLayers.employment,
-            "Additional Resources": geoJsonLayers.addtlResources
+            "<font color='red'>Abuse Counseling & Support</font>": geoJsonLayers.abuseSupport,
+            "<font color='blue'>Residential Substance Abuse Help</font>": geoJsonLayers.residentialAbuseHelp,
+            "<font color='purple'>Outpatient Substance Abuse Treatment & Support</font>": geoJsonLayers.outpatientAbuseHelp,
+            "<font color='orange'>Emergency Shelters</font>": geoJsonLayers.emergencyShelters,
+            "<font color='lightgreen'>Indigent Healthcare</font>": geoJsonLayers.indigentHealthcare,
+            "<font color='darkred'>Mental Health Assessment/Counseling/Support Groups</font>": geoJsonLayers.mentalHealth,
+            "<font color='green'>Clothing, Food, Housing, Finance Aid</font>": geoJsonLayers.clothfoodhousing,
+            "<font color='darkpurple'>Pregnancy and Parenting</font>": geoJsonLayers.pregnancy,
+            "<font color='pink'>Education</font>": geoJsonLayers.education,
+            "<font color='beige'>Childcare</font>": geoJsonLayers.childcare,
+            "<font color='cadetblue'>Employment</font>": geoJsonLayers.employment,
+            "<font color='lightgrey'>Additional Resources</font>": geoJsonLayers.addtlResources
           
         }        
         
         L.control.layers(null, categoryLayers, {collapsed:false}).addTo(map);
         
         
-        $(".leaflet-control-layers").prepend('<label><input id="show-all" type="checkbox" class="leaflet-control-layers-selector" checked=""><span>SHOW ALL SERVICES</span></label><label><input id="hide-all" type="checkbox" class="leaflet-control-layers-selector"><span>HIDE ALL SERVICES</span></label><hr>');
+        $(".leaflet-control-layers").prepend('<label><input id="show-all" type="checkbox" class="leaflet-control-layers-selector" checked=""><span>SHOW all services</span></label><label><input id="hide-all" type="checkbox" class="leaflet-control-layers-selector"><span>HIDE all services</span></label><hr>');
         
         $("#show-all").change(function(e){
             if(!this.checked){
