@@ -24,11 +24,17 @@
         body {
             margin: 0;
             padding: 0;
-            background: whitesmoke;
         }
         header {
-            padding: 6px 10%;
+            position: relative;
+            height: 110px;
+            width: 100%;
+            background: #302725;
         }
+        header img {
+            margin: 10px 0 0 15px   
+        }
+        
         h1 {
             position: absolute;
             z-index: 100;
@@ -38,15 +44,15 @@
             margin: 0;
             color: whitesmoke;
             font-size: 1.5em;
-/*            background: rgba(25,25,25,0.8);*/
             border-radius: 5px
         }     
         #map {
             position: absolute;
+            z-index: 100;
             width: 100%;
-            top: 0;
+            top: 110px;
             bottom: 0;
-        }      
+        }    
         .leaflet-control-layers-expanded {
             padding: 6px 8px;
             color: 'black';
@@ -85,9 +91,15 @@
             height: 300px;
             width: 385px;
         }
-        .logo {
-            width: 150px;
-            height: 75px;
+        .leaflet-control-geosearch {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 400px;
+        }
+        .leaflet-control-geosearch input {
+            width: 96%; 
+            padding: 3px 6px;
         }
       
     </style>
@@ -96,8 +108,9 @@
 
 <body>  
 
-    
-    <h1><image src ="SBSLogo.png" alt="LOGO" class='logo'></image></h1>
+    <header>
+        <img src ="SBSLogo-sm.png" alt="LOGO" class='logo'>
+    </header>
 
     <div id='map'></div>
 
@@ -116,8 +129,13 @@
         map.addLayer(tiles); 
         
         new L.Control.GeoSearch({
-            provider: new L.GeoSearch.Provider.Esri()
+            provider: new L.GeoSearch.Provider.Esri(),
+            position: 'topright'
         }).addTo(map);
+        
+        
+        var searchbox = $('.leaflet-control-geosearch').detach().removeClass('leaflet-control').appendTo('header');
+        
                                                                                        
         var layerInfo2 = {
             abuseSupport: {name: "Abuse Counseling and Support", color: 'red'},
