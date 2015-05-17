@@ -57,7 +57,7 @@
             top: 116px;
             bottom: 0;
         }    
-        .leaflet-control-layers{
+        .leaflet-control-layers {
             font-family: "Ubuntu Condensed";
             padding: 6px 8px;
             color: 'black';
@@ -65,6 +65,10 @@
             box-shadow: 0px;
             border-radius: 0px;
             width: 260px;
+        }
+        .leaflet-control-layers span {
+            margin-left: 8px;
+            text-indent: -8px;
         }
         .leaflet-container {
             font-size: 14px;
@@ -101,9 +105,9 @@
         }
         .leaflet-control-geosearch {
             position: absolute;
-            right: 15px;
+            right: 20px;
             bottom: 10px;
-            width: 270px;
+            width: 264px;
         }
         .leaflet-control-geosearch input {
             width: 96%; 
@@ -118,7 +122,7 @@
 <body>  
 
     <header>
-        <img src ="SBSLogo-sm.png" alt="LOGO" class='logo'>
+        <a href="http://sbs.cornettims.com/"><img src ="SBSLogo-sm.png" alt="LOGO" class='logo'></a>
     </header>
 
     <div id='map'></div>
@@ -146,7 +150,7 @@
         var searchbox = $('.leaflet-control-geosearch').detach().removeClass('leaflet-control').appendTo('header');
         
                                                                                        
-        var layerInfo2 = {
+        var layerInfo = {
             abuseSupport: {name: "Abuse Counseling and Support", color: 'red'},
             residentialAbuseHelp: {name: "Residential Substance Abuse Help", color: 'blue'},
             outpatientAbuseHelp: {name: "Outpatient Substance Abuse Assessment/Treatment/Support", color: 'purple'},
@@ -163,13 +167,13 @@
         
         var geoJsonLayers = {}; 
                
-        for (var layer in layerInfo2) {
+        for (var layer in layerInfo) {
            geoJsonLayers[layer] = L.geoJson(serviceDatabase, {       
             
                 pointToLayer: function(feature, latlng) {
                     
                     var categoryMarker = L.AwesomeMarkers.icon({
-                        markerColor: layerInfo2[layer].color,
+                        markerColor: layerInfo[layer].color,
                     });
                     
                     return L.marker (latlng, {icon: categoryMarker});                
@@ -177,7 +181,7 @@
                 },
                 filter: function(feature) {
                    
-                    if (feature.properties.ServiceCat == layerInfo2[layer].name) {
+                    if (feature.properties.ServiceCat == layerInfo[layer].name) {
                         return feature;
                         
                     }
@@ -218,6 +222,51 @@
         }        
         
         L.control.layers(null, categoryLayers, {collapsed:false}).addTo(map);
+        
+        
+        $(".leaflet-control-layers").prepend('<label><input id="show-all" type="checkbox" class="leaflet-control-layers-selector" checked=""><span>SHOW ALL SERVICES</span></label><label><input id="hide-all" type="checkbox" class="leaflet-control-layers-selector"><span>HIDE ALL SERVICES</span></label><hr>');
+        
+        $("#show-all").change(function(e){
+            if(!this.checked){
+             // is now unchecked
+                for(var layer in geoJsonLayers) {
+                    map.removeLayer(geoJsonLayers[layer]);   
+                }
+                $(".leaflet-control-layers input").prop('checked', false);
+                $("#hide-all").prop('checked', true);
+             
+            } else {
+              // is now checked
+                for(var layer in geoJsonLayers) {
+                    map.addLayer(geoJsonLayers[layer]);   
+                }
+                $(".leaflet-control-layers input").prop('checked', true);
+                $("#hide-all").prop('checked', false);
+                
+            }
+        });
+        
+        $("#hide-all").change(function(e){
+            if(!this.checked){
+             // is now unchecked
+                for(var layer in geoJsonLayers) {
+                    map.addLayer(geoJsonLayers[layer]);   
+                }
+                $(".leaflet-control-layers input").prop('checked', true);
+                $("#show-all").prop('checked', true);
+                $("#hide-all").prop('checked', false);
+             
+            } else {
+              // is now checked
+                for(var layer in geoJsonLayers) {
+                    map.removeLayer(geoJsonLayers[layer]);   
+                }
+                $(".leaflet-control-layers input").prop('checked', false);
+                $("#hide-all").prop('checked',true);
+                
+            }
+        });
+        
         
         var info = L.control();
         

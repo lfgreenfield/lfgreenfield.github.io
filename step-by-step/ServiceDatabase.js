@@ -1,7 +1,5 @@
 var serviceDatabase = {
-"type": "FeatureCollection",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-                                                                                
+"type": "FeatureCollection",                                                                  
 "features": [
 { "type": "Feature", "properties": { "ServiceNam": "Adult Protection Services", "ServiceCat": "Abuse Counseling and Support", "Address": "1165 Centre Parkway", "City": "Lexington", "State": "KY", "ZipCode": "40517", "OperationH": null, "PrimaryPho": "859-245-7136", "SecondaryP": null, "ThirdPhone": null, "FaxNumber": null, "Website": null, "addrtype": "street_address", "addrlocat": "ROOFTOP" }, "geometry": { "type": "Point", "coordinates": [ -84.482466, 37.98219 ] } },
 { "type": "Feature", "properties": { "ServiceNam": "Bluegrass Rape Crisis Center", "ServiceCat": "Abuse Counseling and Support", "Address": "145 Constitution Street", "City": "Lexington", "State": "KY", "ZipCode": "40588", "OperationH": "24-hr Confidential Crisis Line", "PrimaryPho": "859-253-2511 (office)", "SecondaryP": "Toll Free 1-800-656 HOPE (24-hr Confidential Crisis Line", "ThirdPhone": null, "FaxNumber": null, "Website": "www.bluegrassrapecrisis.org", "addrtype": "street_address", "addrlocat": "ROOFTOP" }, "geometry": { "type": "Point", "coordinates": [ -84.492365, 38.047838 ] } },
