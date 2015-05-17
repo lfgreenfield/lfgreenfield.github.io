@@ -172,11 +172,18 @@
             
                 pointToLayer: function(feature, latlng) {
                     
-                    var categoryMarker = L.AwesomeMarkers.icon({
-                        markerColor: layerInfo[layer].color,
-                    });
+//                    var categoryMarker = L.AwesomeMarkers.icon({
+//                        markerColor: layerInfo[layer].color,
+//                    });
+//                    
+//                    return L.marker (latlng, {icon: categoryMarker}); 
                     
-                    return L.marker (latlng, {icon: categoryMarker});                
+                    return L.circleMarker(latlng, {
+                        stroke: false,
+                        fillColor: layerInfo[layer].color,
+                        fillOpacity: 1,
+                        radius: 6
+                    });
                     
                 },
                 filter: function(feature) {
