@@ -3,331 +3,34 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Step-By-Step</title>
+    <title>Step-By-Step Service Locations</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    
+    <link rel="stylesheet" href="css/normalize.css" />    
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/Leaflet.vector-markers.css">
+    <link rel="stylesheet" href="css/styles.css">
 
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="l.control.geosearch.js"></script>
-    <script src="l.geosearch.provider.esri.js"></script>
-    <script src="ServiceDatabase.js"></script>
-    <script src="Leaflet.MakiMarkers.js"></script>
-    <script src="Leaflet.vector-markers.js"></script>
-    
-    <link rel="stylesheet" href="normalize.css" />    
-    <link rel="stylesheet" href="leaflet.css" />
-
-    <link rel="stylesheet" href="Leaflet.vector-markers.css">
-    
-    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400' rel='stylesheet' type='text/css'>
-   
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            position: relative;
-            height: 110px;
-            width: 100%;
-            background: #302725 url('images/bg_header_pattern.png');
-            border-bottom: 6px solid #d48983;
-        }
-        header img {
-            margin: 10px 0 0 15px   
-        }     
-        #map {
-            position: absolute;
-            z-index: 100;
-            width: 100%;
-            top: 116px;
-            bottom: 0;
-        }    
-        .leaflet-control-layers {
-            font-family: "Ubuntu";
-            padding: 6px 8px;
-            color: #f4f4f4;
-            background: #302725 url('images/bg_header_pattern.png');
-            box-shadow: none;
-            border-radius: 3px;
-            width: 260px;
-        }
-        .leaflet-control-layers label {
-            padding-left: 26px;
-            text-indent: -16px;
-            line-height: 1.2em;
-            margin-bottom: 6px;
-            cursor: pointer;
-        }
-        .leaflet-control-layers label:hover {
-/*            something cool here?*/
-        }
-        .leaflet-control-layers input {
-            margin: 0 9px 0 -8px;
-            cursor: pointer;
-        }
-        .leaflet-container {
-            font-size: 14px;
-        }
-        .info {
-            font-family: "Ubuntu";
-            padding: 6px 8px;
-            font-size: 1em;
-            color: #f4f4f4;
-            background: #302725 url('images/bg_header_pattern.png');
-            border-radius: 3px;
-            max-width: 260px;
-            position: absolute;
-            z-index: 200;
-            word-wrap: break-word;
-        }
-        .info h3 {
-            font-size: 1em;
-            font-weight: 400; 
-            line-height: 1.2em;
-            margin: 4px 0 10px;
-            padding: 0;
-        }
-        .info ul {
-            padding-left: 0;
-            list-style-type: none;
-        }
-        .info li {
-            margin: 0 0 6px 0;
-            font-size: .8em;
-            font-weight: 300;
-            line-height: 1.3em;
-        }
-        .leaflet-control-geosearch {
-            position: absolute;
-            right: 20px;
-            bottom: 10px;
-            width: 264px;
-        }
-        .leaflet-control-geosearch input {
-            width: 96%; 
-            padding: 5px 8px;
-            background: #302725;
-            border: 1px dashed whitesmoke;
-            color: #a9a9a9;
-        }
-        .leaflet-control-geosearch-msg ul {
-            list-style: none;
-            display: none;
-            height: auto;
-            background: none;
-            padding: 0;
-            position: absolute;
-            top: -220%;
-            z-index: 200;
-            background: #d48983;
-        }
-        .leaflet-control-geosearch ul li {
-            border-radius: 4px;
-            padding: 4px 8px;
-            font: 1em "Ubuntu";
-            color: whitesmoke;
-        }
-      
-    </style>
-    
 </head>
 
 <body>  
 
     <header>
-        <a href="http://sbs.cornettims.com/"><img src ="SBSLogo-sm.png" alt="LOGO" class='logo'></a>
+        <a href="http://sbs.cornettims.com/"><img src ="images/SBSLogo-sm.png" alt="LOGO" class='logo'></a>
     </header>
 
     <div id='map'></div>
     <div class='info'></div>
-
-    <script>
-        var options = {
-            center: [38.0400,-84.4650],
-            zoom: 12,
-            minZoom: 10
-        }
-       
-        var map = L.map('map', options);
-        
-        map.setMaxBounds(L.latLngBounds([37.77,-85.45],[38.41,-83.57]));
-        
-        var tiles = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-	       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        });
-        
-        map.addLayer(tiles); 
-        
-        new L.Control.GeoSearch({
-            provider: new L.GeoSearch.Provider.Esri(),
-            position: 'topright',
-            zoomLevel: 15
-        }).addTo(map);
-        
-        
-        var searchbox = $('.leaflet-control-geosearch').detach().removeClass('leaflet-control').appendTo('header');
-        
-                                                                                       
-        var layerInfo = {
-            abuseSupport: {name: "Abuse Counseling and Support", color: '#a6cee3'},
-            residentialAbuseHelp: {name: "Residential Substance Abuse Help", color: '#1f78b4'},
-            outpatientAbuseHelp: {name: "Outpatient Substance Abuse Assessment/Treatment/Support", color: '#b2df8a'},
-            emergencyShelters: {name: "Emergency Shelters", color: '#33a02c'},
-            indigentHealthcare: {name: "Indigent Healthcare", color: '#fb9a99'},
-            mentalHealth: {name: "Mental Health Assessment\/Counseling\/Support Groups", color: '#e31a1c'},
-            clothfoodhousing: {name: "Clothing, Food, Housing, Financial Aid", color: '#fdbf6f'},
-            pregnancy: {name: "Pregnancy and Parenting", color: '#ff7f00'},
-            education: {name: "Education", color: '#cab2d6'},
-            childcare: {name: "Childcare", color: '#6a3d9a'},
-            employment: {name: "Employment", color: '#ffff99'},
-            addtlResources: {name: "Additional Resources", color: '#b15928'}        
-        }
-        
-        var geoJsonLayers = {}; 
-               
-        for (var layer in layerInfo) {
-           geoJsonLayers[layer] = L.geoJson(serviceDatabase, {       
-            
-                pointToLayer: function(feature, latlng) {
-
-                    return  L.marker(latlng, {
-                        icon: L.VectorMarkers.icon({
-                            icon: '',
-                            prefix: '',
-                            //extraClasses: 'myMarker',
-                            markerColor: layerInfo[layer].color,
-                            iconSize: [15,20]
-                         
-                          })
-                    }).addTo(map);
-                    
-                },
-                filter: function(feature) {
-                   
-                    if (feature.properties.ServiceCat == layerInfo[layer].name) {
-                        return feature;
-                        
-                    }
-                },
-                onEachFeature: function(feature, layer) {
-                    var props = feature.properties;
-                    var content = "<b>"+props.ServiceNam+"</b><br>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"<br>";
-                
-                    //layer.bindPopup(content);
-                    
-                    layer.on('mouseover', function(e) {
-                        $(".info").show();
-                        updateInfo(props);
-                    });
-                    layer.on('mouseout', function(){
-                        $(".info").hide(); 
-                    });
-                        
-                    },       
-            
-          }).addTo(map); 
-           
-        }
-        
-        var categoryLayers = {
-            "<font color='#a6cee3'>Abuse Counseling & Support</font>": geoJsonLayers.abuseSupport,
-            "<font color='#1f78b4'>Residential Substance Abuse Help</font>": geoJsonLayers.residentialAbuseHelp,
-            "<font color='#b2df8a'>Outpatient Substance Abuse Treatment & Support</font>": geoJsonLayers.outpatientAbuseHelp,
-            "<font color='#33a02c'>Emergency Shelters</font>": geoJsonLayers.emergencyShelters,
-            "<font color='#fb9a99'>Indigent Healthcare</font>": geoJsonLayers.indigentHealthcare,
-            "<font color='#e31a1c'>Mental Health Assessment/Counseling/Support Groups</font>": geoJsonLayers.mentalHealth,
-            "<font color='#fdbf6f'>Clothing, Food, Housing, Finance Aid</font>": geoJsonLayers.clothfoodhousing,
-            "<font color='#ff7f00'>Pregnancy and Parenting</font>": geoJsonLayers.pregnancy,
-            "<font color='#cab2d6'>Education</font>": geoJsonLayers.education,
-            "<font color='#6a3d9a'>Childcare</font>": geoJsonLayers.childcare,
-            "<font color='#ffff99'>Employment</font>": geoJsonLayers.employment,
-            "<font color='#b15928'>Additional Resources</font>": geoJsonLayers.addtlResources
-          
-        }  
-        
-        L.control.layers(null, categoryLayers, {collapsed:false}).addTo(map);
-        
-        
-        $(".leaflet-control-layers").prepend('<label><input id="show-all" type="checkbox" class="leaflet-control-layers-selector" checked=""><span>SHOW all services</span></label><label><input id="hide-all" type="checkbox" class="leaflet-control-layers-selector"><span>HIDE all services</span></label><hr>');
-        
-        $("#show-all").change(function(e){
-            if(!this.checked){
-             // is now unchecked
-                for(var layer in geoJsonLayers) {
-                    map.removeLayer(geoJsonLayers[layer]);   
-                }
-                $(".leaflet-control-layers input").prop('checked', false);
-                $("#hide-all").prop('checked', true);
-             
-            } else {
-              // is now checked
-                for(var layer in geoJsonLayers) {
-                    map.addLayer(geoJsonLayers[layer]);   
-                }
-                $(".leaflet-control-layers input").prop('checked', true);
-                $("#hide-all").prop('checked', false);
-                
-            }
-        });
-        
-        $("#hide-all").change(function(e){
-            if(!this.checked){
-             // is now unchecked
-                for(var layer in geoJsonLayers) {
-                    map.addLayer(geoJsonLayers[layer]);   
-                }
-                $(".leaflet-control-layers input").prop('checked', true);
-                $("#show-all").prop('checked', true);
-                $("#hide-all").prop('checked', false);
-             
-            } else {
-              // is now checked
-                for(var layer in geoJsonLayers) {
-                    map.removeLayer(geoJsonLayers[layer]);   
-                }
-                $(".leaflet-control-layers input").prop('checked', false);
-                $("#hide-all").prop('checked',true);
-                
-            }
-        });
-        
-        function updateInfo(props) {
-           
-           var html = "<h3>"+props.ServiceNam+"</h3><ul>"+
-                    "<li>"+props.Address+" "+props.City+", "+props.State+" "+
-               props.ZipCode+"</li>"+"<li>";
-            
-            if(props.PrimaryPho != null){
-               html+= "(p): "+props.PrimaryPho+"</li>";
-            }
-            if(props.SecondaryP != null){
-                html+= "<li>(s): "+props.SecondaryP+"</li>";
-            }
-            if(props.Website != null){
-                html += "<li>"+props.Website+"</li>"
-            }
-            
-            html+= "<li>Category: "+props.ServiceCat+"</li>";
-
-           $(".info").html(html);
-               
-        };
-        
-        
-        // hide the info box on initialize
-        $(".info").hide();
-        
-        $(document).mousemove(function(e){
-            $(".info").css({"left": e.pageX + 8, "top": e.pageY - $(".info").height() - 8}); 
-            if($(".info").offset().top < 4) {
-                $(".info").css({"top": e.pageY + 8});
-            }
-        });
-        
-                                    
-       </script>
     
+    <script src="data/ServiceDatabase.js"></script>
+
+    <script src="js/leaflet.js"></script>
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/l.control.geosearch.js"></script>
+    <script src="js/l.geosearch.provider.esri.js"></script>
+    <script src="js/Leaflet.vector-markers.js"></script>
+    <script src="js/map.js"></script>
+
 </body>
 
 </html>
