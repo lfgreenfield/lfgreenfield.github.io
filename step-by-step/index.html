@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="leaflet.awesome-markers.css">
     
     <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400' rel='stylesheet' type='text/css'>
    
     
 
@@ -62,8 +63,8 @@
             padding: 6px 8px;
             color: #f4f4f4;
             background: #302725 url('images/bg_header_pattern.png');
-            box-shadow: 0px;
-            border-radius: 0px;
+            box-shadow: none;
+            border-radius: 3px;
             width: 260px;
         }
         .leaflet-control-layers span {
@@ -89,20 +90,32 @@
             pointer-events: auto;
         }
         .info {
-            font-family: "Ubuntu Condensed";
+            font-family: "Ubuntu";
             padding: 6px 8px;
             font-size: 1em;
-            background: #f6f6f6; 
+            color: #f4f4f4;
+            background: #302725 url('images/bg_header_pattern.png');
+            border-radius: 3px;
             max-width: 260px;
-            color: rgb(70, 67, 58);
             position: absolute;
             z-index: 200;
+            word-wrap: break-word;
         }
         .info h3 {
-            font-weight: normal; 
+            font-size: 1.1em;
+            font-weight: 400; 
             line-height: 1.2em;
-            margin: 0 0 10px 0;
+            margin: 4px 0 10px;
             padding: 0;
+        }
+        .info ul {
+            padding-left: 0;
+            list-style-type: none;
+        }
+        .info li {
+            margin: 0 0 6px 0;
+            font-size: .9em;
+            font-weight: 300;
         }
         .leaflet-control-geosearch {
             position: absolute;
@@ -290,16 +303,21 @@
         
         function updateInfo(props) {
            
-           var html = "<h3>"+props.ServiceNam+"</h3>"+
-                    "<b>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"</b><br>"+"Primary: <b>"+props.PrimaryPho+"</b><br>"+
-               "Category: <b>"+props.ServiceCat+"</b><br>";
+           var html = "<h3>"+props.ServiceNam+"</h3><ul>"+
+                    "<li>"+props.Address+" "+props.City+", "+props.State+" "+
+               props.ZipCode+"</li>"+"<li>";
             
+            if(props.PrimaryPho != null){
+               html+= "(p):"+props.PrimaryPho+"</li>";
+            }
             if(props.SecondaryP != null){
-                html+= "Secondary Phone: <b>"+props.SecondaryP+"</b><br>";
+                html+= "<li>(s): <b>"+props.SecondaryP+"</li>";
             }
             if(props.Website != null){
-                html += "Website: <b>"+props.Website+"</b><br>"
+                html += "<li>"+props.Website+"</li>"
             }
+            
+            html+= "<li>Category: "+props.ServiceCat+"</li>";
 
            $(".info").html(html);
                
@@ -311,7 +329,10 @@
         $(".info").hide();
         
         $(document).mousemove(function(e){
-            $(".info").css({"left": e.pageX + 6, "top": e.pageY - $(".info").height() - 6}); 
+            $(".info").css({"left": e.pageX + 8, "top": e.pageY - $(".info").height() - 8}); 
+            if($(".info").offset().top < 4) {
+                $(".info").css({"top": e.pageY + 8});
+            }
         });
         
                                     
