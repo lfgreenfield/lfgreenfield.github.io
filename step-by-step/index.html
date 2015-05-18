@@ -12,6 +12,8 @@
     <script src="l.geosearch.provider.esri.js"></script>
     <script src="leaflet.awesome-markers.js"></script>
     <script src="ServiceDatabase.js"></script>
+    <script src="Leaflet.MakiMarkers.js"></script>
+    <script src="Leaflet.vector-markers.js"></script>
     
     <link rel="stylesheet" href="normalize.css" />
     <link rel="stylesheet" href="l.geosearch.css" />    
@@ -19,8 +21,8 @@
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
     <link rel="stylesheet" href="leaflet.awesome-markers.css">
+    <link rel="stylesheet" href="Leaflet.vector-markers.css">
     
-    <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400' rel='stylesheet' type='text/css'>
    
     
@@ -59,7 +61,7 @@
             bottom: 0;
         }    
         .leaflet-control-layers {
-            font-family: "Ubuntu Condensed";
+            font-family: "Ubuntu";
             padding: 6px 8px;
             color: #f4f4f4;
             background: #302725 url('images/bg_header_pattern.png');
@@ -67,8 +69,8 @@
             border-radius: 3px;
             width: 260px;
         }
-        .leaflet-control-layers span {
-            margin-left: 8px;
+        .leaflet-control-layers label {
+            padding-left: 8px;
             text-indent: -8px;
         }
         .leaflet-container {
@@ -102,7 +104,7 @@
             word-wrap: break-word;
         }
         .info h3 {
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: 400; 
             line-height: 1.2em;
             margin: 4px 0 10px;
@@ -114,7 +116,7 @@
         }
         .info li {
             margin: 0 0 6px 0;
-            font-size: .9em;
+            font-size: .8em;
             font-weight: 300;
         }
         .leaflet-control-geosearch {
@@ -128,6 +130,10 @@
             padding: 5px 8px;
             background: #302725;
             color: #a9a9a9;
+        }
+        .myMarker {
+            width: 15px;
+            height: 20px;
         }
       
     </style>
@@ -168,18 +174,18 @@
         
                                                                                        
         var layerInfo = {
-            abuseSupport: {name: "Abuse Counseling and Support", color: 'red'},
-            residentialAbuseHelp: {name: "Residential Substance Abuse Help", color: 'blue'},
-            outpatientAbuseHelp: {name: "Outpatient Substance Abuse Assessment/Treatment/Support", color: 'purple'},
-            emergencyShelters: {name: "Emergency Shelters", color: 'orange'},
-            indigentHealthcare: {name: "Indigent Healthcare", color: 'lightgreen'},
-            mentalHealth: {name: "Mental Health Assessment\/Counseling\/Support Groups", color: 'darkred'},
-            clothfoodhousing: {name: "Clothing, Food, Housing, Financial Aid", color: 'green'},
-            pregnancy: {name: "Pregnancy and Parenting", color: 'indigo'},
-            education: {name: "Education", color: 'pink'},
-            childcare: {name: "Childcare", color: 'beige'},
-            employment: {name: "Employment", color: 'cadetblue'},
-            addtlResources: {name: "Additional Resources", color: 'lightgray'}        
+            abuseSupport: {name: "Abuse Counseling and Support", color: '#a6cee3'},
+            residentialAbuseHelp: {name: "Residential Substance Abuse Help", color: '#1f78b4'},
+            outpatientAbuseHelp: {name: "Outpatient Substance Abuse Assessment/Treatment/Support", color: '#b2df8a'},
+            emergencyShelters: {name: "Emergency Shelters", color: '#33a02c'},
+            indigentHealthcare: {name: "Indigent Healthcare", color: '#fb9a99'},
+            mentalHealth: {name: "Mental Health Assessment\/Counseling\/Support Groups", color: '#e31a1c'},
+            clothfoodhousing: {name: "Clothing, Food, Housing, Financial Aid", color: '#fdbf6f'},
+            pregnancy: {name: "Pregnancy and Parenting", color: '#ff7f00'},
+            education: {name: "Education", color: '#cab2d6'},
+            childcare: {name: "Childcare", color: '#6a3d9a'},
+            employment: {name: "Employment", color: '#ffff99'},
+            addtlResources: {name: "Additional Resources", color: '#b15928'}        
         }
         
         var geoJsonLayers = {}; 
@@ -195,12 +201,37 @@
 //                    
 //                    return L.marker (latlng, {icon: categoryMarker}); 
                     
-                    return L.circleMarker(latlng, {
-                        stroke: false,
-                        fillColor: layerInfo[layer].color,
-                        fillOpacity: 1,
-                        radius: 8
-                    });
+//                    return L.circleMarker(latlng, {
+//                        stroke: false,
+//                        fillColor: layerInfo[layer].color,
+//                        fillOpacity: 1,
+//                        radius: 8
+//                    });
+//                        return L.marker(latlng, {
+//                            icon: L.icon({
+//                                iconUrl: 'images/marker.svg',
+//                                iconSize: [50,50]
+//                            })
+//                            icon: L.divIcon({  // make it a div icon
+//                                    className: 'test',  // assign class name
+//                                    iconSize: L.Point(24,24)
+//                                })
+//                        })
+//                    return L.marker(latlng, {
+//                        icon: L.MakiMarkers.icon({icon: "rocket", color: "#b0b", size: "s"})
+//                    })
+
+
+                    return  L.marker(latlng, {
+                        icon: L.VectorMarkers.icon({
+                            icon: '',
+                            prefix: '',
+                            //extraClasses: 'myMarker',
+                            markerColor: layerInfo[layer].color,
+                            iconSize: [15,20]
+                         
+                          })
+                    }).addTo(map);
                     
                 },
                 filter: function(feature) {
@@ -231,20 +262,20 @@
         }
         
         var categoryLayers = {
-            "<font color='red'>Abuse Counseling & Support</font>": geoJsonLayers.abuseSupport,
-            "<font color='blue'>Residential Substance Abuse Help</font>": geoJsonLayers.residentialAbuseHelp,
-            "<font color='purple'>Outpatient Substance Abuse Treatment & Support</font>": geoJsonLayers.outpatientAbuseHelp,
-            "<font color='orange'>Emergency Shelters</font>": geoJsonLayers.emergencyShelters,
-            "<font color='lightgreen'>Indigent Healthcare</font>": geoJsonLayers.indigentHealthcare,
-            "<font color='darkred'>Mental Health Assessment/Counseling/Support Groups</font>": geoJsonLayers.mentalHealth,
-            "<font color='green'>Clothing, Food, Housing, Finance Aid</font>": geoJsonLayers.clothfoodhousing,
-            "<font color='indigo'>Pregnancy and Parenting</font>": geoJsonLayers.pregnancy,
-            "<font color='pink'>Education</font>": geoJsonLayers.education,
-            "<font color='beige'>Childcare</font>": geoJsonLayers.childcare,
-            "<font color='cadetblue'>Employment</font>": geoJsonLayers.employment,
-            "<font color='lightgrey'>Additional Resources</font>": geoJsonLayers.addtlResources
+            "<font color='#a6cee3'>Abuse Counseling & Support</font>": geoJsonLayers.abuseSupport,
+            "<font color='#1f78b4'>Residential Substance Abuse Help</font>": geoJsonLayers.residentialAbuseHelp,
+            "<font color='#b2df8a'>Outpatient Substance Abuse Treatment & Support</font>": geoJsonLayers.outpatientAbuseHelp,
+            "<font color='#33a02c'>Emergency Shelters</font>": geoJsonLayers.emergencyShelters,
+            "<font color='#fb9a99'>Indigent Healthcare</font>": geoJsonLayers.indigentHealthcare,
+            "<font color='#e31a1c'>Mental Health Assessment/Counseling/Support Groups</font>": geoJsonLayers.mentalHealth,
+            "<font color='#fdbf6f'>Clothing, Food, Housing, Finance Aid</font>": geoJsonLayers.clothfoodhousing,
+            "<font color='#ff7f00'>Pregnancy and Parenting</font>": geoJsonLayers.pregnancy,
+            "<font color='#cab2d6'>Education</font>": geoJsonLayers.education,
+            "<font color='#6a3d9a'>Childcare</font>": geoJsonLayers.childcare,
+            "<font color='#ffff99'>Employment</font>": geoJsonLayers.employment,
+            "<font color='#b15928'>Additional Resources</font>": geoJsonLayers.addtlResources
           
-        }        
+        }  
         
         L.control.layers(null, categoryLayers, {collapsed:false}).addTo(map);
         
@@ -308,7 +339,7 @@
                props.ZipCode+"</li>"+"<li>";
             
             if(props.PrimaryPho != null){
-               html+= "(p):"+props.PrimaryPho+"</li>";
+               html+= "(p): "+props.PrimaryPho+"</li>";
             }
             if(props.SecondaryP != null){
                 html+= "<li>(s): <b>"+props.SecondaryP+"</li>";
@@ -323,7 +354,6 @@
                
         };
         
-       // info.addTo(map);
         
         // hide the info box on initialize
         $(".info").hide();
