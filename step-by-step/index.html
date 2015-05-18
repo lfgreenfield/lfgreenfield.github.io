@@ -14,9 +14,8 @@
     <script src="Leaflet.MakiMarkers.js"></script>
     <script src="Leaflet.vector-markers.js"></script>
     
-    <link rel="stylesheet" href="normalize.css" />
-    <link rel="stylesheet" href="l.geosearch.css" />    
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="normalize.css" />    
+    <link rel="stylesheet" href="leaflet.css" />
 
     <link rel="stylesheet" href="Leaflet.vector-markers.css">
     
@@ -36,17 +35,6 @@
         }
         header img {
             margin: 10px 0 0 15px   
-        }
-        h1 {
-            position: absolute;
-            z-index: 100;
-            bottom: 15px;
-            left: 30px;
-            padding: 8px 15px;
-            margin: 0;
-            color: whitesmoke;
-            font-size: 1.5em;
-            border-radius: 5px
         }     
         #map {
             position: absolute;
@@ -67,9 +55,16 @@
         .leaflet-control-layers label {
             padding-left: 26px;
             text-indent: -16px;
+            line-height: 1.2em;
+            margin-bottom: 6px;
+            cursor: pointer;
+        }
+        .leaflet-control-layers label:hover {
+/*            something cool here?*/
         }
         .leaflet-control-layers input {
-            margin: 0 9px 0 -8px;;   
+            margin: 0 9px 0 -8px;
+            cursor: pointer;
         }
         .leaflet-container {
             font-size: 14px;
@@ -101,6 +96,7 @@
             margin: 0 0 6px 0;
             font-size: .8em;
             font-weight: 300;
+            line-height: 1.3em;
         }
         .leaflet-control-geosearch {
             position: absolute;
@@ -112,11 +108,25 @@
             width: 96%; 
             padding: 5px 8px;
             background: #302725;
+            border: 1px dashed whitesmoke;
             color: #a9a9a9;
         }
-        .myMarker {
-            width: 15px;
-            height: 20px;
+        .leaflet-control-geosearch-msg ul {
+            list-style: none;
+            display: none;
+            height: auto;
+            background: none;
+            padding: 0;
+            position: absolute;
+            top: -220%;
+            z-index: 200;
+            background: #d48983;
+        }
+        .leaflet-control-geosearch ul li {
+            border-radius: 4px;
+            padding: 4px 8px;
+            font: 1em "Ubuntu";
+            color: whitesmoke;
         }
       
     </style>
@@ -135,10 +145,13 @@
     <script>
         var options = {
             center: [38.0400,-84.4650],
-            zoom: 12
+            zoom: 12,
+            minZoom: 10
         }
        
         var map = L.map('map', options);
+        
+        map.setMaxBounds(L.latLngBounds([37.77,-85.45],[38.41,-83.57]));
         
         var tiles = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -279,15 +292,6 @@
             }
         });
         
-//        
-//        var info = L.control();
-//        
-//        info.onAdd = function (map) {
-//            var div = L.DomUtil.create('div', 'info');           
-//            return div;
-//        };
-        
-        
         function updateInfo(props) {
            
            var html = "<h3>"+props.ServiceNam+"</h3><ul>"+
@@ -298,7 +302,7 @@
                html+= "(p): "+props.PrimaryPho+"</li>";
             }
             if(props.SecondaryP != null){
-                html+= "<li>(s): <b>"+props.SecondaryP+"</li>";
+                html+= "<li>(s): "+props.SecondaryP+"</li>";
             }
             if(props.Website != null){
                 html += "<li>"+props.Website+"</li>"
