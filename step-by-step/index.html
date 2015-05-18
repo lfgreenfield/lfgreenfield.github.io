@@ -10,7 +10,6 @@
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="l.control.geosearch.js"></script>
     <script src="l.geosearch.provider.esri.js"></script>
-    <script src="leaflet.awesome-markers.js"></script>
     <script src="ServiceDatabase.js"></script>
     <script src="Leaflet.MakiMarkers.js"></script>
     <script src="Leaflet.vector-markers.js"></script>
@@ -18,9 +17,7 @@
     <link rel="stylesheet" href="normalize.css" />
     <link rel="stylesheet" href="l.geosearch.css" />    
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
-    <link rel="stylesheet" href="leaflet.awesome-markers.css">
+
     <link rel="stylesheet" href="Leaflet.vector-markers.css">
     
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400' rel='stylesheet' type='text/css'>
@@ -194,33 +191,6 @@
            geoJsonLayers[layer] = L.geoJson(serviceDatabase, {       
             
                 pointToLayer: function(feature, latlng) {
-                    
-//                    var categoryMarker = L.AwesomeMarkers.icon({
-//                        markerColor: layerInfo[layer].color,
-//                    });
-//                    
-//                    return L.marker (latlng, {icon: categoryMarker}); 
-                    
-//                    return L.circleMarker(latlng, {
-//                        stroke: false,
-//                        fillColor: layerInfo[layer].color,
-//                        fillOpacity: 1,
-//                        radius: 8
-//                    });
-//                        return L.marker(latlng, {
-//                            icon: L.icon({
-//                                iconUrl: 'images/marker.svg',
-//                                iconSize: [50,50]
-//                            })
-//                            icon: L.divIcon({  // make it a div icon
-//                                    className: 'test',  // assign class name
-//                                    iconSize: L.Point(24,24)
-//                                })
-//                        })
-//                    return L.marker(latlng, {
-//                        icon: L.MakiMarkers.icon({icon: "rocket", color: "#b0b", size: "s"})
-//                    })
-
 
                     return  L.marker(latlng, {
                         icon: L.VectorMarkers.icon({
