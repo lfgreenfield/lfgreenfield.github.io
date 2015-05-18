@@ -95,9 +95,10 @@
             background: #f6f6f6; 
             max-width: 260px;
             color: rgb(70, 67, 58);
+            position: absolute;
+            z-index: 200;
         }
         .info h3 {
-            text-transform: uppercase;
             font-weight: normal; 
             line-height: 1.2em;
             margin: 0 0 10px 0;
@@ -113,6 +114,7 @@
             width: 96%; 
             padding: 5px 8px;
             background: #302725;
+            color: #a9a9a9;
         }
       
     </style>
@@ -126,6 +128,7 @@
     </header>
 
     <div id='map'></div>
+    <div class='info'></div>
 
     <script>
         var options = {
@@ -138,12 +141,13 @@
         var tiles = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         });
-   
+        
         map.addLayer(tiles); 
         
         new L.Control.GeoSearch({
             provider: new L.GeoSearch.Provider.Esri(),
-            position: 'topright'
+            position: 'topright',
+            zoomLevel: 15
         }).addTo(map);
         
         
@@ -158,7 +162,7 @@
             indigentHealthcare: {name: "Indigent Healthcare", color: 'lightgreen'},
             mentalHealth: {name: "Mental Health Assessment\/Counseling\/Support Groups", color: 'darkred'},
             clothfoodhousing: {name: "Clothing, Food, Housing, Financial Aid", color: 'green'},
-            pregnancy: {name: "Pregnancy and Parenting", color: 'darkpurple'},
+            pregnancy: {name: "Pregnancy and Parenting", color: 'indigo'},
             education: {name: "Education", color: 'pink'},
             childcare: {name: "Childcare", color: 'beige'},
             employment: {name: "Employment", color: 'cadetblue'},
@@ -182,7 +186,7 @@
                         stroke: false,
                         fillColor: layerInfo[layer].color,
                         fillOpacity: 1,
-                        radius: 6
+                        radius: 8
                     });
                     
                 },
@@ -199,11 +203,12 @@
                 
                     //layer.bindPopup(content);
                     
-                    layer.on('mouseover', function() {
-                        info.update(props);                         
+                    layer.on('mouseover', function(e) {
+                        $(".info").show();
+                        updateInfo(props);
                     });
                     layer.on('mouseout', function(){
-                        //$(".info").hide(); 
+                        $(".info").hide(); 
                     });
                         
                     },       
@@ -220,7 +225,7 @@
             "<font color='lightgreen'>Indigent Healthcare</font>": geoJsonLayers.indigentHealthcare,
             "<font color='darkred'>Mental Health Assessment/Counseling/Support Groups</font>": geoJsonLayers.mentalHealth,
             "<font color='green'>Clothing, Food, Housing, Finance Aid</font>": geoJsonLayers.clothfoodhousing,
-            "<font color='darkpurple'>Pregnancy and Parenting</font>": geoJsonLayers.pregnancy,
+            "<font color='indigo'>Pregnancy and Parenting</font>": geoJsonLayers.pregnancy,
             "<font color='pink'>Education</font>": geoJsonLayers.education,
             "<font color='beige'>Childcare</font>": geoJsonLayers.childcare,
             "<font color='cadetblue'>Employment</font>": geoJsonLayers.employment,
@@ -274,23 +279,20 @@
             }
         });
         
+//        
+//        var info = L.control();
+//        
+//        info.onAdd = function (map) {
+//            var div = L.DomUtil.create('div', 'info');           
+//            return div;
+//        };
         
-        var info = L.control();
         
-        info.onAdd = function (map) {
-            var div = L.DomUtil.create('div', 'info');           
-            return div;
-        };
-        
-        
-        info.update = function (props) {
+        function updateInfo(props) {
            
-           $(".info").show();
-//           $(".info").
-            
            var html = "<h3>"+props.ServiceNam+"</h3>"+
-                    "Category: <b>"+props.ServiceCat+"</b><br>"+
-                    "Address: <b>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"</b><br>"+"Primary Phone: <b>"+props.PrimaryPho+"</b><br>";
+                    "<b>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"</b><br>"+"Primary: <b>"+props.PrimaryPho+"</b><br>"+
+               "Category: <b>"+props.ServiceCat+"</b><br>";
             
             if(props.SecondaryP != null){
                 html+= "Secondary Phone: <b>"+props.SecondaryP+"</b><br>";
@@ -303,10 +305,14 @@
                
         };
         
-        info.addTo(map);
+       // info.addTo(map);
         
         // hide the info box on initialize
         $(".info").hide();
+        
+        $(document).mousemove(function(e){
+            $(".info").css({"left": e.pageX + 6, "top": e.pageY - $(".info").height() - 6}); 
+        });
         
                                     
        </script>
