@@ -5,101 +5,22 @@
     <meta charset=utf-8 />
     <title>Step-By-Step Service Locations</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="l.control.geosearch.js"></script>
-    <script src="l.geosearch.provider.esri.js"></script>
-    <script src="leaflet.awesome-markers.js"></script>
     
-    <link rel="stylesheet" href="l.geosearch.css" />    
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
-    <link rel="stylesheet" href="leaflet.awesome-markers.css">
-   
-    <script src="ServiceDatabase.js"></script>
+    <link rel="stylesheet" href="css/normalize.css" />    
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/Leaflet.vector-markers.css">
+    <link rel="stylesheet" href="css/styles.css">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: whitesmoke;
-        }
-        header {
-            padding: 6px 10%;
-        }
-        h1 {
-            position: absolute;
-            z-index: 100;
-            bottom: 15px;
-            left: 30px;
-            padding: 8px 15px;
-            margin: 0;
-            color: whitesmoke;
-            font-size: 1.5em;
-/*            background: rgba(25,25,25,0.8);*/
-            border-radius: 5px
-        }     
-        #map {
-            position: absolute;
-            width: 100%;
-            top: 0;
-            bottom: 0;
-        }      
-        .leaflet-control-layers-expanded {
-            padding: 6px 8px;
-            color: 'black';
-            background: #bfbfbf;
-        }
-        .leaflet-control-layers {
-            box-shadow: 0;
-            border-radius: 0px;
-            width: 385px;
-        }
-        .leaflet-container {
-            font-size: 14px;
-        }
-        leaflet-top .leaflet-control {
-            margin-top: 0;
-        }
-        leaflet-right. leaflet-control {
-            margin-right: 0;
-            float: none;
-        }
-        .leaflet-control {
-            position: relative;
-            top: 0px;
-            left: 0px;
-            bottom: 0;
-            z-index: 7;
-            pointer-events: auto;
-        }
-        .info {
-            padding: 6px 8px;
-            font-size: 1em;
-            background: #bfbfbf;
-            box-shadow: 0;
-            border-radius: 0px;
-            text-align: left; 
-            height: 300px;
-            width: 385px;
-        }
-        .logo {
-            width: 150px;
-            height: 75px;
-        }
-      
-    </style>
-    
 </head>
 
 <body>  
 
-    
-    <h1><image src ="SBSLogo.png" alt="LOGO" class='logo'></image></h1>
+    <header>
+        <a href="http://sbs.cornettims.com/"><img src ="images/SBSLogo-sm.png" alt="LOGO" class='logo'></a>
+    </header>
 
     <div id='map'></div>
+<<<<<<< HEAD
 
     <script>
         var options = {
@@ -215,7 +136,19 @@
         info.addTo(map);
                                     
        </script>
+=======
+    <div class='info'></div>
+>>>>>>> rich-dev
     
+    <script src="data/ServiceDatabase.js"></script>
+
+    <script src="js/leaflet.js"></script>
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/l.control.geosearch.js"></script>
+    <script src="js/l.geosearch.provider.esri.js"></script>
+    <script src="js/Leaflet.vector-markers.js"></script>
+    <script src="js/map.js"></script>
+
 </body>
 
 </html>
