@@ -8,7 +8,7 @@ header {
     position: relative;
     height: 110px;
     width: 100%;
-    background: #302725 url('images/bg_header_pattern.png');
+    background: #f4f4f4;
     border-bottom: 6px solid #d48983;
 }
 header img {
@@ -85,9 +85,9 @@ header img {
 .leaflet-control-geosearch input {
     width: 96%; 
     padding: 5px 8px;
-    background: #302725;
-    border: 1px dashed whitesmoke;
-    color: #a9a9a9;
+    background: whitesmoke ;
+    bordere: 2px solid ##302725;
+    color: #A0A0A0 ;
 }
 .leaflet-control-geosearch-msg ul {
     list-style: none;
