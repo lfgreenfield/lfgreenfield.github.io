@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Vacant Properties</title>
+    <title>Habitat for Humanity</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
@@ -103,18 +103,54 @@
      
         map.addLayer(tiles);
         
-//        add address data
+        var layerInfo = {
+            Layer1988: {year: "1988", color: '#91cf60'}, 
+            Layer1999: {year: "1999", color:'#1f78b4'},    
+            Layer2000: {year: "2000", color:'#FFFF00'} 
+        }                                          
+        
+//         var geoJsonLayers = {};
+//        
+//        
+//             for(var layer in layerInfo) {     
+//            geoJsonLayers[layer] = L.geoJson(address, {
+//                pointToLayer: function(feature,latlng) {
+//                    return L.circleMarker(latlng, {
+//                        width: 0.5,
+//                        fillOpacity: 0.7
+//                    });
+//                },
+//                 filter: function(feature) {
+//                    if(feature.properties.Year[layerInfo[layer].year]) {
+//                        return feature;
+//                    }
+//                },
+//                style: function(feature) {
+//                    return {
+//                        color: layerInfo[layer].color,
+//                        fillColor: layerInfo[layer].color
+//                    } 
+//                },            
+//            }).addTo(map);
+//        }  
+////        
+//        
+        
+        
         var habitatAddresses = L.geoJson(address, {
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, {
                     width: 0.5,
                     fillOpacity: 0.7
                     });
-            },
-            style: function (feature) {
-                if(features.properties["Year"]="1988"
-            }
+                },
+//            style: function(feature) {
+//                if 
+//            }
+            
         }).addTo(map);
+        
+       
         
   
     
