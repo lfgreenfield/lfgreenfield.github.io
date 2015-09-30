@@ -87,9 +87,9 @@
     <script>
         var map = L.map('map', {
             center: [38.055,-84.483],
-            zoom: 12,
+            zoom: 14,
             minZoom: 10,
-            maxZoom: 16,
+            maxZoom: 17,
             zoomControl: true,
             dragging: true,
         });
@@ -103,57 +103,124 @@
      
         map.addLayer(tiles);
         
-        var layerInfo = {
-            Layer1988: {year: "1988", color: '#91cf60'}, 
-            Layer1999: {year: "1999", color:'#1f78b4'},    
-            Layer2000: {year: "2000", color:'#FFFF00'} 
-        }                                          
-        
-//         var geoJsonLayers = {};
-//        
-//        
-//             for(var layer in layerInfo) {     
-//            geoJsonLayers[layer] = L.geoJson(address, {
-//                pointToLayer: function(feature,latlng) {
-//                    return L.circleMarker(latlng, {
-//                        width: 0.5,
-//                        fillOpacity: 0.7
-//                    });
-//                },
-//                 filter: function(feature) {
-//                    if(feature.properties.Year[layerInfo[layer].year]) {
-//                        return feature;
-//                    }
-//                },
-//                style: function(feature) {
-//                    return {
-//                        color: layerInfo[layer].color,
-//                        fillColor: layerInfo[layer].color
-//                    } 
-//                },            
-//            }).addTo(map);
-//        }  
-////        
-//        
-        
-        
-        var habitatAddresses = L.geoJson(address, {
-            pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, {
-                    width: 0.5,
-                    fillOpacity: 0.7
-                    });
-                },
-//            style: function(feature) {
-//                if 
-//            }
-            
-        }).addTo(map);
         
        
+var habitatData = L.geoJson(address, {
+    pointToLayer: function (feature, latlng) {
+        return L.circleMarker (latlng, {
+            width: 0.5,
+            fillOpacity: 0.8
+        });
+    },
+    onEachFeature: function(feature, layer) {
+//      console.log(layer.feature.properties["Year"]);        
+        var year = layer.feature.properties["Year"];
         
-  
-    
+        if(year == "1989") {
+            layer.setStyle({
+                color: "red"
+            });
+           }
+        if(year == "1990") {
+            layer.setStyle({
+                color: "orange"
+            });
+           }
+        if(year == "1991") {
+            layer.setStyle ({
+                color: "green"
+            });
+        }
+        if(year == "1992") {
+            layer.setStyle ({   
+                color: '#008066'
+            });
+        }
+        if(year == "1993") {
+            layer.setStyle ({
+                color: '#FF0066'
+            });
+        }
+        if(year == "1994") {
+            layer.setStyle ({
+                color: '#3D003D'
+            });
+        }
+        if(year == "1995") {
+            layer.setStyle ({
+                color: '#4C4C33'
+            });
+        }
+        if(year == "1995") {
+            layer.setStyle ({
+                color: '#FFFF00'
+            });
+        }
+        if(year == "1996") {
+            layer.setStyle ({
+                color: '#0A1F0A'
+            });
+        }
+        if(year == "1997") {
+            layer.setStyle ({
+                color: '#001429'
+            });
+        }
+        if(year == "1998") {
+            layer.setStyle ({
+                color: '#B82E00'
+            });
+        }
+        if(year == "1999") {
+            layer.setStyle ({
+                color: '#996633'
+            });
+        }
+        if(year == "2000") {
+            layer.setStyle ({
+                color: '#99003D'
+            });
+        }
+        if(year == "2001") {
+            layer.setStyle ({
+                color: '#E68A5C'
+            });
+        }
+        if(year == "2002") {
+            layer.setStyle ({
+                color: '#7575FF'
+            });
+        }
+        if(year == "2003") {
+            layer.setStyle ({
+                color: '#993333'
+            });
+        }
+        if(year == "2004") {
+            layer.setStyle ({
+                color: '#000000'
+            });
+        }
+        if(year == "2005") {
+            layer.setStyle ({
+                color: '#996600'
+            });
+        }
+        if(year == "2006") {
+            layer.setStyle ({
+                color: '#FF99FF'
+            });
+        }
+        if(year == "2007") {
+            layer.setStyle ({
+                color: '#FF99FF'
+            });
+        }
+        
+        
+        
+    }
+}).addTo(map);
         
         
         
