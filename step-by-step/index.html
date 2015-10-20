@@ -58,6 +58,19 @@
         }
         
         var geoJsonLayers = {}; 
+    
+<!--    var serviceDatabase = L.geoJson('https://drive.google.com/drive/u/0/folders/0B-TUdNQmpZtXek5QMkdzTkE2LU0/ServiceDatabaseGoogle.geojson');-->
+<!--
+    
+    https://docs.google.com/spreadsheets/d/15bcRqV1lb1yV_8PZCrzUfqsIaod9JKWMiQRBz2S7H8o/edit#gid=0
+-->
+<!--
+    
+    $.getJSON("https://docs.google.com/spreadsheets/d/15bcRqV1lb1yV_8PZCrzUfqsIaod9JKWMiQRBz2S7H8o/edit#gid=0"=json-in-script&callback=?", 
+function(json) {
+    console.log(json);
+});
+-->
                
         for (var layer in layerInfo2) {
            geoJsonLayers[layer] = L.geoJson(serviceDatabase, {       
