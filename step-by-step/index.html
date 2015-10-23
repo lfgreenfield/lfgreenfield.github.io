@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="css/Leaflet.vector-markers.css">
     <link rel="stylesheet" href="css/styles.css">
-
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    
 </head>
 
 <body>  
@@ -21,139 +22,13 @@
     </header>
 
     <div id='map'></div>
-<<<<<<< HEAD
 
-    <script>
-        var options = {
-            center: [38.0400,-84.4650],
-            zoom: 12
-        }
-       
-        var map = L.map('map', options);
-        
-        var tiles = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	maxZoom: 19,
-	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-});
-   
-        map.addLayer(tiles); 
-        
-        new L.Control.GeoSearch({
-            provider: new L.GeoSearch.Provider.Esri()
-        }).addTo(map);
-                                                                                       
-        var layerInfo2 = {
-            abuseSupport: {name: "Abuse Counseling and Support", color: 'red'},
-            residentialAbuseHelp: {name: "Residential Substance Abuse Help", color: 'blue'},
-            outpatientAbuseHelp: {name: "Outpatient Substance Abuse Assessment/Treatment/Support", color: 'purple'},
-            emergencyShelters: {name: "Emergency Shelters", color: 'orange'},
-            indigentHealthcare: {name: "Indigent Healthcare", color: 'lightgreen'},
-            mentalHealth: {name: "Mental Health Assessment\/Counseling\/Support Groups", color: 'darkred'},
-            clothfoodhousing: {name: "Clothing, Food, Housing, Financial Aid", color: 'green'},
-            pregnancy: {name: "Pregnancy and Parenting", color: 'darkpurple'},
-            education: {name: "Education", color: 'pink'},
-            childcare: {name: "Childcare", color: 'beige'},
-            employment: {name: "Employment", color: 'cadetblue'},
-            addtlResources: {name: "Additional Resources", color: 'lightgray'}        
-        }
-        
-        var geoJsonLayers = {}; 
-    
-<!--    var serviceDatabase = L.geoJson('https://drive.google.com/drive/u/0/folders/0B-TUdNQmpZtXek5QMkdzTkE2LU0/ServiceDatabaseGoogle.geojson');-->
-<!--
-    
-    https://docs.google.com/spreadsheets/d/15bcRqV1lb1yV_8PZCrzUfqsIaod9JKWMiQRBz2S7H8o/edit#gid=0
--->
-<!--
-    
-    $.getJSON("https://docs.google.com/spreadsheets/d/15bcRqV1lb1yV_8PZCrzUfqsIaod9JKWMiQRBz2S7H8o/edit#gid=0"=json-in-script&callback=?", 
-function(json) {
-    console.log(json);
-});
--->
-               
-        for (var layer in layerInfo2) {
-           geoJsonLayers[layer] = L.geoJson(serviceDatabase, {       
-            
-                pointToLayer: function(feature, latlng) {
-                    
-                    var categoryMarker = L.AwesomeMarkers.icon({
-                        markerColor: layerInfo2[layer].color,
-                    });
-                    
-                    return L.marker (latlng, {icon: categoryMarker});                
-                    
-                },
-                filter: function(feature) {
-                   
-                    if (feature.properties.ServiceCat == layerInfo2[layer].name) {
-                        return feature;
-                        
-                    }
-                },
-                onEachFeature: function(feature, layer) {
-                    var props = feature.properties;
-                    var content = "<b>"+props.ServiceNam+"</b><br>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"<br>";
-                
-                    layer.bindPopup(content);
-                    
-                    layer.on('click', function() {
-                        info.update(props);                         
-                    });
-                        
-                    },       
-            
-          }).addTo(map); 
-           
-        }
-        
-        var categoryLayers = {
-            "Abuse Counseling & Support": geoJsonLayers.abuseSupport,
-            "Residential Substance Abuse Help": geoJsonLayers.residentialAbuseHelp,
-            "Outpatient Substance Abuse Treatment & Support": geoJsonLayers.outpatientAbuseHelp,
-            "Emergency Shelters": geoJsonLayers.emergencyShelters,
-            "Indigent Healthcare": geoJsonLayers.indigentHealthcare,
-            "Mental Health Assessment/Counseling/Support Groups": geoJsonLayers.mentalHealth,
-            "Clothing, Food, Housing, Finance Aid": geoJsonLayers.clothfoodhousing,
-            "Pregnancy and Parenting": geoJsonLayers.pregnancy,
-            "Education": geoJsonLayers.education,
-            "Childcare": geoJsonLayers.childcare,
-            "Employment": geoJsonLayers.employment,
-            "Additional Resources": geoJsonLayers.addtlResources
-          
-        }        
-        
-        L.control.layers(null, categoryLayers, {collapsed:false}).addTo(map);
-        
-        var info = L.control();
-        info.onAdd = function (map) {
-            var div = L.DomUtil.create('div', 'info');           
-            return div;
-        };
-        
-        info.update = function (props) {
-           
-           var html = "<h3>"+props.ServiceNam+"</h3>"+
-                    "Category: <b>"+props.ServiceCat+"</b><br>"+
-                    "Address: <b>"+props.Address+" "+props.City+", "+props.State+" "+props.ZipCode+"</b><br>"+
-                    "Primary Phone: <b>"+props.PrimaryPho+"</b><br>"+
-                    "Secondary Phone: <b>"+props.SecondaryP+"</b><br>"+
-                    "Website: <b>"+props.Website+"</b><br>"
-           
-           $(".info").html(html);
-               
-        };
-        info.addTo(map);
-                                    
-       </script>
-=======
     <div class='info'></div>
->>>>>>> LOADING
-    
+
+
     <script src="data/ServiceDatabase.js"></script>
     
-<!--    <script src="https://drive.google.com/drive/u/0/folders/0B-TUdNQmpZtXek5QMkdzTkE2LU0/ServiceDatabaseGoogle.geojson"></script>-->
-
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
     <script src="js/leaflet.js"></script>
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/l.control.geosearch.js"></script>
