@@ -36,15 +36,15 @@ function makeMap(serviceDatabase){
     var layerInfo = {
         abuseSupport: {name: "Abuse Counseling and Support", color: '#a6cee3'},
         residentialAbuseHelp: {name: "Residential Substance Abuse Help", color: '#1f78b4'},
-        outpatientAbuseHelp: {name: "Outpatient Substance Abuse Assessment/Treatment/Support", color: '#b2df8a'},
+        outpatientAbuseHelp: {name: "Outpatient Substance Abuse Assessment/Treatment/Support", color: '#003300'},
         emergencyShelters: {name: "Emergency Shelters", color: '#33a02c'},
         indigentHealthcare: {name: "Indigent Healthcare", color: '#fb9a99'},
         mentalHealth: {name: "Mental Health Assessment\/Counseling\/Support Groups", color: '#e31a1c'},
         clothfoodhousing: {name: "Clothing, Food, Housing, Financial Aid", color: '#fdbf6f'},
         pregnancy: {name: "Pregnancy and Parenting", color: '#ff7f00'},
-        education: {name: "Education", color: '#cab2d6'},
+        education: {name: "Education", color: '#5C5C3D'},
         childcare: {name: "Childcare", color: '#6a3d9a'},
-        employment: {name: "Employment", color: '#ffff99'},
+        employment: {name: "Employment", color: '#1F1F14'},
         addtlResources: {name: "Additional Resources", color: '#b15928'}        
     }
 
@@ -100,15 +100,15 @@ function makeMap(serviceDatabase){
     var categoryLayers = {
         "<font color='#a6cee3'>Abuse Counseling & Support</font>": geoJsonLayers.abuseSupport,
         "<font color='#1f78b4'>Residential Substance Abuse Help</font>": geoJsonLayers.residentialAbuseHelp,
-        "<font color='#b2df8a'>Outpatient Substance Abuse Treatment & Support</font>": geoJsonLayers.outpatientAbuseHelp,
+        "<font color='#003300'>Outpatient Substance Abuse Treatment & Support</font>": geoJsonLayers.outpatientAbuseHelp,
         "<font color='#33a02c'>Emergency Shelters</font>": geoJsonLayers.emergencyShelters,
         "<font color='#fb9a99'>Indigent Healthcare</font>": geoJsonLayers.indigentHealthcare,
         "<font color='#e31a1c'>Mental Health Assessment/Counseling/Support Groups</font>": geoJsonLayers.mentalHealth,
         "<font color='#fdbf6f'>Clothing, Food, Housing, Finance Aid</font>": geoJsonLayers.clothfoodhousing,
         "<font color='#ff7f00'>Pregnancy and Parenting</font>": geoJsonLayers.pregnancy,
-        "<font color='#cab2d6'>Education</font>": geoJsonLayers.education,
+        "<font color='#5C5C3D'>Education</font>": geoJsonLayers.education,
         "<font color='#6a3d9a'>Childcare</font>": geoJsonLayers.childcare,
-        "<font color='#ffff99'>Employment</font>": geoJsonLayers.employment,
+        "<font color='#1F1F14'>Employment</font>": geoJsonLayers.employment,
         "<font color='#b15928'>Additional Resources</font>": geoJsonLayers.addtlResources
 
     }  
