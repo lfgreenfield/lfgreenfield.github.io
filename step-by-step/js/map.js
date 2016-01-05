@@ -23,6 +23,7 @@ sql.execute("SELECT * FROM servicedatabase").done(function(geojson) {
 });
 
 function makeMap(serviceDatabase){
+    
 
     new L.Control.GeoSearch({
         provider: new L.GeoSearch.Provider.Esri(),
@@ -96,6 +97,8 @@ function makeMap(serviceDatabase){
       }).addTo(map); 
 
     }
+    
+    console.log(serviceDatabase);
 
     var categoryLayers = {
         "<font color='#a6cee3'>Abuse Counseling & Support</font>": geoJsonLayers.abuseSupport,
