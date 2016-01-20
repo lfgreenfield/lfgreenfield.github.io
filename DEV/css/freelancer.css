@@ -110,7 +110,7 @@ header .intro-text .skills {
 
 @media(min-width:768px) {
     header .container {
-        padding-top: 200px;
+        padding-top: 125px;
         padding-bottom: 50px;
     }
 
@@ -393,7 +393,31 @@ footer .footer-below {
 .scroll-top .btn:focus {
     outline: 0;
 }
-
+.project {
+    width: 90%;
+    min-width: 800px;
+    height: 100%;
+    margin: 5px auto;
+}
+.project-image {
+    width: 388px;
+    height: 240px;
+    background: white;
+    float: left;
+    margin-right: 20px;
+    border: 2px solid #dddddd;
+    box-shadow: 5px 5px 5px #D0D0D0;
+}
+.project:after{
+    content: "";
+    display: table;
+    clear: both; 
+}
+p {
+    margin-right: 50px;
+    margin-left: 50px;
+    font-size: 1em;
+}
 .portfolio-modal .modal-content {
     padding: 100px 0;
     min-height: 100%;
