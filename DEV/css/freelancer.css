@@ -412,7 +412,7 @@ footer .footer-below {
 .project-image-profile {
     width: 300px;
     height: 300px;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 .project:after{
     content: "";
@@ -423,7 +423,13 @@ p {
     margin-right: 50px;
     margin-left: 50px;
     font-size: 1em;
+    padding-top: 5px;
+}
+.p-profile{
+    font-size: 1em;
     padding-top: 20px;
+    text-align: center;
+    margin-left: 10px;
 }
 .portfolio-modal .modal-content {
     padding: 100px 0;
