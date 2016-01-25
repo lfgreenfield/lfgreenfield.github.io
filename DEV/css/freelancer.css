@@ -409,6 +409,11 @@ footer .footer-below {
     border: 2px solid #dddddd;
     box-shadow: 5px 5px 5px #D0D0D0;
 }
+.project-image-profile {
+    width: 300px;
+    height: 300px;
+    margin-left: 5px;
+}
 .project:after{
     content: "";
     display: table;
