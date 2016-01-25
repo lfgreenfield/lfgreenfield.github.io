@@ -397,14 +397,15 @@ footer .footer-below {
     width: 90%;
     min-width: 800px;
     height: 100%;
-    margin: 5px auto;
+    margin: 5px 15px;
+    padding-right: 0px;
 }
 .project-image {
-    width: 388px;
+    width: 400px;
     height: 240px;
     background: white;
     float: left;
-    margin-right: 20px;
+    margin-right: 35px;
     border: 2px solid #dddddd;
     box-shadow: 5px 5px 5px #D0D0D0;
 }
