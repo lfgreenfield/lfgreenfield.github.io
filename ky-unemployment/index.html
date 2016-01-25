@@ -100,22 +100,27 @@
         }
         .info {
             padding: 6px 8px;
-            font-size: 1em;
+            font-size: 1.2em;
             background: rgba(75,75,75,0.8);
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border-radius: 5px;
-            text-align: right; 
+            text-align: left; 
             color: whitesmoke;
-            height: 275px;
+            height: 320px;
+            width: 165px;
         }
         .info h3 {
             margin: 0;   
         }
         .info span {
-            width: 30px;
-            height: 50px;
             float: left;
-            margin-right: 10px;
+            margin-right: 50px;
+        }
+        .leaflet-popup-content-wrapper {
+            background: rgba(75,75,75,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            color: whitesmoke;
+            font-size: 1.2em;
         }
         
     </style>
@@ -375,8 +380,6 @@
         
         // function to update the legend
         function updateLegend(breaks) {
-            
-//            console.log(breaks);
              
             //header for legend
             var legend = $('.legend').html("<h3>" + "% Unemployment: "+ [attribute] +  "</h3><ul>");
