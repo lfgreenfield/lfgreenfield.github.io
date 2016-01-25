@@ -37,6 +37,18 @@
             background: rgba(25,25,25,0.8);
             border-radius: 5px; 
         }
+        h4 {
+            position: absolute;
+            z-index: 100;
+            top: 50px;
+            left: 60px;
+            padding: 8px 15px;
+            margin: 0;
+            color: whitesmoke;
+            font-size: 1.2em;
+            background: rgba(25,25,25,0.8);
+            border-radius: 5px;
+        }
         #map {
             position: absolute;
             width: 100%;
@@ -84,6 +96,8 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border-radius: 5px; 
             color: whitesmoke;
+            margin-bottom: 50px;
+            margin-left: 25px;
         }
         .year-slider {
             width: 100%;
@@ -122,12 +136,16 @@
             color: whitesmoke;
             font-size: 1.2em;
         }
+        .leaflet-popup-tip {
+            background: rgba(75,75,75,0.8);
+        }
         
     </style>
 </head>
 
 <body>
     <h1>Kentucky Unemployment Rates: 2000-2013</h1>
+    <h4>Use the slider tool to examine Kentucky's unemployment rates through the years and watch a timeline update dynamically.</h4>
     
     <div id='map'></div>
     
@@ -145,7 +163,7 @@
         var options = {
             center: [37.6456, -84.7697],
             zoom: 7,
-            dragging: true,
+            dragging: false,
             zoomControl: true
         }
         var map = L.map('map', options);
@@ -258,7 +276,7 @@
                     //setting style for mouseover event
                     layer.setStyle({
                         fillColor: 'yellow',
-                        fillOpacity: 0.6,
+                        fillOpacity: 1,
                         color: 'yellow',
                         weight: 1.5,
                         opacity: 2
