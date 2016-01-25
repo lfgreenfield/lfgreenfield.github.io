@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Module 15 Lab Template</title>
+    <title>KY Unemployment</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
@@ -127,10 +127,6 @@
     <div id='map'></div>
     
     <div id="ui-controls">
-<!--
-        <input type="range" min="2001", max="2013", 
-                value="2001", step="1" class="year-slider"></input>
--->
     
         <label><span class="min">2000</span><span class="max">2013</span>
             <input type="range" min = "2000", max= "2013", 
@@ -144,21 +140,19 @@
         var options = {
             center: [37.6456, -84.7697],
             zoom: 7,
-            dragging: false,
-            zoomControl: false
+            dragging: true,
+            zoomControl: true
         }
         var map = L.map('map', options);
         
         var dataLayer,
              attribute = '2000';
-             
-        
-        // load map tiles and add to map
-         var tiles = L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
-             attribution: '&copy;2012 Esri & Stamen, Data from OSM and Natural Earth',
-             subdomains: '0123',
+                     
+        // load map tiles and add to map        
+         var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png',{ 
              minZoom: 4,
-             maxZoom: 12
+             maxZoom: 12,
+             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a     href="http://cartodb.com/attributions">CartoDB</a>',
          });
         
         map.addLayer(tiles);
@@ -284,14 +278,14 @@
                     });
                 }); 
                  
-                // when mousing over each layer...?
+                // when mousing over each layer
                 layer.on('mouseover', function() {
-                    $(".info").show(); // display the info panel..ISN'T CURRENTLY WORKING
+                    $(".info").show(); // display the info panel
                 });
                 
-//                 when mousing off each layer...?
+//                 when mousing off each layer
                 layer.on('mouseout', function() {
-                    $(".info").hide(); // hide the info panel...ISN'T CURRENTLY WORKING
+                    $(".info").hide(); // hide the info panel
                 });
                  
                  
@@ -325,13 +319,11 @@
                  var value = layer.feature.properties[attribute];
                  
                  //pushing all values into 'value' array
-                 values.push(Number(value)); // push the normalized value for each layer into the Array
-                 
-                
+                 values.push(Number(value)); // push the normalized value for each layer into the Array          
                     
              });
             
-             //setting breaks...MAY BE PROBLEM HERE
+             //setting breaks
              var breaks = ss.jenks(values, 6);
             
                 return breaks; // return Array of class breaks
@@ -440,16 +432,11 @@
                     updateMap();
 
             });
-
-
-
         
         }
         
-        //function to draw the info panel....ISSUES RESIDE HERE
+        //function to draw the info panel
         function drawInfo() {
-            
-            console.log("here");
             
             //creating leafleft control object and positioning top-right
             var info = L.control({position: 'bottomright'});
@@ -470,15 +457,10 @@
             
         }
         
-         //function to insert content into new info div element..ISSUES PROBABLY
+         //function to insert content into new info div element
         function updateInfo(layer) {
             
-            //creating variable to save space and call attributes
-//            var props = layer.feature.properties[attribute];
-            
             var props = layer.feature; 
-            
-//            console.log(props);
             
            //variable containing concatenated string info
             var html = "<h3>"+props.properties['NAME']+" County</h3>"+
