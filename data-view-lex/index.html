@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>(Data)View of Lexington</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.0/simple_statistics.min.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+        .red {
+            color: #cc0000;
+        }
+         .legend {
+            padding: 6px 8px;
+            font-size: 1em;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        .legend h3 {
+            font-size: 1.1em;
+            font-weight: normal;
+            color: #001323;
+            margin: 0 0 10px 0;
+        }
+        .legend span {
+            width: 20px;
+            height: 20px;
+            float: left;
+            margin: 0 10px 4px 0;
+        }
+/*
+        .legend label {
+            font-size: 1.1em;
+        }
+        .legend label:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+*/
+        
+    </style>
+</head>
+
+<body>
+    
+    <div id='map'></div>
+    
+<!--
+    <div id="legend">
+        <h3>Legend</h3>
+        <svg class="legend" width="200" height="200"></svg>
+    </div>
+-->
+
+    <script src ="belowhs2014json.js"></script>
+    <script src ="belowpov2014json.js"></script>
+    <script src ="grapi2013json.js"></script>
+    <script src ="medincome2013.js"></script>
+    <script src ="nonwhite2010json.js"></script>
+    <script src ="percenover74_2010.js"></script>
+    <script src ="renteroccupied2010.js"></script>
+    <script src ="unemployed2013.js"></script>
+    
+    <script>
+        
+    L.mapbox.accessToken = 'pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA';
+    
+    var map = L.mapbox.map('map', 'mapbox.streets-satellite', {
+        center: [38.055, -84.483],
+        zoom: 11,
+        minZoom: 6,
+        maxZoom: 15,
+    });
+        
+//    drawLegend();  
+        
+    var belowhs2014 = L.geoJson(belowhs).addTo(map);
+        console.log(belowhs2014);
+        drawMap(belowhs2014, 'BELOWHS');
+
+    var belowpov2014 = L.geoJson(belowpov);
+        drawMap(belowpov2014, 'INT_PERCEN');
+
+    var grapi2013 = L.geoJson(grapi);
+        drawMap(grapi2013, "PercenUnaf");
+
+    var medincome2013 = L.geoJson(medincome);
+        drawMap(medincome2013, "MEDINCOME");
+
+    var nonwhite2010 = L.geoJson(nonwhite);
+        drawMap(nonwhite2010, "INT_PERCEN");
+
+    var over74_2010 = L.geoJson(over74);
+        drawMap(over74_2010, "PrcnOvr75");
+
+    var renteroccupied2010 = L.geoJson(renteroccupied);
+        drawMap(renteroccupied2010, "RntrOcc");
+
+    var unemployed2013 = L.geoJson(unemployed);
+        drawMap(unemployed2013, "UNEM_PERCN");
+        
+        
+    function drawMap(dataLayer, attribute) {
+
+    //            call function getClassBreaks, assign to variable 'breaks'
+            var breaks = getClassBreaks(dataLayer, attribute);
+        
+            dataLayer.eachLayer(function(layer) {
+
+    //                shorthand variable to access properties of data to colorize and build popup
+                var props = layer.feature.properties;
+
+    //                for every layer, colorize by sending its normalization AND breaks (calculated with getClassBreaks) to getColor function
+                var layerStyle = {
+                    fillColor: getColor(props[attribute], breaks),
+                    fillOpacity: 1,
+                    weight: 1,
+                    opacity: 1,
+                    color: 'whitesmoke'
+                }
+                
+                layer.setStyle(layerStyle);
+
+    //                on user mouseover, update info and create focus on specific layer by bringing to front and stylizing yellow border
+                layer.on('mouseover', function() {
+
+                    layer.bringToFront();
+
+                    layer.setStyle ({
+                        color: 'red'
+                    });
+
+                });
+
+    //                on user mouseout, return styles to original settings
+                layer.on('mouseout', function() {
+
+                    layer.setStyle (layerStyle);
+
+                });
+
+//                    NOT WORKING
+                layer.bindPopup(props[attribute]); 
+
+            });
+////
+//            updateLegend(breaks, attribute);
+        }
+    
+    function getClassBreaks(dataLayer, attribute) {
+            
+//            create array 'values'
+            var values = [];
+            
+//            for each layer, create normalized value and push into array 'values'
+            dataLayer.eachLayer(function(layer) {
+                var value = layer.feature.properties[attribute];
+                values.push(value);   
+            }); 
+           
+//            use simple statistics ck means to divide array 'values' into 5 groups/arrays, make 'clusters' which is an array of arrays
+            var clusters = ss.ckmeans(values, 5);
+//            assign highest and lowest value from each of 5 arrays within 'clusters' array to the var 'breaks' 
+            var breaks = clusters.map(function(cluster){
+                return [cluster[0],cluster.pop()];   
+            });
+//            return 'breaks' with highest and lowest values from each of 5 groups to functions where getClassBreaks/'breaks' are called
+            return breaks;
+            
+        }  
+        
+         function getColor(d, breaks) {
+            
+            if(d <= breaks[0][1]) {
+                return '#FFFFB2';
+            } else if(d <= breaks[1][1]) {
+                return '#FECC5C';
+            } else if(d <= breaks[2][1]) {
+                return '#FD8D3C';
+            } else if(d <= breaks[3][1]) {
+                return '#F03B20'
+            } else if(d <= breaks[4][1]) {
+                return '#BD0026'
+            }
+        }
+        
+//       function drawLegend() {
+//            
+//            var legend = L.control({position: 'topleft'});
+//            legend.onAdd = function(map) {
+//                
+//                var div = L.DomUtil.create('div', 'legend');
+//                               
+//                return div;               
+//                    
+//            };
+//            legend.addTo(map);
+//       }   
+//
+//
+//    function updateLegend(breaks, attribute){
+////              selects already created 'legend'; using JQuery, therefore have to use JQuery methods below, too
+//            var legend = $('.legend');
+//            
+////            use jQuery method (.html) to populate legend with name of data attribute
+//            legend.html("<h3>" + attribute + "</h3>"); 
+//                for (var i = 0; i <= breaks.length-1; i++) {
+//                    
+//                    var color = getColor(breaks[i][0], breaks);
+//                    
+//                    legend.append(
+//                        '<span style="background:' + color + '"></span> ' +
+//                        +(breaks[i][0]).toLocaleString() + ' &mdash; ' + 
+//                        (breaks[i][1]).toLocaleString());
+//                } 
+//    
+//   
+//}
+        
+    var controls = {
+        "Percent without High School Degree (over age 25), 2014": belowhs2014, 
+        "Percent Below Poverty, 2014": belowpov2014,
+        "Percent Unaffordable Housing, 2013": grapi2013,
+        "Median Income, 2013": medincome2013,
+        "Percent Non-White, 2010": nonwhite2010,
+        "Percent Over Age 75, 2010": over74_2010,
+        "Percent Renter Occupation, 2010": renteroccupied2010,
+        "Percent Unemployed (over age 25), 2013": unemployed2013           
+    };
+    
+    L.control.layers(null, controls, { collapsed:false }).addTo(map);
+        
+          
+    </script>
+    
+</body>
+
+</html>
