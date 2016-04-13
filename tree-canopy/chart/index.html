@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Chart.js practice</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.0/simple_statistics.min.js"></script>
+    <script src="Chart.js"></script>    
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #myChart {
+            z-index: 10;
+            position: absolute;
+        }
+        #map {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            z-index: 1
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+   
+    </style>
+</head>
+
+<body>
+    
+    <div id='map'></div>
+    <canvas id="myChart" width="400" height="400" style="solid  #000000;"></canvas>
+
+    <script>
+        
+        L.mapbox.accessToken = 'pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA';
+
+        var map = L.mapbox.map('map', 'mapbox.streets-satellite', {
+            center: [38.055, -84.483],
+            zoom: 11,
+            minZoom: 6,
+            maxZoom: 15,
+        });
+
+        
+        var ctx = document.getElementById("myChart").getContext("2d");
+        console.log(ctx);
+        
+        var currentAttribute, 
+            goalAttribute;
+        
+        $.getJSON('https://lfgreenfield.cartodb.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM lexcouncildistricts_merge', 
+                   
+            function(data) {
+            
+                jsonData = L.geoJson(data).addTo(map);
+            
+                console.log(jsonData);
+//            need this to be in order of council districts
+            
+//                console.log(data3);
+            
+                currentData = [];
+            
+                goalData = [];
+            
+                jsonData.eachLayer(function(layer) {
+                    
+                    var currentAttribute = "cdcalcs_carbonstoredsequesttonsannually";
+                    var goalAttribute = "cdcalcs_goalcarbonstoredsequesttonsannually";
+                    
+                    var currentProps = layer.feature.properties[currentAttribute];
+//                        console.log(currentProps);
+                    
+                    var goalProps = layer.feature.properties[goalAttribute];
+                   
+//                    1. get all current data and add to array
+//                    2. get all goal data and add to array
+                    
+                    currentData.push(currentProps);
+//                    currentData.sort(function (a, b) {
+//                        return a - b;
+//                    });
+                    
+                    goalData.push(goalProps);
+//                    goalData.sort(function (a, b) {
+//                        return a - b;
+//                    });
+                 
+                });
+            
+//               console.log(currentData);
+//            
+                var barChartData = {
+    				labels :  ["District 1", "District 2", "District 3", "District 4", "District 5", "District 6", "District 7", "District 8", "District 9", "District 10", "District 11", "District 12"],
+    				datasets : [
+    					{
+    						fillColor: "rgba(220,220,220,0.5)",
+                            strokeColor: "rgba(220,220,220,0.8)",
+                            highlightFill: "rgba(220,220,220,0.75)",
+                            highlightStroke: "rgba(220,220,220,1)",
+    						data : currentData
+    					},
+                        {
+                            fillColor: "rgba(151,187,205,0.5)",
+                            strokeColor: "rgba(151,187,205,0.8)",
+                            highlightFill: "rgba(151,187,205,0.75)",
+                            highlightStroke: "rgba(151,187,205,1)",
+    						data : goalData
+    					}
+    				]
+			}
+                
+                //        
+        var myBarChart = new Chart(ctx).Bar(barChartData);
+    
+            
+        });
+        
+//        function buildChart () {
+//            
+//        }
+//        
+        
+        
+    
+        
+        
+//        var data = {
+//            labels: ["District 1", "District 2", "District 3", "District 4", "District 5", "District 6", "District 7", "District 8", "District 9", "District 10", "District 11", "District 12"],
+//            datasets: [
+//                {
+//                    label: "Current Benefits",
+//                    fillColor: "rgba(220,220,220,0.5)",
+//                    strokeColor: "rgba(220,220,220,0.8)",
+//                    highlightFill: "rgba(220,220,220,0.75)",
+//                    highlightStroke: "rgba(220,220,220,1)",
+//                    data: [65, 59, 80, 81, 56, 55, 40, 90]
+//                },
+//                {
+//                    label: "Goal Benefits",
+//                    fillColor: "rgba(151,187,205,0.5)",
+//                    strokeColor: "rgba(151,187,205,0.8)",
+//                    highlightFill: "rgba(151,187,205,0.75)",
+//                    highlightStroke: "rgba(151,187,205,1)",
+//                    data: [28, 48, 40, 19, 86, 27, 90, 120]
+//                }
+//            ]
+//        };
+//      
+ 
+
+
+
+    </script>
+    
+</body>
+
+</html>
