@@ -239,10 +239,12 @@ function createPopup() {
         layer.on('mouseover', function (e) {
             var props = this.feature.properties,
                 currentVal = props[(allData[currentAttribute].current)],
-                goalVal = props[(allData[currentAttribute].goal)];      
+                goalVal = props[(allData[currentAttribute].goal)]; 
+            var link = $('<a href="http://www.lexingtonky.gov/index.aspx?page=325">Contact</a>').click(function() {
+    alert("test");})[0];
       
             infoWindow.show();
-            infoWindow.html("<b>"+"District "+props.district+"</b><br>"+ description+ "<br>"+ "current value: "+currentVal + "<br>"+ "goal value: "+goalVal);
+            infoWindow.html("<b>"+"District "+props.district+"</b><br>"+ description+ "<br>"+ "current value: "+currentVal + "<br>"+ "goal value: "+goalVal+"<br>"+ link );
             
             $(document).mousemove(function(e){
                 // first offset from the mouse position of the info window
