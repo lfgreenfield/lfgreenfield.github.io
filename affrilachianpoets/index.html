@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>Rooted and Connected</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.0/simple_statistics.min.js"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: whitesmoke;
+            font-family: Lato, sans-serif;
+            color: #0D0000;
+        }
+        header {
+            padding: 6px 10%;
+        }
+        h1 {
+            display: inline-block;
+            margin-right: 20px;
+            color: #001323;
+        }
+        h2 {
+            display: inline-block;
+            color: #001323;
+        }
+        #map {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+        }
+        footer {
+            padding: 6px 10%;
+            width: 80%;
+        }
+        p {
+            font-size: 1em;
+            color: #001323;
+        }
+       .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+            background: white;
+            box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+       }
+        .leaflet-popup-content-wrapper {
+            padding: 1px;
+            text-align: left;
+            border-radius: 12px;
+        }
+     
+        
+    </style>
+</head>
+
+<body>
+    
+    <div id='map'></div>
+    
+<!--    <script src ="belowhs2014json.js"></script>-->
+    
+    <script>
+
+        var map;
+        var targetDiv = 'map';
+        
+        var options = {
+            center: [38.3498,-81.6326],
+            zoom: 6
+        }
+        
+        map = L.map(targetDiv, options);
+//        
+//       var tiles = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+//            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+//            subdomains: 'abcd',
+//            ext: 'png'
+//        });
+        
+        var tiles = L.tileLayer('http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_CorrectedReflectance_Bands367/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
+            attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
+            bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
+            minZoom: 1,
+            maxZoom: 9,
+            format: 'jpg',
+            time: '',
+            tilematrixset: 'GoogleMapsCompatible_Level'
+        });
+
+        map.addLayer(tiles);
+    
+        
+        var icon = L.icon({
+            iconUrl: 'bison.png',
+
+            iconSize:     [50, 50], // size of the icon
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+        
+//        CSV to json: 
+//             $.getJSON("ky-counties.json", function (counties){
+//            
+////            console.log(counties);
+//            
+//            //converting csv to json
+//            Papa.parse('ky-unemployment-data.csv', {
+//                download: true, 
+//                header: true,
+//                complete: function (data) {
+//                    
+////                    console.log(data);
+//                                
+//                    //calling functions processData, passing 'counties' and 'data' to it so they can be joined
+//                    processData(counties, data);
+//                }
+//            });
+//        })
+//        .fail(function() {
+//            //the data file fails to load
+//            console.log("Data failed to load.");
+//        });
+        
+        var data = [
+             {
+                name: "Tanya",
+                properties: {
+                     coordinates: [37.4793, -82.5188],
+                     city: "Philadelphia",
+                     state: "PN",
+                     quote: "quote"
+                    }
+             },
+            {
+                name: "Zadie",
+                properties: {
+                    coordinates: [39.2806, -80.3445],
+                    city: "Clarksburg",
+                    state: "WV",
+                    quote: "quote"
+                    }
+            },
+            {
+                name: "Bianca",
+                properties: {
+                    coordinates: [38.0489,-84.5025],
+                    city: "Lexington",
+                    state: "KY",
+                    quote: "quote"
+                    }
+            }   
+                  
+        ];
+        
+        for(var i = 0; i < data.length; i++){
+            //console.log(cities[i]);
+            //console.log(cities[i].properties.population);
+            
+            var props = data[i].properties;
+                //console.log(props);
+                //console.log(props.state);
+            
+            var name = data[i].name;
+            
+            var popup = buildPopup(name, props.city, props.quote);
+            
+            L.marker(props.coordinates, {icon: icon}).addTo(map)
+                .bindPopup(popup);
+            
+        }
+        
+        function buildPopup(name, city, state){
+            
+           
+            if (state == "KY") {
+                var colorClass = "blue";
+                }
+            else if (state == "PN") {
+                var colorClass = "red";
+            }
+            else if (state == "WV") {
+                var colorClass = "purple";
+            }
+            
+            return "<div class='"+colorClass+"'><b>"+name+"</b><br>"+
+                "<b>Quote</b>: "+props.quote+"<div>";
+                
+        }
+                 
+          
+    </script>
+    
+</body>
+
+</html>
