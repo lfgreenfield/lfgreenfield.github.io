@@ -49,15 +49,12 @@
             font-size: 1em;
             color: #001323;
         }
-       .leaflet-popup-content-wrapper, .leaflet-popup-tip {
-            background: white;
-            box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-       }
         .leaflet-popup-content-wrapper {
             padding: 1px;
             text-align: left;
             border-radius: 12px;
         }
+        
      
         
     </style>
@@ -162,7 +159,8 @@
                      coordinates: [37.4793, -82.5188],
                      city: "Philadelphia",
                      state: "PN",
-                     quote: "quote"
+                     quote: "quote",
+                     photo: "Laura"
                     }
              },
             {
@@ -171,7 +169,8 @@
                     coordinates: [39.2806, -80.3445],
                     city: "Clarksburg",
                     state: "WV",
-                    quote: "quote"
+                    quote: "quote",
+                    photo: "Laura"
                     }
             },
             {
@@ -180,7 +179,8 @@
                     coordinates: [38.0489,-84.5025],
                     city: "Lexington",
                     state: "KY",
-                    quote: "quote"
+                    quote: "quote",
+                    photo: "Laura"
                     }
             }   
                   
@@ -196,30 +196,30 @@
             
             var name = data[i].name;
             
-            var popup = buildPopup(name, props.city, props.quote);
+            var popupContent = "<b>"+name+"</b><br>"+ props.quote+"<br>" + "<figure><img src='1_"+props.photo+".JPG' width=100></figure>";
             
-            L.marker(props.coordinates, {icon: icon}).addTo(map)
-                .bindPopup(popup);
+            L.marker(props.coordinates, {icon: icon}).addTo(map).bindPopup(popupContent);
             
         }
         
-        function buildPopup(name, city, state){
-            
-           
-            if (state == "KY") {
-                var colorClass = "blue";
-                }
-            else if (state == "PN") {
-                var colorClass = "red";
-            }
-            else if (state == "WV") {
-                var colorClass = "purple";
-            }
-            
-            return "<div class='"+colorClass+"'><b>"+name+"</b><br>"+
-                "<b>Quote</b>: "+props.quote+"<div>";
-                
-        }
+        
+//        function buildPopup(name, city, state){
+//            
+//           
+//            if (state == "KY") {
+//                var colorClass = "blue";
+//                }
+//            else if (state == "PN") {
+//                var colorClass = "red";
+//            }
+//            else if (state == "WV") {
+//                var colorClass = "purple";
+//            }
+//            
+//            return "<div class='"+colorClass+"'><b>"+name+"</b><br>"+
+//                "<b>Quote</b>: "+props.quote+"<div>";
+//                
+//        }
                  
           
     </script>
