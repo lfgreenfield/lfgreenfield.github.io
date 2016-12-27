@@ -185,7 +185,7 @@
             }   
                   
         ];
-        
+        console.log(data);
         for(var i = 0; i < data.length; i++){
             //console.log(cities[i]);
             //console.log(cities[i].properties.population);
@@ -195,16 +195,22 @@
                 //console.log(props.state);
             
             var name = data[i].name;
-            
+//            
             var popupContent = "<b>"+name+"</b><br>"+ props.quote+"<br>" + "<figure><img src='1_"+props.photo+".JPG' width=100></figure>";
+            
+//            var popupContent = buildPopup(name, props.city, props.quote, props.photo);
             
             L.marker(props.coordinates, {icon: icon}).addTo(map).bindPopup(popupContent);
             
         }
         
-        
-//        function buildPopup(name, city, state){
+//        
+//        function buildPopup(name, city, quote, photo){
 //            
+//            layer.on('mouseover', function() {
+//                
+//                return "<b>"+name+"</b><br>"+ props.quote+"<br>" + "<figure><img src='1_"+props.photo+".JPG' width=100></figure>";
+            
 //           
 //            if (state == "KY") {
 //                var colorClass = "blue";
@@ -218,8 +224,8 @@
 //            
 //            return "<div class='"+colorClass+"'><b>"+name+"</b><br>"+
 //                "<b>Quote</b>: "+props.quote+"<div>";
-//                
-//        }
+                
+//                })
                  
           
     </script>
