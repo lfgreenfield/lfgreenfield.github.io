@@ -22,9 +22,11 @@
         body {
             margin: 0;
             padding: 0;
+/*
             background: whitesmoke;
             font-family: Lato, sans-serif;
             color: #0D0000;
+*/
         }
         #map {
             position: absolute;
@@ -49,22 +51,11 @@
         }
         .leaflet-popup-tip {
             background: rgba(75,75,75,0.8);
-        }
-/*
-        .leaflet-container h1{
-            font-family: 'Rock Salt', cursive;
-            font-size: 1em;
-        }
-        .leaflet-container p{
-            font-family: 'Lato', san-serif;
-            font-size: 1em;
-        }
-*/
-*/
-        
+        }  
      
         
     </style>
+    
 </head>
 
 <body>
@@ -172,7 +163,7 @@
        
         function drawMap(data){
             
-            console.log(data);
+//            console.log(data);       
     
             
             for (i = 0; i < 3; i++) {
@@ -181,16 +172,14 @@
                 
                 var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].quote+"<br></p>") + "<figure><img src='1_"+data.data[i].photo+".JPG' width=100></figure>";
                 
-                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
+                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
 
                 
             }
-        }
-
             
+        }           
     
         
-
           
     </script>
     
