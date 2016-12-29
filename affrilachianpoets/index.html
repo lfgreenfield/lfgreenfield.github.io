@@ -86,7 +86,7 @@
 //        });
 
 //      ** NASA water reflecting bands **  
-        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_Bands721/default/2014-04-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_Bands721/default/2014-04-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
         
 //     ** NASA cloud optical thicknesss**         
 //        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Cloud_Optical_Thickness/default/2014-12-24/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
@@ -98,7 +98,7 @@
 //        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_SurfaceReflectance_Bands121/default/2014-01-01/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
         
 //      ** NASA brightness temp - day**         
-//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Brightness_Temp_Band31_Day/default/2016-12-01/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
+        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Brightness_Temp_Band31_Day/default/2016-12-01/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
 //        
 //      ** NASA brightness temp - night**         
 //        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Brightness_Temp_Band31_Night/default/2016-12-01/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
@@ -172,7 +172,7 @@
                 
 //                console.log("here");
                 
-                var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].quote+"<br></p>") + "<figure><img src='1_"+data.data[i].photo+".jpg' width=100></figure>";
+                var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].city+", "+data.data[i].state+"<br>"+data.data[i].quote+"<br></p>") + "<figure><img src='1_"+data.data[i].photo+".jpg' width=100></figure>";
                 
                 L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
 
