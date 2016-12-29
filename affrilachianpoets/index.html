@@ -71,7 +71,9 @@
         
         var options = {
             center: [38.3498,-81.6326],
-            zoom: 6
+            zoom: 6,
+            maxZoom: 7,
+            minZoom: 5
         }
         
         map = L.map(targetDiv, options);
@@ -84,7 +86,7 @@
 //        });
 
 //      ** NASA water reflecting bands **  
-//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_Bands721/default/2014-04-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
+        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_Bands721/default/2014-04-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
         
 //     ** NASA cloud optical thicknesss**         
 //        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Cloud_Optical_Thickness/default/2014-12-24/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
@@ -99,7 +101,7 @@
 //        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Brightness_Temp_Band31_Day/default/2016-12-01/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
 //        
 //      ** NASA brightness temp - night**         
-        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Brightness_Temp_Band31_Night/default/2016-12-01/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Brightness_Temp_Band31_Night/default/2016-12-01/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
         
         
 //      ** NASA cloud top pressure**         
