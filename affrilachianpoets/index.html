@@ -10,9 +10,12 @@
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.0/simple_statistics.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.0/papaparse.min.js"></script>
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet"> 
     
 
     <style>
@@ -23,37 +26,41 @@
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
-        header {
-            padding: 6px 10%;
-        }
-        h1 {
-            display: inline-block;
-            margin-right: 20px;
-            color: #001323;
-        }
-        h2 {
-            display: inline-block;
-            color: #001323;
-        }
         #map {
             position: absolute;
             width: 100%;
             top: 0;
             bottom: 0;
         }
-        footer {
-            padding: 6px 10%;
-            width: 80%;
+        h1 {
+            font-family: 'Rock Salt', cursive;
+            font-size: 1.5em;
+            padding: 0;
         }
         p {
+            font-family: 'Lato', sans-serif;
             font-size: 1em;
-            color: #001323;
         }
         .leaflet-popup-content-wrapper {
-            padding: 1px;
-            text-align: left;
-            border-radius: 12px;
+            background: rgba(75,75,75,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            color: whitesmoke;
+            font-size: 1.2em;
         }
+        .leaflet-popup-tip {
+            background: rgba(75,75,75,0.8);
+        }
+/*
+        .leaflet-container h1{
+            font-family: 'Rock Salt', cursive;
+            font-size: 1em;
+        }
+        .leaflet-container p{
+            font-family: 'Lato', san-serif;
+            font-size: 1em;
+        }
+*/
+*/
         
      
         
@@ -77,36 +84,55 @@
         }
         
         map = L.map(targetDiv, options);
-//        
+        
+//       ** STAMEN watercolor ** 
 //       var tiles = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
 //            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 //            subdomains: 'abcd',
 //            ext: 'png'
 //        });
-        
-//    var tiles = L.tileLayer('http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_CorrectedReflectance_TrueColor/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
-//            attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
-//            bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
-//            minZoom: 1,
-//            maxZoom: 9,
-//            format: 'jpg',
-//            time: '',
-//            tilematrixset: 'GoogleMapsCompatible_Level'
-//        });
-   
-//        var tiles = L.tileLayer('http://map1.vis.earthdata.nasa.gov/wmts-webmerc/MODIS_Terra_CorrectedReflectance_Bands367/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
-//            attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
-//            bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
-//            minZoom: 1,
-//            maxZoom: 9,
-//            format: 'jpg',
-//            time: '',
-//            tilematrixset: 'GoogleMapsCompatible_Level'
-//        });
 
-//          var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_Bands721/default/2014-04-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
+//      ** NASA water reflecting bands **  
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_Bands721/default/2014-04-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
         
-    var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Cloud_Optical_Thickness/default/2016-12-24/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
+//     ** NASA cloud optical thicknesss**         
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Cloud_Optical_Thickness/default/2014-12-24/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
+//        
+//      ** NASA surface reflectance (true color)**         
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_SurfaceReflectance_Bands143/default/2014-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg');
+        
+//      ** NASA surface reflectance (bands 121)**         
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_SurfaceReflectance_Bands121/default/2014-01-01/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
+        
+//      ** NASA brightness temp - day**         
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Brightness_Temp_Band31_Day/default/2016-12-01/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
+//        
+//      ** NASA brightness temp - night**         
+        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Brightness_Temp_Band31_Night/default/2016-12-01/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
+        
+        
+//      ** NASA cloud top pressure**         
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_Cloud_Top_Pressure_Day/default/2015-01-01/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png');
+        
+//      ** NASA soil temp **
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/SMAP_L4_Soil_Temperature_Layer_1/default/2016-12-24/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png');
+        
+//      ** NASA land surface temp - day **
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Land_Surface_Temp_Day/default/2012-12-24/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
+        
+//      ** NASA heterotrophic respiration **
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/SMAP_L4_Mean_Heterotrophic_Respiration/default/2015-12-24/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png');
+        
+//          ** NASA veg light use efficiency **
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/SMAP_L4_Emult_Average/default/2015-06-24/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png');
+        
+//          ** NASA net ecosystem exchange **
+//         var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/SMAP_L4_Mean_Net_Ecosystem_Exchange/default/2015-06-24/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png');
+        
+//          ** NASA root zone soil moisture **
+//         var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/SMAP_L4_Analyzed_Root_Zone_Soil_Moisture/default/2016-10-28/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png');
+        
+    
 
 
         map.addLayer(tiles);
@@ -119,114 +145,52 @@
 //    
         
         var icon = L.icon({
-            iconUrl: 'bison.png',
-
-            iconSize:     [50, 50], // size of the icon
+            iconUrl: 'bison2.png',
+            iconSize:     [60, 60], // size of the icon
             iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
         
-//        CSV to json: 
-//             $.getJSON("ky-counties.json", function (counties){
-//            
-////            console.log(counties);
-//            
-//            //converting csv to json
-//            Papa.parse('ky-unemployment-data.csv', {
-//                download: true, 
-//                header: true,
-//                complete: function (data) {
-//                    
-////                    console.log(data);
-//                                
-//                    //calling functions processData, passing 'counties' and 'data' to it so they can be joined
-//                    processData(counties, data);
-//                }
-//            });
-//        })
-//        .fail(function() {
-//            //the data file fails to load
-//            console.log("Data failed to load.");
-//        });
         
-          
-//        var stateMap = L.geoJson(states).addTo(map);
-        
-        var data = [
-             {
-                name: "Tanya",
-                properties: {
-                     coordinates: [37.4793, -82.5188],
-                     city: "Philadelphia",
-                     state: "PN",
-                     quote: "quote",
-                     photo: "Laura"
-                    }
-             },
-            {
-                name: "Zadie",
-                properties: {
-                    coordinates: [39.2806, -80.3445],
-                    city: "Clarksburg",
-                    state: "WV",
-                    quote: "quote",
-                    photo: "Laura"
-                    }
-            },
-            {
-                name: "Bianca",
-                properties: {
-                    coordinates: [38.0489,-84.5025],
-                    city: "Lexington",
-                    state: "KY",
-                    quote: "quote",
-                    photo: "Laura"
-                    }
-            }   
-                  
-        ];
-        console.log(data);
-        for(var i = 0; i < data.length; i++){
-            //console.log(cities[i]);
-            //console.log(cities[i].properties.population);
-            
-            var props = data[i].properties;
-                //console.log(props);
-                //console.log(props.state);
-            
-            var name = data[i].name;
-//            
-            var popupContent = "<b>"+name+"</b><br>"+ props.quote+"<br>" + "<figure><img src='1_"+props.photo+".JPG' width=100></figure>";
-            
-//            var popupContent = buildPopup(name, props.city, props.quote, props.photo);
-            
-            L.marker(props.coordinates, {icon: icon}).addTo(map).bindPopup(popupContent);
-            
-        }
-        
-//        
-//        function buildPopup(name, city, quote, photo){
-//            
-//            layer.on('mouseover', function() {
-//                
-//                return "<b>"+name+"</b><br>"+ props.quote+"<br>" + "<figure><img src='1_"+props.photo+".JPG' width=100></figure>";
-            
+        getData();
 //           
-//            if (state == "KY") {
-//                var colorClass = "blue";
-//                }
-//            else if (state == "PN") {
-//                var colorClass = "red";
-//            }
-//            else if (state == "WV") {
-//                var colorClass = "purple";
-//            }
-//            
-//            return "<div class='"+colorClass+"'><b>"+name+"</b><br>"+
-//                "<b>Quote</b>: "+props.quote+"<div>";
+        function getData() {
+            
+        //converting csv to json
+            Papa.parse('data.csv', {
+                download: true, 
+                header: true,
+                complete: function (data) {
+                    
+                    console.log(data);
+                    
+                    drawMap(data);         
+
+                }
+            });
+        }
+       
+        function drawMap(data){
+            
+            console.log(data);
+    
+            
+            for (i = 0; i < 3; i++) {
                 
-//                })
-                 
+//                console.log("here");
+                
+                var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].quote+"<br></p>") + "<figure><img src='1_"+data.data[i].photo+".JPG' width=100></figure>";
+                
+                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
+
+                
+            }
+        }
+
+            
+    
+        
+
           
     </script>
     
