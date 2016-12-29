@@ -170,7 +170,7 @@
                 
 //                console.log("here");
                 
-                var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].quote+"<br></p>") + "<figure><img src='1_"+data.data[i].photo+".JPG' width=100></figure>";
+                var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].quote+"<br></p>") + "<figure><img src='1_"+data.data[i].photo+".jpg' width=100></figure>";
                 
                 L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
 
