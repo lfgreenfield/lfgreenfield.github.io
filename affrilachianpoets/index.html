@@ -72,9 +72,17 @@
             zoom: 6,
             maxZoom: 7,
             minZoom: 5
-        }
+        }        
         
         map = L.map(targetDiv, options);
+        
+        //      get and set bounds
+        var bounds = map.getBounds();
+        var southwest = bounds.getSouthWest();
+        var northeast = bounds.getNorthEast();
+        map.setMaxBounds(bounds);
+        
+        
         
 //       ** STAMEN watercolor ** 
 //       var tiles = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
@@ -131,6 +139,7 @@
 
         map.addLayer(tiles);
         
+        
         var countryOutline = L.geoJson(us, {
             fillOpacity: 0,
             weight: 5,
@@ -174,7 +183,7 @@
                 
                 var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].city+", "+data.data[i].state+"<br>"+data.data[i].quote+"<br></p>") + "<figure><img src='1_"+data.data[i].photo+".jpg' width=100></figure>";
                 
-                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
+                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false, keepInView: true}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
 
                 
             }
