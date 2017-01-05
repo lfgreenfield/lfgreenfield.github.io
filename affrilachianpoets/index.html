@@ -13,6 +13,8 @@
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">  
+     
     
 
     <style>
@@ -39,6 +41,10 @@
         p {
             font-family: 'Lato', sans-serif;
             font-size: 1em;
+        }
+        p2 {
+            font-family: 'Nothing You Could Do', cursive;
+            font-size: 1.5em;
         }
         .leaflet-popup-content-wrapper {
             background: rgba(75,75,75,0.8);
@@ -76,11 +82,11 @@
         map = L.map(targetDiv, options);
         
         //      get and set bounds
-        var bounds = map.getBounds();
-        var southwest = bounds.getSouthWest();
-        var northeast = bounds.getNorthEast();
-        map.setMaxBounds(bounds);
-        
+//        var bounds = map.getBounds();
+//        var southwest = bounds.getSouthWest();
+//        var northeast = bounds.getNorthEast();
+//        map.setMaxBounds(bounds);
+//        
         
         
 //       ** STAMEN watercolor ** 
@@ -91,13 +97,13 @@
 //        });
 
 //      ** NASA water reflecting bands **  
-//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_Bands721/default/2014-04-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
+        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_Bands721/default/2014-04-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
 //        
 //     ** NASA cloud optical thicknesss**         
 //        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Cloud_Optical_Thickness/default/2014-12-24/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
 //        
 //      ** NASA surface reflectance (true color)**         
-        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_SurfaceReflectance_Bands143/default/2014-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg');
+//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_SurfaceReflectance_Bands143/default/2014-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg');
         
 //      ** NASA surface reflectance (bands 121)**         
 //        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_SurfaceReflectance_Bands121/default/2014-01-01/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
@@ -120,18 +126,18 @@
         map.addLayer(tiles);
         
         
-        var countryOutline = L.geoJson(us, {
-            fillOpacity: 0,
-            weight: 5,
-            color: 'black'
-        }).addTo(map);
+//        var countryOutline = L.geoJson(us, {
+//            fillOpacity: 0,
+//            weight: 5,
+//            color: 'black'
+//        }).addTo(map);
 //    
         
         var icon = L.icon({
-            iconUrl: 'bison2.png',
+            iconUrl: 'bison.png',
             iconSize:     [60, 60], // size of the icon
             iconAnchor:   [25, 25], // point of the icon which will correspond to marker's location
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            popupAnchor:  [6, -20] // point from which the popup should open relative to the iconAnchor
         });
         
         
@@ -161,7 +167,7 @@
             
             for (i = 0; i < 10; i++) {
                 
-                var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].city+", "+data.data[i].state+"<br>"+data.data[i].quote+"<br></p>") + "<figure><img src='1_"+data.data[i].photo+".jpg' width=100></figure>";
+                var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].city+", "+data.data[i].state+"</p><br>"+"<p2>"+data.data[i].quote+"<br></p2>") + "<figure><img src='1_"+data.data[i].photo+".jpg' width=150></figure>";
                 
                 L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false, keepInView: true}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
 

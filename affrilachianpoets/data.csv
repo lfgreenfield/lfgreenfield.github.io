@@ -1,11 +1,10 @@
-name,city,state,quote,lat,lng,photo
-Frank X Walker,Lexington,Kentucky,,38.0489,-84.5025,Frank
-Dorian Hairston,Lexington,Kentucky,,38.0489,-84.5025,Dorian
-Bianca Spriggs,Lexington,Kentucky,,38.0489,-84.5025,Bianca
-Bill Withers,Stab Fork,West Virginia,,37.6871,-81.3315,Bill
-Booker T Washington,Hale's Ford,Virginia,,37.1196,-79.717,Booker
-Percy Sledge,Shefield,Alabama,,34.7651,-87.6986,Percy
-Bessie Smith,Chattanooga,Tennessee,,35.0456,-85.3097,Bessie
-Nina Simone,Tryon,North Carolina,,35.2082,-82.2384,Nina
-August Wilson,Pittsburgh,Pennsylvania,,40.4406,-79.9959,August
-Jeffrey Reddick,Jackson,Kentucky,,37.5531,-83.3835,Jeffrey
+name,city,state,quote,lat,lng,photo,,,
+Frank X Walker,Lexington,Kentucky,"""unlearn fear and hate""",37.6456,-84.7722,Walker,,,
+Bill Withers,Stab Fork,West Virginia,"""I write and sing about whatever I am able to understand and feel. I feel that it is healthier to look out at the world through a window than through a mirror. Otherwise, all you see is yourself and whatever is behind you""",37.6871,-81.3315,Withers,,,
+Booker T Washington,Hale's Ford,Virginia,"""No race can prosper till it learns that there is as much dignity in tilling a field as in writing a poem""",37.1196,-79.717,Washington,,,
+Percy Sledge,Shefield,Alabama,"""When a man loves a woman, can't keep his mind on nothing else. He'd trade the world for the good thing he's found""",34.7651,-87.6986,Sledge,,,
+Bessie Smith,Chattanooga,Tennessee,"""Listen to my story and everything will come out true""",35.0456,-85.3097,Smith,,,
+Nina Simone,Tryon,North Carolina,"""You can't help it. An artist's duty, as far as I'm concerned, is to reflect the times""",35.2082,-82.2384,Simone,,,
+August Wilson,Pittsburgh,Pennsylvania,"""All you need in the world is love and laughter. That's all anybody needs. To have love in one hand and laughter in the other""",40.4406,-79.9959,Wilson,,,
+Jeffrey Reddick,Jackson,Kentucky,"""We decorate our rooms with our dreams for the future""",37.5531,-83.3835,Reddick,,,
+Crystal Wilkinson,Indian Creek,Kentucky,,38.2074,-84.254,Wilkinson,,,
