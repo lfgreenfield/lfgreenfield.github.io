@@ -88,38 +88,9 @@
 //        map.setMaxBounds(bounds);
 //        
         
-        
-//       ** STAMEN watercolor ** 
-//       var tiles = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-//            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-//            subdomains: 'abcd',
-//            ext: 'png'
-//        });
 
-//      ** NASA water reflecting bands **  
+//      ** basemap: NASA water reflecting bands **  
         var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_Bands721/default/2014-04-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
-//        
-//     ** NASA cloud optical thicknesss**         
-//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Cloud_Optical_Thickness/default/2014-12-24/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
-//        
-//      ** NASA surface reflectance (true color)**         
-//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_SurfaceReflectance_Bands143/default/2014-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg');
-        
-//      ** NASA surface reflectance (bands 121)**         
-//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_SurfaceReflectance_Bands121/default/2014-01-01/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
-        
-//      ** NASA brightness temp - day**         
-//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Brightness_Temp_Band31_Day/default/2016-12-01/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
-//        
-        //      ** NASA shaded relief**         
-//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/BlueMarble_ShadedRelief/default/2016-12-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpg');
-//        
-//      ** NASA brightness temp - night**         
-//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_Brightness_Temp_Band31_Night/default/2016-12-01/GoogleMapsCompatible_Level7/{z}/{y}/{x}.png');
-        
-        
-//      ** NASA cloud top pressure**         
-//        var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_Cloud_Top_Pressure_Day/default/2015-01-01/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png');      
     
 
 
@@ -163,15 +134,15 @@
         function drawMap(data){ 
     
             
-            for (i = 0; i < 10; i++) {
+            for (i = 0; i < 9; i++) {
                 
                 var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].city+", "+data.data[i].state+"</p><br>"+"<p2>"+data.data[i].quote+"<br></p2>") + "<figure><img src='1_"+data.data[i].photo+".jpg' width=150></figure>";
                 
-//              to make hover
+//              to make hover:
                 
                 L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false, keepInView: true}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
 
-//              to make click
+//              to make click:
 //                
 //                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false, keepInView: true}).addTo(map);
                 
