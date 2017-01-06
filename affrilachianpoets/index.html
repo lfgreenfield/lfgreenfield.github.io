@@ -82,13 +82,13 @@
         map = L.map(targetDiv, options);
         
         //      get and set bounds
-//        var bounds = map.getBounds();
-//        var southwest = bounds.getSouthWest();
-//        var northeast = bounds.getNorthEast();
-//        map.setMaxBounds(bounds);
-//        
         
-
+        var southWest = L.latLng(26.076, -111.665),
+            northEast = L.latLng(48.835, -51.635),
+            bounds = L.latLngBounds(southWest, northEast);
+        
+        map.setMaxBounds(bounds);
+        
 //      ** basemap: NASA water reflecting bands **  
         var tiles = L.tileLayer('http://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Aqua_CorrectedReflectance_Bands721/default/2014-04-09/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg');
     
