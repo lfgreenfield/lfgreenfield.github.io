@@ -45,6 +45,11 @@
         p2 {
             font-family: 'Nothing You Could Do', cursive;
             font-size: 1.5em;
+            line-height: 75%;
+            margin: 0px;
+        }
+        .leaflet-popup-content p {
+            margin: 0px 0;
         }
         .leaflet-popup-content-wrapper {
             background: rgba(75,75,75,0.8);
@@ -169,8 +174,13 @@
                 
                 var content = "<b>"+("<h1>"+data.data[i].name+"</b><br></h1>")+ ("<p>"+data.data[i].city+", "+data.data[i].state+"</p><br>"+"<p2>"+data.data[i].quote+"<br></p2>") + "<figure><img src='1_"+data.data[i].photo+".jpg' width=150></figure>";
                 
-                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false, keepInView: true}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
+//              to make hover
+                
+//                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false, keepInView: true}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
 
+//              to make click
+                
+                L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false, keepInView: true}).addTo(map);
                 
             }
             
