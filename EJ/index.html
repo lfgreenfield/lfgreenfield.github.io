@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.0/simple_statistics.min.js"></script>
 
     <style>
         body {
@@ -33,6 +34,7 @@
             top: 0;
             bottom: 0;
         }
+/*
       div.cartodb-layer-selector-box div.cartodb-dropdown ul li a.layer {
             display: inline-block;
             vertical-align: middle;
@@ -46,6 +48,7 @@
             font: 400 13px "Helvetica Neue",Helvetica,Arial;
             text-decoration: none;
 
+*/
 
         }
          h1 {
@@ -61,6 +64,7 @@
             border-radius: 0; 
             font-weight: normal;
         }
+/*
         div.cartodb-searchbox {
             position: relative;
             display: none;
@@ -76,6 +80,8 @@
             border: 1px solid #999;
             z-index: 105;
         }
+       
+*/
     
 
         
@@ -88,23 +94,222 @@
         <h1>Environmental Justice Analysis<br><p class = 'small'>Data source: Lexington PVA and VPRC<br>Click on each red vacant property for more info and a photo</p></h1>
         
 </header>
+    
+    
     <div id='map'></div>
 
+        
+    
+
+<script src ="county.js"></script>
+<script src ="pov_county.js"></script>
+<script src ="minority_county.js"></script>
+
     <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+
+    
     
     <script>
         
+          
+        
         var options = {
             center: [37.6456, -84.7697],
-            zoom: 8,
-            dragging: false,
-            zoomControl: false
+            zoom: 7,
+            dragging: true,
+            zoomControl: true
         }
         var map = L.map('map', options);
+////        
+        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+	       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a       href="http://cartodb.com/attributions">CartoDB</a>',
+	       subdomains: 'abcd'
+        });
+        map.addLayer(tiles);
+        
+    // get county layer and send to drawCountyMap
+        var countyLayer = L.geoJson(county);
+        drawCountyMap(countyLayer);
+        
+    // draw county map, add pop up, etc.    
+      function drawCountyMap(countyLayer){
+            countyLayer.eachLayer(function(layer){
+                layer.setStyle({
+                    opacity: 1,
+                    fillOpacity: 0,
+                    stroke: 1
+                })
+                layer.on('mouseover', function() {
+                    layer.bringToFront();
+                    layer.setStyle ({
+                        color: 'red'
+                    });
+                });
+                
+                // make pop-up
+                var content = layer.feature.properties["NAME"];
+                layer.bindPopup(content);
+
+            })
+    
+            
+            countyLayer.addTo(map);
+          
+        } 
+
+            
+      // bring in Cumulative Pollution layer
+        var sql = new cartodb.SQL({ user: 'lfgreenfield', format: 'geojson' });
+
+        sql.execute("SELECT * FROM cumulativepollution").done(function(geojson) {
+
+            var pollution = L.geoJson(geojson);
+
+            pollution.eachLayer(function(layer){
+
+                layer.setStyle({
+
+                    fillColor: getGridColor(layer.feature.properties.gridcode),
+                    opacity: 0,
+                    fillOpacity: 1
+
+                });
+            })
+
+            pollution.addTo(map);
+            
+            var pollutionControl = {"Cumulative Pollution": pollution}
+            
+            L.control.layers(null, pollutionControl, { collapsed:false }).addTo(map);
+
+        })
+
+        
+    // get pov and minor layers and send to drawMap        
+        var minorityLayer = L.geoJson(percentMinority);
+        drawMap(minorityLayer, "Minority");
+        console.log(minorityLayer);
+        
+        var povertyLayer = L.geoJson(percentPoverty);
+        drawMap(povertyLayer, "Poverty");
+        
+    // add power plant data!!!!!!!!!!!!!!!!
+          
+
+    //function drawMap to colorize pov and minor and add to map        
+        function drawMap(dataLayer, attribute){
+            
+            var breaks = getClassBreaks(dataLayer, attribute);
+            console.log(breaks);
+            
+            dataLayer.eachLayer(function(layer){
+                
+                var props = layer.feature.properties;
+                
+                layer.setStyle({
+                    fillColor: getColor(props[attribute], breaks),
+                    opacity: 0,
+                    fillOpacity: 1
+                })
+            })
+                            
+                   
+            dataLayer.addTo(map);
+            
+        }
         
         
-        cartodb.createVis('map', 'https://lfgreenfield.carto.com/api/v2/viz/e70c84a0-fe0a-11e6-81cd-0e05a8b3e3d7/viz.json');
+        function getGridColor (gridcode) {
+             
+                if(gridcode == 1) {
+                    return '#006837';
+                } else if(gridcode == 2) {
+                    return '#1a9850';
+                } else if(gridcode == 3) {
+                    return '#66bd63';
+                } else if(gridcode == 4) {
+                    return '#a6d96a'
+                } else if(gridcode == 5) {
+                    return '#d9ef8b'
+                } else if(gridcode == 6) {
+                    return '#fee08b'
+                } else if(gridcode == 7) {
+                    return '#fdae61'
+                }  else if(gridcode == 8) {
+                    return '#f46d43'
+                }  else if(gridcode == 9) {
+                    return '#d73027'
+                }  else if(gridcode == 10) {
+                    return '#a50026'
+                }
+            
+        }
         
+        function getClassBreaks(dataLayer, attribute) {
+            
+            //  create array 'values'
+            var values = [];
+            
+            // for each layer, create normalized value and push into array 'values'
+            dataLayer.eachLayer(function(layer) {
+                var value = layer.feature.properties[attribute];
+                values.push(value);   
+            }); 
+           
+            // use simple statistics ck means to divide array 'values' into 5 groups/arrays, make 'clusters' which is an array of arrays
+            var clusters = ss.ckmeans(values, 10);
+            // assign highest and lowest value from each of 10 arrays within 'clusters' array to the var 'breaks' 
+            var breaks = clusters.map(function(cluster){
+                return [cluster[0],cluster.pop()];   
+            });
+            // return 'breaks' with highest and lowest values from each of 10 groups to functions where getClassBreaks/'breaks' are called
+            return breaks;
+            
+        }  
+        
+        // send d (attribute) and breaks
+         function getColor(d, breaks) {
+            
+            if(d <= breaks[0][1]) {
+                return '#006837';
+            } else if(d <= breaks[1][1]) {
+                return '#1a9850';
+            } else if(d <= breaks[2][1]) {
+                return '#66bd63';
+            } else if(d <= breaks[3][1]) {
+                return '#a6d96a'
+            } else if(d <= breaks[4][1]) {
+                return '#d9ef8b'
+            }
+             else if(d <= breaks[5][1]) {
+                return '#BD0026'
+            }
+             else if(d <= breaks[6][1]) {
+                return '#fdae61'
+            }
+               else if(d <= breaks[7][1]) {
+                return '#f46d43'
+            }
+               else if(d <= breaks[8][1]) {
+                return '#BD0026'
+            }
+               else if(d <= breaks[9][1]) {
+                return '#d73027'
+            }
+               else if(d <= breaks[10][1]) {
+                return '#a50026'
+            }
+         }        
+        
+        var controls = {
+            "Minority": minorityLayer, 
+            "Poverty": povertyLayer
+
+        };
+    
+        L.control.layers(null, controls, { collapsed:false }).addTo(map);
+       
+       
      
         
 
