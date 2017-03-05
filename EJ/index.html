@@ -4,18 +4,18 @@
 <head>
     <meta charset=utf-8 />
     <title>KFTC</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
-
-    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />    
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-   
+    <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.0/simple_statistics.min.js"></script>
+    <script src="l.control.geosearch.js"></script>
+    <script src="l.geosearch.provider.esri.js"></script>
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-statistics/1.0.0/simple_statistics.min.js"></script>
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    
+  
 
     <style>
         body {
@@ -33,85 +33,36 @@
             width: 100%;
             top: 0;
             bottom: 0;
-        }
-/*
-      div.cartodb-layer-selector-box div.cartodb-dropdown ul li a.layer {
-            display: inline-block;
-            vertical-align: middle;
-            width: 104px;
-            padding: 13px 13px 15px;
-            zoom: 1;
-          text-overflow: inherit;
-          overflow: visible;
-          white-space: normal;
-            color: #666;
-            font: 400 13px "Helvetica Neue",Helvetica,Arial;
-            text-decoration: none;
-
-*/
-
-        }
-         h1 {
+        },
+        h1 {
             position: absolute;
-            z-index: 100;
+            z-index: 99;
             top: 10px;
             left: 60px;
             padding: 8px 15px;
             margin: 0;
             color: whitesmoke;
-            font-size: 1.3em;
+            font-size: 1em;
             background: rgba(25,25,25,0.8);
             border-radius: 0; 
             font-weight: normal;
-        }
-/*
-        div.cartodb-searchbox {
-            position: relative;
-            display: none;
-            float: right;
-            margin: 20px 20px 0 0;
-            width: 142px;
-            height: 29px;
-           box-shadow: rgba(0,0,0,.2) 0 0 4px 2px;
-     
-            background: #fff;
-           border-radius: 4px;
-        
-            border: 1px solid #999;
-            z-index: 105;
-        }
-       
-*/
-    
-
-        
+         }
+  
     </style>
+    
 </head>
 
-<body>
-      <header>
-
-        <h1>Environmental Justice Analysis<br><p class = 'small'>Data source: Lexington PVA and VPRC<br>Click on each red vacant property for more info and a photo</p></h1>
-        
-</header>
+<body>  
     
     
     <div id='map'></div>
+ 
+    <script src="powerplants.js"></script>
+    <script src="county_data.js"></script>
+
 
         
-    
-
-<script src ="county.js"></script>
-<script src ="pov_county.js"></script>
-<script src ="minority_county.js"></script>
-
-    <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
-
-    
-    
-    <script>
-        
-          
+<script> 
         
         var options = {
             center: [37.6456, -84.7697],
@@ -120,49 +71,32 @@
             zoomControl: true
         }
         var map = L.map('map', options);
-////        
-        var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-	       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a       href="http://cartodb.com/attributions">CartoDB</a>',
-	       subdomains: 'abcd'
+       
+        var tiles =  L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
         });
-        map.addLayer(tiles);
-        
-    // get county layer and send to drawCountyMap
-        var countyLayer = L.geoJson(county);
-        drawCountyMap(countyLayer);
-        
-    // draw county map, add pop up, etc.    
-      function drawCountyMap(countyLayer){
-            countyLayer.eachLayer(function(layer){
-                layer.setStyle({
-                    opacity: 1,
-                    fillOpacity: 0,
-                    stroke: 1
-                })
-                layer.on('mouseover', function() {
-                    layer.bringToFront();
-                    layer.setStyle ({
-                        color: 'red'
-                    });
-                });
-                
-                // make pop-up
-                var content = layer.feature.properties["NAME"];
-                layer.bindPopup(content);
-
-            })
     
-            
-            countyLayer.addTo(map);
-          
-        } 
-
-            
-      // bring in Cumulative Pollution layer
+        map.addLayer(tiles);  
+    
+        // add search box    
+        new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Esri(),
+            position: 'topright',
+            zoomLevel: 10,
+            showMarker: true,
+            showPopup: false,
+            marker: {
+                draggable: false
+            }
+        }).addTo(map);
+    
+                    
+      // load, symbolize, add Cumulative Pollution layer
         var sql = new cartodb.SQL({ user: 'lfgreenfield', format: 'geojson' });
 
         sql.execute("SELECT * FROM cumulativepollution").done(function(geojson) {
 
+            // get pollution data
             var pollution = L.geoJson(geojson);
 
             pollution.eachLayer(function(layer){
@@ -178,29 +112,102 @@
 
             pollution.addTo(map);
             
-            var pollutionControl = {"Cumulative Pollution": pollution}
-            
+             var pollutionControl = {"Cumulative Pollution": pollution}
+//            
             L.control.layers(null, pollutionControl, { collapsed:false }).addTo(map);
 
         })
-
         
+        //load, symbolize, make county data (percents and boundaries) stay on top        
+        sql.execute("SELECT * FROM pov_percencounty").done(function(geojson){
+            
+            var county_data = L.geoJson(geojson);
+            
+            county_data.eachLayer(function(layer){
+             layer.setStyle({
+                    opacity: 1,
+                    fillOpacity: 0,
+                    weight: 0.8
+                })
+                layer.on('mouseover', function() {
+                    layer.setStyle({
+                        color: 'black',
+                        weight: 2
+                    });
+                    layer.bringToFront();
+                    
+                })
+                layer.on('mouseout', function(){
+                    layer.setStyle({color: 'blue', weight: 0.8})
+                });
+                
+                var props = layer.feature.properties;
+                
+                var content = layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
+                layer.bindPopup(content);
+
+            })
+                
+            county_data.addTo(map);
+            
+                      
+            map.on("overlayadd", function (event) {
+                county_data.bringToFront();
+            });
+      
+        })
+ 
+   
     // get pov and minor layers and send to drawMap        
-        var minorityLayer = L.geoJson(percentMinority);
-        drawMap(minorityLayer, "Minority");
+        var minorityLayer = L.geoJson(county_percents);
+        drawMap(minorityLayer, "PctMinor");
         console.log(minorityLayer);
         
-        var povertyLayer = L.geoJson(percentPoverty);
-        drawMap(povertyLayer, "Poverty");
-        
-    // add power plant data!!!!!!!!!!!!!!!!
+        var povertyLayer = L.geoJson(county_percents);
+        drawMap(povertyLayer, "PctPov");
+    
+        makeLayerSelector(minorityLayer, povertyLayer);
+    
+    
+        function makeLayerSelector(minorityLayer, povertyLayer){
+            
+            //first get powerPlantLayer
+            var powerPlantLayer = L.geoJson(powerPlants, {
+
+                pointToLayer: function(feature){
+                    var latlng = L.latLng(feature.properties.Latitude, feature.properties.Longitude);
+                    var icon = L.icon({
+                        iconUrl: 'powerplant.png',
+                        iconSize:     [25, 25], // size of the icon
+                        iconAnchor:   [12,12], // point of the icon which will correspond to marker's location
+                        popupAnchor:  [6, -20] // point from which the popup should open relative to the iconAnchor
+                    });
+
+                    return L.marker(latlng, {icon:icon});
+                }
+
+             }).addTo(map);
+            
+                   
+            // make selector
+                var controls = {
+                    "Poverty": povertyLayer, 
+                    "Minority": minorityLayer,
+                    "Power Plants": powerPlantLayer
+
+                };
+
+                L.control.layers(null, controls, { collapsed:false }).addTo(map);
+
+        }
+
           
 
     //function drawMap to colorize pov and minor and add to map        
         function drawMap(dataLayer, attribute){
             
             var breaks = getClassBreaks(dataLayer, attribute);
-            console.log(breaks);
+//            console.log(breaks);
             
             dataLayer.eachLayer(function(layer){
                 
@@ -212,12 +219,13 @@
                     fillOpacity: 1
                 })
             })
+            
+            //not adding to map bc not automatically selected in layer control!
                             
-                   
-            dataLayer.addTo(map);
+//            dataLayer.addTo(map);
             
         }
-        
+            
         
         function getGridColor (gridcode) {
              
@@ -300,16 +308,10 @@
                 return '#a50026'
             }
          }        
-        
-        var controls = {
-            "Minority": minorityLayer, 
-            "Poverty": povertyLayer
-
-        };
+ 
+  
     
-        L.control.layers(null, controls, { collapsed:false }).addTo(map);
-       
-       
+    
      
         
 
