@@ -79,6 +79,7 @@
             font-family: Lato, sans-serif;
             font-size: 1em;
         }
+/*
           .legend {
             padding: 6px 8px;
             font-size: 1em;
@@ -88,6 +89,8 @@
             border-radius: 5px;
             width: 160px;
         }
+*/
+/*
         .legend h3 {
             font-size: 1.1em;
             font-weight: bold;
@@ -105,7 +108,28 @@
             float: left;
             margin-right: 10px;
         }
-  
+*/
+/*
+         .info {
+            padding: 6px 8px;
+            font-size: 1.2em;
+            background: rgba(75,75,75,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            text-align: left; 
+            color: whitesmoke;
+            height: 320px;
+            width: 165px;
+        }
+        .info h3 {
+            margin: 0;   
+        }
+        .info span {
+            float: left;
+            margin-right: 50px;
+        }
+*/
+
     </style>
     
 </head>
@@ -153,6 +177,8 @@
                 draggable: false
             }
         }).addTo(map);
+    
+     
 
 //    
 //        L.Control.Watermark = L.Control.extend({
@@ -201,6 +227,8 @@
              var pollutionControl = {"Cumulative Pollution": pollution}
 //            
             L.control.layers(null, pollutionControl, { collapsed:false }).addTo(map);
+            
+            drawInfo();
 
 
         })
@@ -224,12 +252,14 @@
                     layer.bringToFront();
                     
                     var props = layer.feature.properties;
-                
-                    var content = layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
-                    layer.bindPopup(content,{
-                    });
                     
-                    layer.openPopup();
+                    
+                //TO MAKE HOVER:
+//                    var content = layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
+//                    layer.bindPopup(content,{
+//                    });
+//                    
+//                    layer.openPopup();
                     
                 })
                 layer.on('mouseout', function(){
@@ -237,20 +267,19 @@
 //                    layer.closePopup();
                 });
                 
-//                var props = layer.feature.properties;
-//                
-//                var content = layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
-//                layer.bindPopup(content);
+                var props = layer.feature.properties;
+                
+                var content = layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
+                layer.bindPopup(content);
 
             })
                 
-            county_data.addTo(map);
-            
-//            L.marker([data.data[i].lat,data.data[i].lng], {icon:icon}).bindPopup(content, {closeButton: false, keepInView: true}).on('mouseover',function(e){this.openPopup()}).on('mouseout', function(e){this.closePopup()}).addTo(map);
-            
+            county_data.addTo(map);            
                       
             map.on("overlayadd", function (event) {
                 county_data.bringToFront();
+                
+            
             });
       
         })
@@ -298,39 +327,12 @@
                 };
 
                 L.control.layers(null, controls, { collapsed:false }).addTo(map);
-            
-            map.on('layerchange', function(){
-                console.log("we changed");
-            })
-            
+            map.on("baselayerchange", function(event){
+                console.log("change");
+            });
 
         }
-//    map.on('baselayerchange', function (eventLayer) {
-//    if (eventLayer.name === 'Poverty') {
-//        console.log('now we are looking at poverty');
-////        map.removeControl(currentLegend );
-////        currentLegend = SGlegend;
-////        SGlegend.addTo(map);
-//    }
-//    else if  (eventLayer.name === 'Minority') {
-//        console.log('now we are looking at MINORITY');
-////        map.removeControl(currentLegend );
-////        currentLegend = BUDlegend;
-////        BUDlegend.addTo(map);
-////    }
-////    else if  (eventLayer.name === 'Forest') {
-////       map.removeControl(currentLegend );
-////        currentLegend = LISlegend;
-////        LISlegend.addTo(map);
-////    }
-////    else if  (eventLayer.name === 'Water') {
-////       map.removeControl(currentLegend );
-////        currentLegend = VODlegend;
-////       VODlegend.addTo(map);
-////    }
-//  
-//    }
-//    })
+
           
 
     //function drawMap to colorize pov and minor and add to map        
@@ -458,9 +460,26 @@
 //        }
 //  
 //  
+       function drawInfo() {
+            
+            //creating leafleft control object and positioning top-right
+            var info = L.control({position: 'bottomright'});
+            
+            //actions for when info panel is added to map
+            info.onAdd = function(map) {
+                
+                //creating new div element
+                var div = L.DomUtil.create('div', 'info');
+                
+                    return div;    
+            }
+            
+            info.addTo(map);
+//            $(".info").hide();  
+            
+        }
     
-    
-     
+
         
 
     </script>
