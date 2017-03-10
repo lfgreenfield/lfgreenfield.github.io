@@ -145,6 +145,35 @@
             top: 60%;
             left: 10%;
         }
+        .why-this-matters {
+            position: absolute;
+            bottom: 22px;
+            right: 24%;
+            z-index: 99;
+            font-size: 1.3em;
+            box-shadow: 0 1px 5px rgba(53,112,54,.65);
+            background: rgba(53,112,54,.80);
+        }
+        .meaning {
+            width: 60%;
+        /*    min-height: 450px;*/
+            background: rgb(193,205,193);
+            position: absolute;
+            z-index: 800;
+            left: 18%;
+            top: 40px;
+            padding: 20px 2%;
+            display: none;
+         }
+        .close-meaning {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            color: rgb(49,79,79);
+        }
+        .meaning p {
+           rgb(49,79,79);
+        }
 
 
 
@@ -161,6 +190,18 @@
     
     
     <div id='map'></div>
+     <div class='meaning'>
+        <div class='close-meaning'>close</div>
+        <p><b>Why do trees and urban tree canopy matter?</b> Great question. And one with an incredible list of answers. Lexington’s Urban County Government (LFUCG) had an assessment completed in 2015: <a href="http://www.lexingtonky.gov/index.aspx?page=3412" target="_blank">The Urban Tree Canopy (UTC) Analysis</a>. In this study, Lexington’s current tree canopy (25%, totaling about 13,000 acres) and potential tree canopy were calculated, in addition to the benefits, called ecosystem services, which our city’s trees give us. </p>
+<p>The value of trees is phenomenal. Not only do they remove pollutants from the air, store carbon dioxide, reduce water pollution, and increase property values, they provide these benefits all at the same time and, as they grow and flourish, their value increases over time. Combined with acres and acres of other trees, they become a tool to manage environmental, health, social, and economic sustainability goals. Together, they create an urban forest which contributes to the beauty and character of Lexington and enhances the overall quality of the built environment.</p> 
+<p>So what do we do? We can <b>educate</b> about the real benefits of tree canopy in Lexington. We can <b>motivate</b> to help LFUCG with their 30% canopy goal, which is just an increase of 3,000 more acres of trees. We can share this map and the story that trees are doing real work to improve Lexington. And, of course, we can <b>plant more trees!</b></p>
+<p>Read the UTC report <a href="http://www.lexingtonky.gov/index.aspx?page=3412" target="_blank">here</a></p>
+<p>Read more about LFUCG’s urban forest efforts <a href="http://www.lexingtonky.gov/Modules/ShowDocument.aspx?documentid=26521" target="_blank">here</a></p>
+<p>Contact your district's Council member <a href="http://www.lexingtonky.gov/index.aspx?page=325" target="_blank">here</a></p>
+<p>Cartography: Laura Greenfield (lauragreenfield0@gmail.com), 2016</p>
+    </div>
+    <button class='why-this-matters'>why this matters</button>
+<div class='cover-all'></div>
     
     </div>
  
@@ -197,6 +238,17 @@
         }).addTo(map);
     
         var searchbox = $('.leaflet-control-geosearch').detach().removeClass('leaflet-control').appendTo('header');
+    
+        $('.meaning').appendTo('header');
+        $('.why-this-matters').on('click', function() {
+            $('.cover-all').fadeIn();
+            $('.meaning').fadeIn();
+        });
+
+        $('.cover-all, .close-meaning').on('click', function() {
+            $('.cover-all').fadeOut();
+            $('.meaning').fadeOut();
+        });
     
   
     // add info box
