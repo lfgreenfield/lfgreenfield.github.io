@@ -79,46 +79,15 @@
             font-family: Lato, sans-serif;
             font-size: 1em;
         }
-/*
-          .legend {
-            padding: 6px 8px;
-            font-size: 1em;
-            background: rgba(75,75,75,0.8);
-            color: whitesmoke;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            border-radius: 5px;
-            width: 160px;
-        }
-*/
-/*
-        .legend h3 {
-            font-size: 1.1em;
-            font-weight: bold;
-            line-height: 1em;
-            color: whitesmoke;
-            margin: 0;
-        }
-        .legend li {
-            list-style-type: none;
-            height: 22px;
-        }
-        .legend span {
-            width: 30px;
-            height: 20px;
-            float: left;
-            margin-right: 10px;
-        }
-*/
-/*
-         .info {
+        .info {
             padding: 6px 8px;
             font-size: 1.2em;
-            background: rgba(75,75,75,0.8);
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            border-radius: 5px;
+            background: rgba(25,25,25,0.8);
+/*            box-shadow: 0 0 15px rgba(0,0,0,0.2);*/
+            border-radius: 0px;
             text-align: left; 
             color: whitesmoke;
-            height: 320px;
+/*            height: px;*/
             width: 165px;
         }
         .info h3 {
@@ -128,7 +97,8 @@
             float: left;
             margin-right: 50px;
         }
-*/
+
+
 
     </style>
     
@@ -177,6 +147,40 @@
                 draggable: false
             }
         }).addTo(map);
+    
+        var searchbox = $('.leaflet-control-geosearch').detach().removeClass('leaflet-control').appendTo('header');
+    
+  
+            //creating leafleft control object and positioning top-right
+        var info = L.control({position: 'bottomright'});
+            
+            //actions for when info panel is added to map
+        info.onAdd = function(map) {
+                
+                //creating new div element
+        var div = L.DomUtil.create('div', 'info');
+        div.innerHTML='KY Counties'+'<br>Hover over a county';
+                
+                    return div;    
+            }
+            
+        info.addTo(map);
+//            $(".info").hide(); 
+
+//info.onAdd = function (map) {
+//    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+//    this.update();
+//    return this._div;
+//};
+//
+//// method that we will use to update the control based on feature properties passed
+////info.update = function (props) {
+////    this._div.innerHTML = '<h4>US Population Density</h4>' +  (props ?
+////        '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+////        : 'Hover over a state');
+////};
+//
+//info.addTo(map);
     
      
 
@@ -228,7 +232,6 @@
 //            
             L.control.layers(null, pollutionControl, { collapsed:false }).addTo(map);
             
-            drawInfo();
 
 
         })
@@ -254,23 +257,24 @@
                     var props = layer.feature.properties;
                     
                     
-                //TO MAKE HOVER:
-//                    var content = layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
+//                TO MAKE HOVER:
+                    var content = "KY Counties" +"<br>"+layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
 //                    layer.bindPopup(content,{
 //                    });
-//                    
-//                    layer.openPopup();
+                    
+                       $(".info").html(content);
                     
                 })
                 layer.on('mouseout', function(){
                     layer.setStyle({color: 'blue', weight: 0.8});
+                    $(".info").html('KY Counties'+'<br>Hover over a county');
 //                    layer.closePopup();
                 });
                 
-                var props = layer.feature.properties;
-                
-                var content = layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
-                layer.bindPopup(content);
+//                var props = layer.feature.properties;
+//                
+//                var content = layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
+//                layer.bindPopup(content);
 
             })
                 
@@ -327,9 +331,7 @@
                 };
 
                 L.control.layers(null, controls, { collapsed:false }).addTo(map);
-            map.on("baselayerchange", function(event){
-                console.log("change");
-            });
+         
 
         }
 
@@ -460,24 +462,24 @@
 //        }
 //  
 //  
-       function drawInfo() {
-            
-            //creating leafleft control object and positioning top-right
-            var info = L.control({position: 'bottomright'});
-            
-            //actions for when info panel is added to map
-            info.onAdd = function(map) {
-                
-                //creating new div element
-                var div = L.DomUtil.create('div', 'info');
-                
-                    return div;    
-            }
-            
-            info.addTo(map);
-//            $(".info").hide();  
-            
-        }
+//       function drawInfo() {
+//            
+//            //creating leafleft control object and positioning top-right
+//            var info = L.control({position: 'bottomright'});
+//            
+//            //actions for when info panel is added to map
+//            info.onAdd = function(map) {
+//                
+//                //creating new div element
+//                var div = L.DomUtil.create('div', 'info');
+//                
+//                    return div;    
+//            }
+//            
+//            info.addTo(map);
+////            $(".info").hide();  
+//            
+//        }
     
 
         
