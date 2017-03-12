@@ -108,10 +108,29 @@
             color: whitesmoke;
             bottom: 180px;
             width: 220px;
-            height: 180px;           
+            height: 180px;  
         } 
         .info h3 {
-            margin: 0;   
+            margin: 0px;
+            text-decoration: underline;
+            font-weight: normal;
+            text-align: center;
+        }
+        .info h4 {
+            font-size: 0.9em;
+/*            font-style: italic;*/
+            text-align: center;
+            font-weight: normal;
+            margin: 0px;
+            margin-top: -20px;
+        }
+        .info h5 {
+            font-size: 1em;
+            text-align: left;
+            font-weight: normal;
+            color: 'red';
+            margin: 0px;
+            
         }
         .info span {
             float: left;
@@ -342,7 +361,7 @@
         info.onAdd = function(map) {
                 
             var div = L.DomUtil.create('div', 'info');
-            div.innerHTML='Demographic Data'+'<br>Hover over a county';
+            div.innerHTML='<h3>Demographic Data</h3>'+'<br><h4>hover over a county</h4>';
                 return div;    
             }
             
@@ -398,11 +417,6 @@
             
             combineLayers(pollution);
             
-//        
-//             var pollutionControl = {"Cumulative Pollution": pollution}
-////            
-//            L.control.layers(null, pollutionControl, { collapsed:false, position: 'bottomright'}).addTo(map);
-            
 
 
         })
@@ -429,7 +443,7 @@
                     
                     
 //                TO MAKE HOVER:
-                    var content = "Demographic Data" +"<br>"+layer.feature.properties["name"]+" County"+"<br>"+"Percent Poverty: "+props["pctpov"]+"%"+"<br>"+"Percent Minority: "+props["pctminor"].toFixed(2)+"%";
+                    var content = "<h3>Demographic Data</h3>" +"<br>"+layer.feature.properties["name"]+" County"+"<br>"+"<h5>Percent Poverty: </h5>"+props["pctpov"]+"%"+"<br>"+"<h5>Percent Minority: </h5>"+props["pctminor"].toFixed(2)+"%";
 //                    layer.bindPopup(content,{
 //                    });
                     
@@ -438,7 +452,7 @@
                 })
                 layer.on('mouseout', function(){
                     layer.setStyle({color: 'blue', weight: 0.8});
-                    $(".info").html('Demographic Data'+'<br>Hover over a county');
+                    $(".info").html('<h3>Demographic Data</h3>'+'<br><h4>hover over a county</h4>');
 //                    layer.closePopup();
                 });
                 
