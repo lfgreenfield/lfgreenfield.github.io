@@ -69,6 +69,12 @@
             width: 200px;
            
         }
+        .scale{
+            width: 100px;
+            right: 127%;
+            bottom: 125px;
+            position: absolute;
+        }
         .leaflet-popup-content-wrapper {
             background: rgba(25,25,25,0.8);
             opacity: 0.95;
@@ -101,7 +107,7 @@
             text-align: left; 
             color: whitesmoke;
             bottom: 180px;
-            width: 200px;
+            width: 220px;
             height: 180px;           
         } 
         .info h3 {
@@ -141,12 +147,6 @@
             font-family: Lato, sans-serif;
             font-size: 3em;
             color: whitesmoke;
-        }
-        .scale{
-            width: 100px;
-            right: 200%;
-            bottom: 50px;
-/*            position: relative;*/
         }
         /*BUTTONS*/
         .what-is-ej-button {
@@ -361,6 +361,7 @@
             },
 
             logo.addTo(map);
+    
     //add color scale as watermark
         var colorScale = L.control({position: 'bottomright'});
     
