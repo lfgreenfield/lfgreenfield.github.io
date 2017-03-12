@@ -100,37 +100,60 @@
         }
         .info {
             padding: 6px 8px;
-            font-size: 1em;
+/*            font-size: 1em;*/
             background: rgba(25,25,25,0.8);
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border-radius: 0px;
-            text-align: left; 
             color: whitesmoke;
             bottom: 180px;
             width: 220px;
             height: 180px;  
         } 
+        /*"Demographics"*/
         .info h3 {
             margin: 0px;
             text-decoration: underline;
             font-weight: normal;
             text-align: center;
+            padding: 0px;
         }
+        /*"hover over a county"*/
         .info h4 {
             font-size: 0.9em;
-/*            font-style: italic;*/
             text-align: center;
             font-weight: normal;
-            margin: 0px;
-            margin-top: -20px;
+            margin-top: -30px;
+            border: 0px;
+            margin-bottom: 0px;
         }
+        /*county name*/
         .info h5 {
+            font-size: 0.9em;
+            text-align: center;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: rgba(202,106,40,1);
+            margin-top: -30px;
+            margin-bottom: 0px;
+        }
+        /*minority, poverty*/
+        .info h6 {
             font-size: 1em;
             text-align: left;
             font-weight: normal;
-            color: 'red';
-            margin: 0px;
-            
+/*            margin: 0px;*/
+            margin-top: -38px;
+            color: rgba(135,156,67,1);
+            text-transform: uppercase;
+            border: 0px;
+        }
+        .info p {
+            font-size: 1em;
+            text-align: left;
+            font-weight: normal;
+            color: whitesmoke;
+            margin-top: -60px;
+            border: 0px;
         }
         .info span {
             float: left;
@@ -443,16 +466,14 @@
                     
                     
 //                TO MAKE HOVER:
-                    var content = "<h3>Demographic Data</h3>" +"<br>"+layer.feature.properties["name"]+" County"+"<br>"+"<h5>Percent Poverty: </h5>"+props["pctpov"]+"%"+"<br>"+"<h5>Percent Minority: </h5>"+props["pctminor"].toFixed(2)+"%";
-//                    layer.bindPopup(content,{
-//                    });
+                    var content = "<h3>Demographic Data</h3>" +"<br><h5>"+layer.feature.properties["name"]+" County"+"</h5>"+"<br><h6>"+"Percent Poverty: "+"</h6>"+"<p>"+props["pctpov"]+"%"+"</p>"+"<br>"+"<h6>"+"Percent Minority: </h6>"+"<p>"+props["pctminor"].toFixed(2)+"%"+"</p>";
                     
-                       $(".info").html(content);
+                    $(".info").html(content);
                     
                 })
                 layer.on('mouseout', function(){
                     layer.setStyle({color: 'blue', weight: 0.8});
-                    $(".info").html('<h3>Demographic Data</h3>'+'<br><h4>hover over a county</h4>');
+                    $(".info").html("<h3>Demographic Data</h3>"+"<br>"+"<h4>hover over a county</h4>");
 //                    layer.closePopup();
                 });
                 
