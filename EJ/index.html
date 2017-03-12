@@ -47,10 +47,11 @@
         }
         h2 {
             display: inline-block;
-            margin-right: 5px;
+/*            margin-right: 5px;*/
+            right: 1%
             color: #302725;
             font-family: Lato, sans-serif;
-            font-size: 1.5em;
+            font-size: 1.8em;
             position: absolute;
             width: 300px;
             text-align: right;
@@ -147,18 +148,39 @@
             top: 60%;
             left: 10%;
         }
-        /*css for button itslf*/
-        .why-this-matters {
+        /*BUTTONS*/
+        .what-is-ej-button {
             position: absolute;
-            top: 10%;
+            top: 8%;
             left: 1%;
             z-index: 99;
-            font-size: 1.3em;
+            font-size: 1em;
+            font-family: Lato, sans-serif;
+            box-shadow: 0 1px 5px rgba(53,112,54,.65);
+            background: rgba(53,112,54,.80);
+        }
+        .kftc-ej-button {
+            position: absolute;
+            top: 8%;
+            left: 15%;
+            z-index: 99;
+            font-size: 1em;
+            font-family: Lato, sans-serif;
+            box-shadow: 0 1px 5px rgba(53,112,54,.65);
+            background: rgba(53,112,54,.80);
+        }
+        .more-info-button {
+            position: absolute;
+            top: 8%;
+            left: 28%;
+            z-index: 99;
+            font-size: 1em;
+            font-family: Lato, sans-serif;
             box-shadow: 0 1px 5px rgba(53,112,54,.65);
             background: rgba(53,112,54,.80);
         }
         /*css for info pop-up itself*/
-        .meaning {
+        .ej-info {
             width: 60%;
         /*    min-height: 450px;*/
             background: rgb(193,205,193);
@@ -169,7 +191,41 @@
             padding: 20px 2%;
             display: none;
          }
-        .close-meaning {
+         .kftc-ej {
+            width: 60%;
+        /*    min-height: 450px;*/
+            background: rgb(193,205,193);
+            position: absolute;
+            z-index: 800;
+            left: 18%;
+            top: 40px;
+            padding: 20px 2%;
+            display: none;
+         }
+         .more-info {
+            width: 60%;
+        /*    min-height: 450px;*/
+            background: rgb(193,205,193);
+            position: absolute;
+            z-index: 800;
+            left: 18%;
+            top: 40px;
+            padding: 20px 2%;
+            display: none;
+         }
+        .close-ej-info {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            color: rgb(49,79,79);
+        }
+        .close-kftc-ej {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            color: rgb(49,79,79);
+        }
+         .close-more-info {
             position: absolute;
             top: 8px;
             right: 10px;
@@ -188,17 +244,27 @@
 <body>  
     <header>
 <!--        <img src ='scale.png' alt="LOGO" class='scale'>-->
-        <h1>Mapping Environmental Justice in Kentucky</h1>
-        <h2>Explore EJ in KY</h2>
+        <h1>Mapping Environmental Justice (EJ) in Kentucky</h1>
+        <h2>Explore EJ in Your Area</h2>
     </header>
     
     
     <div id='map'></div>
-     <div class='meaning'>
-        <div class='close-meaning'>close</div>
+    <div class='ej-info'>
+        <div class='close-info'>close</div>
         <p>content</p>
     </div>
-    <button class='why-this-matters'>why this matters</button>
+    <div class='kftc-ej'>
+        <div class='close-kftc-ej'>close</div>
+        <p>content</p>
+    </div>
+    <div class='more-info'>
+        <div class='close-more-info'>close</div>
+        <p>content</p>
+    </div>
+    <button class='what-is-ej-button'>what is environmental<br>justice?</button>
+    <button class='kftc-ej-button'>about the analysis</button>
+    <button class='more-info-button'>about the map</button>
     <div class='cover-all'></div>
     
     </div>
@@ -240,14 +306,28 @@
         // add EJ Analysis info button
         var infoBox = $('.meaning').appendTo('header');
         
-        //add click functions to EJ Analysis info button
-    
-        $('.why-this-matters').on('click', function() {
-            $('.meaning').fadeIn();
+        //EJ BUTTON   
+        $('.what-is-ej-button').on('click', function() {
+            $('.ej-info').fadeIn();
         });
-
-        $('.close-meaning').on('click', function() {
-            $('.meaning').fadeOut();
+        $('.close-info').on('click', function() {
+            $('.ej-info').fadeOut();
+        });
+    
+        //KFTC BUTTON
+        $('.kftc-ej-button').on('click', function() {
+            $('.kftc-ej').fadeIn();
+        });
+        $('.close-kftc-ej').on('click', function() {
+            $('.kftc-ej').fadeOut();
+        });
+    
+        //MORE INFO BUTTON
+        $('.more-info-button').on('click', function() {
+            $('.more-info').fadeIn();
+        });
+        $('.close-more-info').on('click', function() {
+            $('.more-info').fadeOut();
         });
     
   
@@ -343,11 +423,6 @@
 //                    layer.closePopup();
                 });
                 
-//                var props = layer.feature.properties;
-//                
-//                var content = layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
-//                layer.bindPopup(content);
-
             })
                 
             county_data.addTo(map);            
@@ -409,13 +484,15 @@
     //make power plant popup    
     function makePlantPopup(powerPlantLayer){
         
+        console.log(powerPlantLayer);
+        
            powerPlantLayer.eachLayer(function(layer){
                
                 layer.on('mouseover', function() {
                     
                     var props = layer.feature.properties;
 
-                    var content = "hello";
+                    var content = "Power Plant: "+props["Plant_Name"]+"<br>"+props["Utility_Na"]+"<br>Notes: "+props["PlantStat"];
                     layer.bindPopup(content);
 
                 })
