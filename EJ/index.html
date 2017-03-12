@@ -83,16 +83,17 @@
             border-radius: 0px;
             background: rgba(25,25,25,0.8);
             color: whitesmoke;
-            width: 189px;
+            width: 200px;
             top: 5%;
             position: absolute;
+            right: 5%;
         }
         .leaflet-top .leaflet-control {
             margin-top: 0.5px;
         }
         .leaflet-container {
             font-family: Lato, sans-serif;
-            font-size: 1.2em;
+            font-size: 1.3em;
         }
         .info {
             padding: 6px 8px;
@@ -479,31 +480,13 @@
         
         var povertyLayer = L.geoJson(county_percents);
         drawMap(povertyLayer, "PctPov");
-        
             
-//            //first get powerPlantLayer
-//            var powerPlantLayer = L.geoJson(powerPlants, {
-//
-//                pointToLayer: function(feature){
-//                    var latlng = L.latLng(feature.properties.Latitude, feature.properties.Longitude);
-//                    var icon = L.icon({
-//                        iconUrl: 'powerplant.png',
-//                        iconSize:     [25, 25], // size of the icon
-//                        iconAnchor:   [12,12], // point of the icon which will correspond to marker's location
-//                        popupAnchor:  [6, -20] // point from which the popup should open relative to the iconAnchor
-//                    });
-//
-//                    return L.marker(latlng, {icon:icon});
-//                }
-//
-//             }).addTo(map);
-            
-            makePlantPopup(powerPlantLayer);
+        makePlantPopup(powerPlantLayer);
                    
             // make selector
                 var controls = {
-                    "Poverty": povertyLayer, 
-                    "Minority": minorityLayer,
+                    "Percent Poverty": povertyLayer, 
+                    "Percent Minority": minorityLayer,
                     "Power Plants": powerPlantLayer,
                     "Cumulative Pollution": pollutionLayer
 
