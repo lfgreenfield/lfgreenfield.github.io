@@ -144,19 +144,7 @@
         .scale{
             width: 100px;
             right: 200%;
-/*            height: 150px;*/
-
-/*
-            height: 10px;
-            right: 50%;
-            bottom: 15%;
-*/
-/*
-            height: 20px;
-            position: absolute;
-            top: 60%;
-            right: 10
-*/
+            bottom: 50px;
         }
         /*BUTTONS*/
         .what-is-ej-button {
@@ -167,8 +155,8 @@
             font-size: 1em;
             font-family: Lato, sans-serif;
             color: whitesmoke;
-            box-shadow: 0 1px 5px rgba(53,112,54,.65);
-            background: rgba(53,112,54,.80);
+/*            box-shadow: 0 1px 5px rgba(202,106,40,.65);*/
+            background: rgba(202,106,40,.80);
         }
         .kftc-ej-button {
             position: absolute;
@@ -178,8 +166,8 @@
             font-size: 1em;
             font-family: Lato, sans-serif;
             color: whitesmoke;
-            box-shadow: 0 1px 5px rgba(53,112,54,.65);
-            background: rgba(53,112,54,.80);
+            box-shadow: 0 1px 5px rgba(136,156,67,.65);
+            background: rgba(135,156,67,.80);
         }
         .more-info-button {
             position: absolute;
@@ -189,8 +177,8 @@
             font-size: 1em;
             font-family: Lato, sans-serif;
             color: whitesmoke;
-            box-shadow: 0 1px 5px rgba(53,112,54,.65);
-            background: rgba(53,112,54,.80);
+            box-shadow: 0 1px 5px rgba(143,70,60,.65);
+            background: rgba(143,70,60,.80);
         }
         /*css for info pop-up itself*/
         .ej-info {
@@ -517,6 +505,7 @@
                     var props = layer.feature.properties;
 
                     var content = "Power Plant: "+props["Plant_Name"]+"<br>"+props["Utility_Na"]+"<br>Notes: "+props["PlantStat"];
+    
                     layer.bindPopup(content);
 
                 })
