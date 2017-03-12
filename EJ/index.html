@@ -83,11 +83,13 @@
             border-radius: 0px;
             background: rgba(25,25,25,0.8);
             color: whitesmoke;
-            width: 160px;
+            width: 189px;
+            top: 5%;
+            position: absolute;
         }
         .leaflet-top .leaflet-control {
-                margin-top: 0.5px;
-            }
+            margin-top: 0.5px;
+        }
         .leaflet-container {
             font-family: Lato, sans-serif;
             font-size: 1.2em;
@@ -101,7 +103,9 @@
             text-align: left; 
             color: whitesmoke;
             height: 200px;
-            width: 165px;
+            width: 190px;
+            right: 100%;
+            postion: absolute;
         }
         .info h3 {
             margin: 0;   
@@ -149,7 +153,7 @@
         /*BUTTONS*/
         .what-is-ej-button {
             position: absolute;
-            top: 8%;
+            top: 9%;
             left: 1%;
             z-index: 99;
             font-size: 1em;
@@ -160,8 +164,8 @@
         }
         .kftc-ej-button {
             position: absolute;
-            top: 8%;
-            left: 15%;
+            top: 9%;
+            left: 19%;
             z-index: 99;
             font-size: 1em;
             font-family: Lato, sans-serif;
@@ -171,8 +175,8 @@
         }
         .more-info-button {
             position: absolute;
-            top: 8%;
-            left: 28%;
+            top: 9%;
+            left: 31%;
             z-index: 99;
             font-size: 1em;
             font-family: Lato, sans-serif;
@@ -184,7 +188,7 @@
         .ej-info {
             width: 60%;
         /*    min-height: 450px;*/
-            background: rgb(193,205,193);
+            background: rgba(25,25,25,0.8);
             position: absolute;
             z-index: 800;
             left: 18%;
@@ -195,7 +199,7 @@
          .kftc-ej {
             width: 60%;
         /*    min-height: 450px;*/
-            background: rgb(193,205,193);
+            background: rgba(25,25,25,0.8);
             position: absolute;
             z-index: 800;
             left: 18%;
@@ -206,7 +210,7 @@
          .more-info {
             width: 60%;
         /*    min-height: 450px;*/
-            background: rgb(193,205,193);
+            background: rgba(25,25,25,0.8);
             position: absolute;
             z-index: 800;
             left: 18%;
@@ -218,22 +222,23 @@
             position: absolute;
             top: 8px;
             right: 10px;
-            color: rgb(49,79,79);
+            color: whitesmoke;
         }
         .close-kftc-ej {
             position: absolute;
             top: 8px;
             right: 10px;
-            color: rgb(49,79,79);
+            color: whitesmoke;
         }
          .close-more-info {
             position: absolute;
             top: 8px;
             right: 10px;
-            color: rgb(49,79,79);
+            color: whitesmoke;
         }
         .meaning p {
-           rgb(49,79,79);
+           color: whitesmoke;
+        
         }
 
 
@@ -252,7 +257,7 @@
     
     <div id='map'></div>
     <div class='ej-info'>
-        <div class='close-info'>close</div>
+        <div class='close-ej-info'>close</div>
         <p>content</p>
     </div>
     <div class='kftc-ej'>
@@ -263,7 +268,7 @@
         <div class='close-more-info'>close</div>
         <p>content</p>
     </div>
-    <button class='what-is-ej-button'>what is environmental<br>justice?</button>
+    <button class='what-is-ej-button'>what is environmental justice?</button>
     <button class='kftc-ej-button'>about the analysis</button>
     <button class='more-info-button'>about the map</button>
     <div class='cover-all'></div>
@@ -311,7 +316,7 @@
         $('.what-is-ej-button').on('click', function() {
             $('.ej-info').fadeIn();
         });
-        $('.close-info').on('click', function() {
+        $('.close-ej-info').on('click', function() {
             $('.ej-info').fadeOut();
         });
     
@@ -333,12 +338,13 @@
     
   
     // add info box
-        var info = L.control({position: 'topright'});
+//        var info = L.control({position: 'topright'});
+        var info = L.control({postion: 'bottomright'});
   
         info.onAdd = function(map) {
                 
             var div = L.DomUtil.create('div', 'info');
-            div.innerHTML='KY Counties'+'<br>Hover over a county';
+            div.innerHTML='Demographic Data'+'<br>Hover over a county';
                 return div;    
             }
             
@@ -391,10 +397,12 @@
 
             pollution.addTo(map);
             
-        
-             var pollutionControl = {"Cumulative Pollution": pollution}
-//            
-            L.control.layers(null, pollutionControl, { collapsed:false }).addTo(map);
+            combineLayers(pollution);
+            
+//        
+//             var pollutionControl = {"Cumulative Pollution": pollution}
+////            
+//            L.control.layers(null, pollutionControl, { collapsed:false, position: 'bottomright'}).addTo(map);
             
 
 
@@ -422,7 +430,7 @@
                     
                     
 //                TO MAKE HOVER:
-                    var content = "KY Counties" +"<br>"+layer.feature.properties["name"]+" County"+"<br>"+"Poverty: "+props["pctpov"]+"%"+"<br>"+"Minority: "+props["pctminor"]+"%";
+                    var content = "Demographic Data" +"<br>"+layer.feature.properties["name"]+" County"+"<br>"+"Percent Poverty: "+props["pctpov"]+"%"+"<br>"+"Percent Minority: "+props["pctminor"].toFixed(2)+"%";
 //                    layer.bindPopup(content,{
 //                    });
                     
@@ -431,7 +439,7 @@
                 })
                 layer.on('mouseout', function(){
                     layer.setStyle({color: 'blue', weight: 0.8});
-                    $(".info").html('KY Counties'+'<br>Hover over a county');
+                    $(".info").html('Demographic Data'+'<br>Hover over a county');
 //                    layer.closePopup();
                 });
                 
@@ -447,22 +455,9 @@
       
         })
  
-    // get pov and minor layers and send to drawMap        
-        var minorityLayer = L.geoJson(county_percents);
-        drawMap(minorityLayer, "PctMinor");
-        console.log(minorityLayer);
+    function combineLayers(pollutionLayer){
         
-        var povertyLayer = L.geoJson(county_percents);
-        drawMap(povertyLayer, "PctPov");
-        
-    
-        makeLayerSelector(minorityLayer, povertyLayer);
-        
-    
-        function makeLayerSelector(minorityLayer, povertyLayer){
-            
-            //first get powerPlantLayer
-            var powerPlantLayer = L.geoJson(powerPlants, {
+        var powerPlantLayer = L.geoJson(powerPlants, {
 
                 pointToLayer: function(feature){
                     var latlng = L.latLng(feature.properties.Latitude, feature.properties.Longitude);
@@ -477,6 +472,31 @@
                 }
 
              }).addTo(map);
+        
+        // get pov and minor layers and send to drawMap        
+        var minorityLayer = L.geoJson(county_percents);
+        drawMap(minorityLayer, "PctMinor");
+        
+        var povertyLayer = L.geoJson(county_percents);
+        drawMap(povertyLayer, "PctPov");
+        
+            
+//            //first get powerPlantLayer
+//            var powerPlantLayer = L.geoJson(powerPlants, {
+//
+//                pointToLayer: function(feature){
+//                    var latlng = L.latLng(feature.properties.Latitude, feature.properties.Longitude);
+//                    var icon = L.icon({
+//                        iconUrl: 'powerplant.png',
+//                        iconSize:     [25, 25], // size of the icon
+//                        iconAnchor:   [12,12], // point of the icon which will correspond to marker's location
+//                        popupAnchor:  [6, -20] // point from which the popup should open relative to the iconAnchor
+//                    });
+//
+//                    return L.marker(latlng, {icon:icon});
+//                }
+//
+//             }).addTo(map);
             
             makePlantPopup(powerPlantLayer);
                    
@@ -484,14 +504,16 @@
                 var controls = {
                     "Poverty": povertyLayer, 
                     "Minority": minorityLayer,
-                    "Power Plants": powerPlantLayer
+                    "Power Plants": powerPlantLayer,
+                    "Cumulative Pollution": pollutionLayer
 
                 };
 
-                L.control.layers(null, controls, { collapsed:false }).addTo(map);
+                L.control.layers(null, controls, { collapsed:false, postion: 'topright'}).addTo(map);
          
 
-        }
+        
+    }
     
     //make power plant popup    
     function makePlantPopup(powerPlantLayer){
