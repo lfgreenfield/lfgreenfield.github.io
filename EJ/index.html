@@ -83,13 +83,10 @@
             border-radius: 0px;
             background: rgba(25,25,25,0.8);
             color: whitesmoke;
-            width: 200px;
+            width: 220px;
             top: 5%;
             position: absolute;
             right: 5%;
-        }
-        .leaflet-top .leaflet-control {
-            margin-top: 0.5px;
         }
         .leaflet-container {
             font-family: Lato, sans-serif;
@@ -97,17 +94,16 @@
         }
         .info {
             padding: 6px 8px;
-            font-size: 1.2em;
+            font-size: 1em;
             background: rgba(25,25,25,0.8);
-/*            box-shadow: 0 0 15px rgba(0,0,0,0.2);*/
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border-radius: 0px;
             text-align: left; 
             color: whitesmoke;
-            height: 200px;
-            width: 190px;
-            right: 100%;
-            postion: absolute;
-        }
+            bottom: 180px;
+            width: 200px;
+            height: 180px;           
+        } 
         .info h3 {
             margin: 0;   
         }
@@ -150,6 +146,7 @@
             width: 100px;
             right: 200%;
             bottom: 50px;
+/*            position: relative;*/
         }
         /*BUTTONS*/
         .what-is-ej-button {
@@ -340,7 +337,7 @@
   
     // add info box
 //        var info = L.control({position: 'topright'});
-        var info = L.control({postion: 'bottomright'});
+        var info = L.control({position: 'bottomright'});
   
         info.onAdd = function(map) {
                 
