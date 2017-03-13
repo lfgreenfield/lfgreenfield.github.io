@@ -46,18 +46,31 @@
             position: absolute;
         }
         h2 {
-            display: inline-block;
+/*            display: inline-block;*/
 /*            margin-right: 5px;*/
-            right: 1%
             color: #302725;
             font-family: Lato, sans-serif;
-            font-size: 1.8em;
+            font-size: 1.1em;
             position: absolute;
             width: 300px;
-            text-align: right;
+            text-align: left;
             font-weight: 100;
-            right: 15px;    
+            right: 5%; 
+            top: 5px;
+            margin-top: 2px;
+            width: 500px;
+            border-left: solid;
+            border-left-width: thick;
+            border-left-color:rgba(143,70,60,1);
+            padding-left: 8px;
         }
+/*
+        h2 p {
+            font-size: 0.5em;
+            text-align: left;
+            font-family:
+        }
+*/
         #map {
             position: absolute;
             z-index: 100;
@@ -65,11 +78,6 @@
             top: 16%;
             bottom: 0;
         } 
-/*
-        .leaflet-popup-content p {
-            margin: 0px;
-        }
-*/
         p2 {
             font-family: Lato, sans-serif;
             font-align: left;
@@ -220,7 +228,7 @@
             top: 9%;
             left: 1%;
             z-index: 99;
-            font-size: 1em;
+            font-size: 1.1em;
             font-family: Lato, sans-serif;
             color: whitesmoke;
 /*            box-shadow: 0 1px 5px rgba(202,106,40,.65);*/
@@ -229,9 +237,9 @@
         .kftc-ej-button {
             position: absolute;
             top: 9%;
-            left: 19%;
+            left: 21%;
             z-index: 99;
-            font-size: 1em;
+            font-size: 1.1em;
             font-family: Lato, sans-serif;
             color: whitesmoke;
             box-shadow: 0 1px 5px rgba(136,156,67,.65);
@@ -240,9 +248,9 @@
         .more-info-button {
             position: absolute;
             top: 9%;
-            left: 31%;
+            left: 34%;
             z-index: 99;
-            font-size: 1em;
+            font-size: 1.1em;
             font-family: Lato, sans-serif;
             color: whitesmoke;
             box-shadow: 0 1px 5px rgba(143,70,60,.65);
@@ -315,7 +323,7 @@
     <header>
 <!--        <img src ='scale.png' alt="LOGO" class='scale'>-->
         <h1>Mapping Environmental Justice (EJ) in Kentucky</h1>
-        <h2>Explore EJ in Your Area</h2>
+        <h2>1. Turn on/off data layers<br>2. Hover over counties, click on power plant icons for more info<br>3. Search your area using the search bar</h2>
     </header>
     
     
@@ -332,9 +340,9 @@
         <div class='close-more-info'>close</div>
         <p>content</p>
     </div>
-    <button class='what-is-ej-button'>what is environmental justice?</button>
-    <button class='kftc-ej-button'>about the analysis</button>
-    <button class='more-info-button'>about the map</button>
+    <button class='what-is-ej-button'>What is environmental justice?</button>
+    <button class='kftc-ej-button'>About the analysis</button>
+    <button class='more-info-button'>About the map</button>
     <div class='cover-all'></div>
     
     </div>
