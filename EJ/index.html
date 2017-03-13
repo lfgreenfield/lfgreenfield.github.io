@@ -45,6 +45,11 @@
             font-weight: 100;
             position: absolute;
         }
+        p {
+            font-family: Lato, sans-serif;
+            color: whitesmoke;
+            font-size: 1em;
+        }
         h2 {
 /*            display: inline-block;*/
 /*            margin-right: 5px;*/
@@ -152,7 +157,7 @@
         }
         /*"hover over a county"*/
         .info h4 {
-            font-size: 0.9em;
+            font-size: 0.95em;
             text-align: center;
             font-weight: normal;
             margin-top: -30px;
@@ -273,7 +278,7 @@
             position: absolute;
             z-index: 800;
             left: 18%;
-            top: 40px;
+            top: 12%;
             padding: 20px 2%;
             display: none;
          }
@@ -284,7 +289,7 @@
             position: absolute;
             z-index: 800;
             left: 18%;
-            top: 40px;
+            top: 12%;
             padding: 20px 2%;
             display: none;
          }
@@ -328,15 +333,19 @@
     <div id='map'></div>
     <div class='ej-info'>
         <div class='close-ej-info'>close</div>
-        <p>content</p>
+        <p>What is environmental justice (EJ)?<br><br>The EPA defines EJ as "the fair treatment and meaningful involvement of all people regardless of race, color, national origin, or income with respect to the development, implementation, and enforcement of environmental laws, regulations, and policies."<br><br>For Kentuckians for the Commonwealth (KFTC), it also begins with the recognition that people of color and low income communties have systemically faced the greatest exposure to pollution and its harmful health effects. It requires a commitment that clean energy solutions need to prioritize these communities that stand the most to benefit from a transition.</p>
     </div>
     <div class='kftc-ej'>
         <div class='close-kftc-ej'>close</div>
-        <p>content</p>
+        <p>About the analysis:<br><br>The goal of an Environmental Justice Analysis is to identify the areas and communties that are most affected by pollution, poor health, economic inequality, and racial injustice.<br><br>
+The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationships between pollution exposure, exposure-related health problems, and demographic vulnerabilities in Kentucky using a broad set of indicators. The analysis examines the data individually (ex: identifying the highets concentration of coal mines, percent poverty, etc.) and cumulatively (i.e. combining all pollution data and looking at it comprehensively to find the "most polluted areas").<br><br>Some findings:<br>
+- Pollution from the energy sector (ex: coal, oil and gas) is a large part of Kentucky's cumulative pollution story, but not the whole story<br>
+- Different pollution sources affect low income and minority communities in Kentucky, based on a spatial statistical correlation analysis completed<br>
+- There's a strong relationships between the health problems examined and energy extraction in Kentucky, as well as health problems and the most vulnerable Kentuckians  (based on age, income, educational level, and race)<br><br>Read the Analysis' Executive Summary here. </p>
     </div>
     <div class='more-info'>
         <div class='close-more-info'>close</div>
-        <p>content</p>
+        <p>About the map:<br><br>This map displays a few datasets important to the Kentuckians for the Commonwealth (KFTC) Environmental Justice (EJ) Analysis. <br><br>Coal-fired power plants are a single but signifcant part of pollution generated from the coal landscape in Kentucky. Power Plant icons show the locations of Kentucky's coal-fired power plants. Clicking on the icons displays information, such as the plant's name, utility company, and operational status.<br><br>The KFTC EJ Cumulative Pollution layer visualizes concentrations of the following pollution indicators: coal mines, Coal Haul Highway System, traffic proximity, concentration of ozone and particulate matter, oil and gas wells, injection wells, lead exposure, Risk Management Plan sites, Transfer, Storage, and Disposal Facilities, major direct water dischargers, and National Priorities List sites.<br><br>Percent Minority and Percent Poverty are two datasets which represent demographic vulnerability in Kentucky. </p>
     </div>
     <button class='what-is-ej-button'>What is environmental justice?</button>
     <button class='kftc-ej-button'>About the analysis</button>
@@ -414,7 +423,7 @@
         info.onAdd = function(map) {
                 
             var div = L.DomUtil.create('div', 'info');
-            div.innerHTML='<h3>Demographic Data</h3>'+'<br><h4>hover over a county</h4>';
+            div.innerHTML='<h3>Demographic Data</h3>'+'<br><h4>Hover over a county</h4>';
                 return div;    
             }
             
@@ -503,7 +512,7 @@
                 })
                 layer.on('mouseout', function(){
                     layer.setStyle({color: 'blue', weight: 0.8});
-                    $(".info").html("<h3>Demographic Data</h3>"+"<br>"+"<h4>hover over a county</h4>");
+                    $(".info").html("<h3>Demographic Data</h3>"+"<br>"+"<h4>Hover over a county</h4>");
 //                    layer.closePopup();
                 });
                 
