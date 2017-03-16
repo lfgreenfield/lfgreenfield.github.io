@@ -145,7 +145,7 @@
             color: whitesmoke;
             bottom:120px;
             right: 5%;
-            width: 220px;
+            width: 240px;
             height: 180px; 
             position: relative;
         } 
@@ -515,7 +515,7 @@ The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationshi
                     
                     
 //                TO MAKE HOVER:
-                    var content = "<h3>Demographic Data</h3>" +"<br><h5>"+layer.feature.properties["name"]+" County"+"</h5>"+"<br><h6>"+"Percent Poverty: "+"</h6>"+"<p>"+props["pctpov"]+"%"+"</p>"+"<br>"+"<h6>"+"Percent Minority: </h6>"+"<p>"+props["pctminor"].toFixed(1)+"%"+"</p>";
+                    var content = "<h3>Demographic Data</h3>" +"<br><h5>"+layer.feature.properties["name"]+" County"+"</h5>"+"<br><h6>"+"Percent Poverty: "+"</h6>"+"<p>"+props["pctpov"]+"%"+" (state avg: 18.9%)"+"</p>"+"<br>"+"<h6>"+"Percent Minority: </h6>"+"<p>"+props["pctminor"].toFixed(1)+"%"+" (state avg: 12.6%)"+"</p>";
                     
                     $(".info").html(content);
                     
