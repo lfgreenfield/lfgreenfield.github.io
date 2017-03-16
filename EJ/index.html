@@ -55,12 +55,12 @@
 /*            margin-right: 5px;*/
             color: #302725;
             font-family: Lato, sans-serif;
-            font-size: 1.2em;
+            font-size: 1em;
             position: absolute;
             text-align: left;
             font-weight: normal;
-            right: 5%; 
-            top: 1%;
+            right: 1%; 
+            top: 2%;
             width: 550px;
             border-left: solid;
             border-left-width: thick;
@@ -110,7 +110,7 @@
         .scale{
             width: 100px;
             right: 127%;
-            bottom: 10%;
+            bottom: 2%;
             position: absolute;
         }
         .leaflet-popup-content-wrapper {
@@ -143,7 +143,7 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border-radius: 0px;
             color: whitesmoke;
-            bottom:130px;
+            bottom:120px;
             right: 5%;
             width: 220px;
             height: 180px; 
@@ -590,7 +590,10 @@ The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationshi
 
                     var content = "<p2>"+"Power Plant: "+"</p2>"+"<p3>"+props["Plant_Name"]+"<br>"+"</p3>"+"<p2>"+"Utility: "+"</p2>"+"<p3>"+props["Utility_Na"]+"<br>"+"</p3>"+"<p2>"+"Source: "+"</p2>"+"<p3>"+props["source_des"]+"</p3>"+"<br>"+"<p2>"+"Plant Status: "+"</p2>"+"<p3>"+props["PlantStat"]+"</p3>";
     
-                    layer.bindPopup(content);
+                    var  options = {
+                        keepInView: true
+                    }
+                    layer.bindPopup(content, options);
 
                 })
         })
