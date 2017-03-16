@@ -335,16 +335,16 @@
     <div id='map'></div>
     <div class='ej-info'>
         <div class='close-ej-info'>close</div>
-        <p>What is environmental justice (EJ)?<br><br>The EPA defines EJ as "the fair treatment and meaningful involvement of all people regardless of race, color, national origin, or income with respect to the development, implementation, and enforcement of environmental laws, regulations, and policies."<br><br>For Kentuckians for the Commonwealth (KFTC), it also begins with the recognition that people of color and low income communties have systemically faced the greatest exposure to pollution and its harmful health effects. It requires a commitment that clean energy solutions need to prioritize these communities that stand the most to benefit from a transition.</p>
+        <p>What is environmental justice (EJ)?<br><br>The EPA defines EJ as "the fair treatment and meaningful involvement of all people regardless of race, color, national origin, or income with respect to the development, implementation, and enforcement of environmental laws, regulations, and policies."<br><br>For Kentuckians for the Commonwealth (KFTC), it also begins with the recognition that people of color and low income communties have systemically faced the greatest exposure to pollution and its harmful health effects. It requires a commitment that clean energy solutions need to prioritize these communities that stand the most to benefit from a clean energy transition.</p>
     </div>
     <div class='kftc-ej'>
         <div class='close-kftc-ej'>close</div>
         <p>About the analysis:<br><br>The goal of an Environmental Justice Analysis is to identify the areas and communties that are most affected by pollution, poor health, economic inequality, and racial injustice.<br><br>
-The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationships between cumulative pollution, exposure-related health problems, and demographic vulnerabilities in Kentucky using a broad set of indicators. KFTC collected data from all these categories, creating a KY-specific EJ database. KFTC used a geospatial and statistical analysis to identify the most vulnerable communities in Kentucky and explore the relationships between pollution, health, and demographics in our state.<br><br>Read the KFTC Executive Summary <a href="https://drive.google.com/open?id=0By9qec5SZV2OSm9RdFphZXptVXc"style="color: rgb(135,156,67)" target="_blank">here.</a> </p>
+The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationships between cumulative pollution, exposure-related health problems, and demographic vulnerabilities in Kentucky using a broad set of indicators. KFTC collected data from all these categories, creating a KY-specific EJ database. KFTC used a geospatial and statistical analysis to identify the most vulnerable communities in Kentucky and explore the relationships between pollution, health, and demographics in our state.<br><br>For more information about the analysis, including results, read the <a href="https://drive.google.com/open?id=0By9qec5SZV2OSm9RdFphZXptVXc"style="color: rgb(135,156,67)" target="_blank">KFTC EJ Analysis Executive Summary.</a> </p>
     </div>
     <div class='more-info'>
         <div class='close-more-info'>close</div>
-        <p>This map displays 4 datasets from the KFTC EJ Analysis: coal-fired power plants, percent minority (per county), percent under the poverty level (per county), and Cumulative Pollution (an aggregate of all 15 pollution indicators used in the analysis.<br><br>For more information about these datasets and others in the analysis, read the <a href="https://drive.google.com/open?id=0By9qec5SZV2OSm9RdFphZXptVXc"style="color: rgb(135,156,67)" target="_blank">KFTC EJ Analysis Executive Summary</a><br><br>The map was developed with JavaScript using the Leaflet.js library.</p>
+        <p>This map displays 4 datasets from the KFTC EJ Analysis: coal-fired power plants, percent minority (per county), percent under the poverty level (per county), and Cumulative Pollution (an aggregate of all 15 pollution indicators used in the analysis.<br><br>For more information about these datasets and others in the analysis, read the <a href="https://drive.google.com/open?id=0By9qec5SZV2OSm9RdFphZXptVXc"style="color: rgb(135,156,67)" target="_blank">KFTC EJ Analysis Executive Summary.</a><br><br>The map was developed with JavaScript using the Leaflet.js library.</p>
     </div>
     <button class='what-is-ej-button'>What is environmental justice?</button>
     <button class='kftc-ej-button'>About the analysis</button>
@@ -398,6 +398,8 @@ The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationshi
         //EJ BUTTON   
         $('.what-is-ej-button').on('click', function() {
             $('.ej-info').fadeIn();
+            $('.kftc-ej').fadeOut();
+            $('.more-info').fadeOut();
         });
         $('.close-ej-info').on('click', function() {
             $('.ej-info').fadeOut();
@@ -406,6 +408,8 @@ The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationshi
         //KFTC BUTTON
         $('.kftc-ej-button').on('click', function() {
             $('.kftc-ej').fadeIn();
+            $('.ej-info').fadeOut();
+            $('.more-info').fadeOut();
         });
         $('.close-kftc-ej').on('click', function() {
             $('.kftc-ej').fadeOut();
@@ -414,6 +418,8 @@ The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationshi
         //MORE INFO BUTTON
         $('.more-info-button').on('click', function() {
             $('.more-info').fadeIn();
+            $('.ej-info').fadeOut();
+            $('.kftc-ej').fadeOut();
         });
         $('.close-more-info').on('click', function() {
             $('.more-info').fadeOut();
