@@ -339,7 +339,7 @@
     </div>
     <div class='kftc-ej'>
         <div class='close-kftc-ej'>close</div>
-        <p>About the analysis:<br><br>The goal of an Environmental Justice Analysis is to identify the areas and communties that are most affected by pollution, poor health, economic inequality, and racial injustice.<br><br>
+        <p>About the analysis:<br><br>The goal of an Environmental Justice Analysis is to identify the areas and communities that are most affected by pollution, poor health, economic inequality, and racial injustice.<br><br>
 The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationships between cumulative pollution, exposure-related health problems, and demographic vulnerabilities in Kentucky using a broad set of indicators. KFTC collected data from all these categories, creating a KY-specific EJ database. KFTC used a geospatial and statistical analysis to identify the most vulnerable communities in Kentucky and explore the relationships between pollution, health, and demographics in our state.<br><br>For more information about the analysis, including results, read the <a href="https://drive.google.com/open?id=0By9qec5SZV2OSm9RdFphZXptVXc"style="color: rgb(135,156,67)" target="_blank">KFTC EJ Analysis Executive Summary.</a> </p>
     </div>
     <div class='more-info'>
@@ -535,6 +535,10 @@ The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationshi
                 
             
             });
+            
+            map.on("baselayerchange", function(event){
+                county_data.bringToFront();
+            });
       
         })
  
@@ -569,12 +573,19 @@ The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationshi
                 var controls = {
                     "Percent Poverty": povertyLayer, 
                     "Percent Minority": minorityLayer,
-                    "Power Plants": powerPlantLayer,
                     "Cumulative Pollution": pollutionLayer
+
+
+                };
+        
+                var controls_powerplant = {
+                    "Power Plants": powerPlantLayer,
 
                 };
 
-                L.control.layers(null, controls, { collapsed:false, postion: 'topright'}).addTo(map);
+                L.control.layers(controls, controls_powerplant, { collapsed:false, postion: 'topright'}).addTo(map);
+        
+    
          
 
         
