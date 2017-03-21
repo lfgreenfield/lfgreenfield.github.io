@@ -261,6 +261,17 @@
             box-shadow: 0 1px 5px rgba(143,70,60,.65);
             background: rgba(143,70,60,.80);
         }
+         .empower-ky-button {
+            position: absolute;
+            top: 9%;
+            left: 45%;
+            z-index: 99;
+            font-size: 1.1em;
+            font-family: Lato, sans-serif;
+            color: whitesmoke;
+            box-shadow: 0 1px 5px rgba(143,70,60,.65);
+            background: rgba(143,70,60,.80);
+        }
         /*css for info pop-up itself*/
         .ej-info {
             width: 25%;
@@ -349,7 +360,8 @@ The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationshi
     <button class='what-is-ej-button'>What is environmental justice?</button>
     <button class='kftc-ej-button'>About the analysis</button>
     <button class='more-info-button'>About the map</button>
-    <div class='cover-all'></div>
+    <button class='empower-ky-button'>Empower Kentucky Plan</button>
+
     
     </div>
  
@@ -423,6 +435,10 @@ The Kentuckians for the Commonwealth (KFTC) EJ Analysis examines the relationshi
         });
         $('.close-more-info').on('click', function() {
             $('.more-info').fadeOut();
+        });
+    
+    $('.empower-ky-button').on('click', function() {
+            window.open('http://kftc.org/empowerky', "_blank");
         });
     
   
