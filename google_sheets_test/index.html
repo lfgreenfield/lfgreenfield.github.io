@@ -34,6 +34,9 @@
     
     <script>
     var DATA_SERVICE_URL = 'https://script.google.com/macros/s/AKfycbzcWARwM0Pa-2x2raZ7QgitwSR_0IJkbCbk0RZw2TeyHYlXf4zL/exec?jsonp=callback';
+//            var DATA_SERVICE_URL = 'https://script.google.com/macros/s/AKfycbzcWARwM0Pa-2x2raZ7QgitwSR_0IJkbCbk0RZw2TeyHYlXf4zL/jsonp?callback=?';
+//           var DATA_SERVICE_URL = 'https://script.google.com/macros/s/AKfycbzcWARwM0Pa-2x2raZ7QgitwSR_0IJkbCbk0RZw2TeyHYlXf4zL/exec?callback=?';
+//          var DATA_SERVICE_URL = 'https://script.google.com/macros/s/AKfycbzcWARwM0Pa-2x2raZ7QgitwSR_0IJkbCbk0RZw2TeyHYlXf4zL/exec?jsonp=?';
 
      var DEFAULT_CENTER = {lat: 38.205, lng: -84.2530};
 var DEFAULT_ZOOM = 13;
@@ -44,11 +47,11 @@ var map;
         
         // This function is called after the page has loaded, to set up the map.
         function initializeMap() {
-  map = new google.maps.Map(document.getElementById("map-canvas"),{
+  map = new google.maps.Map(document.getElementById('map-canvas'),{
       center: {lat: 38.205, lng: -84.2530},
     zoom: DEFAULT_ZOOM,
     panControl: false,
-    streetViewControl: true,
+    streetViewControl: false,
     streetViewControlOptions: {
       position: google.maps.ControlPosition.LEFT_BOTTOM
     },
@@ -83,9 +86,8 @@ var map;
 //          // First row contains headings, so start the index at 1 not 0.
 //          for (var i = 1; i < data.length; i++) {
 //              
-//              console.log("here");
-//            
-////            map.data.add({
+//        
+//            map.data.add({
 ////              properties: {
 ////                type: data[i][0],
 ////                name: data[i][1],
@@ -95,11 +97,11 @@ var map;
 ////                enddate: data[i][5],
 ////                address: data[i][6]
 ////              },
-////              geometry: {
-////                lat: data[i][7], 
-////                lng: data[i][8]
-////              }
-////            });
+//              geometry: {
+//                lat: data[i][10], 
+//                lng: data[i][11]
+//              }
+//            });
 //              
 //          }
 //            
