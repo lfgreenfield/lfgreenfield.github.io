@@ -11,13 +11,10 @@
   padding: 0px
 }
 
-    </style>
-
-<!--<link href="resources/techcomm-map-styles.css" rel="stylesheet" type="text/css" />-->
-
+</style>
+    
 <!-- Load jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
 
 
 </head>
@@ -38,46 +35,46 @@
 //           var DATA_SERVICE_URL = 'https://script.google.com/macros/s/AKfycbzcWARwM0Pa-2x2raZ7QgitwSR_0IJkbCbk0RZw2TeyHYlXf4zL/exec?callback=?';
 //          var DATA_SERVICE_URL = 'https://script.google.com/macros/s/AKfycbzcWARwM0Pa-2x2raZ7QgitwSR_0IJkbCbk0RZw2TeyHYlXf4zL/exec?jsonp=?';
 
-     var DEFAULT_CENTER = {lat: 38.205, lng: -84.2530};
-var DEFAULT_ZOOM = 13;
-var AUTO_ZOOM = 14;
-var userZoom = DEFAULT_ZOOM;
-var map;
+    var DEFAULT_CENTER = {lat: 38.205, lng: -84.2530};
+    var DEFAULT_ZOOM = 13;
+    var AUTO_ZOOM = 14;
+    var userZoom = DEFAULT_ZOOM;
+    var map;
         
         
-        // This function is called after the page has loaded, to set up the map.
-        function initializeMap() {
-  map = new google.maps.Map(document.getElementById('map-canvas'),{
-      center: {lat: 38.205, lng: -84.2530},
-    zoom: DEFAULT_ZOOM,
-    panControl: false,
-    streetViewControl: false,
-    streetViewControlOptions: {
-      position: google.maps.ControlPosition.LEFT_BOTTOM
-    },
-    zoomControl: true,
-    zoomControlOptions: {
-      position: google.maps.ControlPosition.LEFT_BOTTOM
-    }
+   
+    function initializeMap() {
+        map = new google.maps.Map(document.getElementById('map-canvas'),{
+          center: {lat: 38.205, lng: -84.2530},
+        zoom: DEFAULT_ZOOM,
+        panControl: false,
+        streetViewControl: false,
+        streetViewControlOptions: {
+          position: google.maps.ControlPosition.LEFT_BOTTOM
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+          position: google.maps.ControlPosition.LEFT_BOTTOM
+        }
   });
                             
     var scriptElement = document.createElement('script');
             scriptElement.src = DATA_SERVICE_URL;
             document.getElementsByTagName('head')[0].appendChild(scriptElement);
   
-}
+    }
         
-        function callback(data){
+    function callback(data){
             for (var i = 0; i< data.length; i++){
                 var marker = new google.maps.Marker({
                     position: new google.maps.LatLng(data[i][10], data[i][10]),
                     map: map
                 });
             }
-        }
+    }
         
         
-
+//ALTERNATIVE?
 //$.ajax({
 //        url: DATA_SERVICE_URL,
 //        dataType: 'jsonp',
@@ -112,11 +109,9 @@ var map;
 
     </script>
 
-  <!-- Set up the map and UI controls -->
-<!--  <script src="resources/techcomm-map.js" charset="utf-8"></script>-->
-
+ <!-- Load the Google Maps JavaScript API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapHTzEgBcQqO5x8hElUv3wFOPjN_k6AA&callback=initializeMap"></script>
-  <!-- Load the Google Maps JavaScript API -->
+
 
 </body>
 </html>
