@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Bourbon County Zoning Atlas</title>
+    <title>Electric Service Areas</title>
 <!--    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />-->
 
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
@@ -163,52 +163,37 @@
 <body>
     
 
-    <button class="button">Highlight Zone</button>
 
+<!--
     <div class='list-container' id="list" >
 
 
        <form class= "radio-list">
-            <label id="agricultural" ><input type="radio" name= "list" id="agricultural" >Agricultural (A-1)</label>
-            <label id="business1"><input type="radio" name="list" id="business1">Central Business (B-1) </label>
-            <label id="business2"> <input type="radio" name="list" id="business2">General Commercial (B-2)</label>
-            <label id="business3"><input type="radio" name="list" id="business3">Neighborhood Commercial (B-3)</label>
-            <label id="conservation"><input type="radio" name = "list" id="conservation" >Conservation (C)</label>
-            <label id="historic"><input type="radio" name = "list" id="historic" >Historic (H)</label>
-            <label id="hospitalmedical"> <input type="radio" name = "list" id="hospitalmedical" >Hospital/Medical (H-M)</label>
-            <label id="lightindustrial"><input type="radio" name = "list" id="lightindustrial" >Light Industrial (I-1)</label>
-            <label id="heavyindustrial"><input type="radio" name = "list" id="heavyindustrial" >Heavy Industrial (I-2)</label>
-            <label id="#planneddevelopment"> <input type="radio" name = "list" id="planneddevelopment" >Planned Development (PUD)</label>
-            <label id="residential"> <input type="radio" name = "list" id="residential" >Residential (R1-R8)</label>
-            <label id="reset"><input type="radio" name="list" id="reset">RESET HIGHLIGHTS</label>
+            <label id="agricultural" >Agricultural (A-1)</label>
+
        </form>
 
 
     </div>
     
+-->
     
     <div id='map'>   
 
     
-    <script src ="Flood_100yr.js"></script>
-    <script src ="zoning.js"></script>
+    <script src ="electric_service_areas.js"></script>
+    <script src ="ky_counties.js"></script>
     
     <script>
         
-            
-    $('.button').on('click', function() {
+                    
 
-        $('.list-container').toggle();
-  
-    });
-        
-
-
-        var highzoom = 13;
+        //mobile-friendly
+        var highzoom = 8;
         var bigmapheight = '100%';
         var smallmapheight = 650;
         var mapbreakwidth = 500;
-        var lowzoom = 11.5;
+        var lowzoom = 7;
         var initialzoom;
         var newSearchTop = 75;
         var origSearchTop = '95%';
@@ -232,10 +217,10 @@
    
         
         var options = {
-            center: [38.205,-84.254040],
-            zoom: 13,
+            center: [37.6456, -84.7697],
+            zoom: 8,
             maxZoom: 18,
-            minZoom: 11,
+            minZoom: 7,
             attributionControl: false,
             zoomControl: false,
 //            layers: [tiles, addressLabels],
@@ -246,9 +231,9 @@
         
         map = L.map(targetDiv, options);
         
-        map.createPane('labels');
-        map.getPane('labels').style.zIndex=650;
-        map.getPane('labels').style.pointerEvents-'none';
+//        map.createPane('labels');
+//        map.getPane('labels').style.zIndex=650;
+//        map.getPane('labels').style.pointerEvents-'none';
         
         L.control.zoom({
              position:'bottomleft'
@@ -267,37 +252,22 @@
 			};
         });
         
-        var addressLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjcccodc23fmu2rmzyt07sf8d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
-            pane: 'labels'
-        });
-        
-        var zoneLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjct2xme90p7v2rnxzd8j2na2/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
-            pane: 'labels'
-        });
+//        var countyLabels = L.tileLayer('https://api.mapbox.com/styles/v1/lfgreenfield/cjcccodc23fmu2rmzyt07sf8d/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGZncmVlbmZpZWxkIiwiYSI6IjJTQWFaakEifQ.n0qIzdB2sQ4MymItf7vCWA',{
+//            pane: 'labels'
+//        });
         
            
-         var tiles = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-            maxZoom: 20,
-            subdomains:['mt0','mt1','mt2','mt3']
-        });
-////        
+         var tiles = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+	       maxZoom: 18,
+	       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+         });
+        
         tiles.addTo(map);
-        zoneLabels.addTo(map);
-//        addressLabels.addTo(map);
+//        countyLabels.addTo(map);
+
 
   
- 
-        var southWest = L.latLng(38.13928, -84.38959),
-            northEast = L.latLng(38.270667, -84.11836),
-            bounds = L.latLngBounds(southWest, northEast);
-        
-        map.setMaxBounds(bounds);        
-
- 
-
-
-
-       new L.Control.GeoSearch({
+        new L.Control.GeoSearch({
             provider: new L.GeoSearch.Provider.Esri(),
             position: 'topleft',
             zoomLevel: 18,
@@ -310,165 +280,143 @@
        }).addTo(map);
         
 
-        
-    var layerInfo = {
-        agricultural: {class: "A", color: '#05c466', label: "Agricultural (A)"},
-        business1: {class: "B-1", color:'#d65353', label: "Central Business (B-1)"},
-        business2: {class: "B-2", color: '#DD4132', label: "General Commercial (B-2)"},
-        business3: {class: "B-3", color: '#9B2335', label: "Neighborhood Commercial (B-3)"},
-        conservation: {class: "C", color: '#53aad6', label: "Conservation (C)"},
-        historic: {class: "H", color: '#f25f10', label: "Historic (H)"},
-        hospitalmedical: {class: "H-M", color: '#10c8f2', label: "Hospital/Medical (H-M)"},
-        lightindustrial: {class: "I-1", color: '#b678c1', label: "Light Industrial (I-1)"},
-        heavyindustrial: {class: "I-2", color: '#760b8c', label: "Heavy Industrial (I-2)"},
-        planneddevelopment: {class: "PUD", color: '#766e77', label: "Planned Development (PUD)"},
-        residential1: {class: "R-1", color: '#ffff00', label: "Residential (R-1)"},
-        residential2: {class: "R-2", color: '#e5bb22', label: "Residential (R-2)"},
-        residential3: {class: "R-3", color: '#e0a31f', label: "Residential (R-3)"},
-        residential4: {class: "R-4", color: '#a88b25', label: "Residential (R-4)"},
-        residential5: {class: "R-5", color: '#aa7243', label: "Residential (R-5)"},
-        residential6: {class: "R-6", color: '#926239', label: "Residential (R-6)"},
-        residential7: {class: "R-7", color: '#7a5230', label: "Residential (R-7)"},
-        residential8: {class: "R-8", color: '#614126', label: "Residential (R-8)"},
-               
-    }
 
-    var geoJsonLayers = {}; 
-        
 
-    function getColor(layer, color) {
-        
-    }
-
-    for (var layer in layerInfo) {
-       
-       geoJsonLayers[layer] = L.geoJson(zones, {  
-           
-    
-
-          style: function(feature) {
-                   return {
-                       weight: 1,
-                       fillOpacity: 0.6,
-                       fillColor: layerInfo[layer].color,
-                       color: '#636363'
-                   }
-              
-               }, 
-           
-           
-            filter: function(feature) {
-
-                if (feature.properties["ZONE_"] == layerInfo[layer].class) {
-                    return feature;
-           
-
-                }
-            },
-
-       }).bindPopup("<b>"+"Zone: "+"</b>"+layerInfo[layer].label+"<br>"+"<pI>"+"Find zone specifications "+('<a href="http://www.bourboncountyplanning.com/zoning/" target="_blank">here</a>.')).addTo(map); 
-    
-
-    }
-    
-
-        
-        function resetStyle(){
-            for (var layer in geoJsonLayers){
-                geoJsonLayers[layer].setStyle({color: '#636363', weight:1, fillOpacity: 0.6});
+//    function getColor(layer, color) {
+//        
+//    }
+//
+//    for (var layer in layerInfo) {
+//       
+//       geoJsonLayers[layer] = L.geoJson(zones, {  
+//           
+//    
+//
+//          style: function(feature) {
+//                   return {
+//                       weight: 1,
+//                       fillOpacity: 0.6,
+//                       fillColor: layerInfo[layer].color,
+//                       color: '#636363'
+//                   }
+//              
+//               }, 
+//           
+//           
+//            filter: function(feature) {
+//
+//                if (feature.properties["ZONE_"] == layerInfo[layer].class) {
+//                    return feature;
+//           
+//
+//                }
+//            },
+//
+//       }).bindPopup("<b>"+"Zone: "+"</b>"+layerInfo[layer].label+"<br>"+"<pI>"+"Find zone specifications "+('<a href="http://www.bourboncountyplanning.com/zoning/" target="_blank">here</a>.')).addTo(map); 
+//    
+//
+//    }
+//    
+    var electricServiceLayer = L.geoJson(electricservice, {
+        style: function(feature){
+            return {
+                opacity: 0.7,
+                color: '#f5f5f0',
+                weight: 0.7,
+                fillColor: getColor(feature.properties["COMPANY_NA"]),
+                fillOpacity: 0.9,
             }
+        },
+        onEachFeature: function(feature, layer){
+            layer.bindPopup("<b>"+"Company: "+"</b>"+feature.properties["COMPANY_NA"]+"<br>"+"<b>"+"Type: "+"</b>"+feature.properties["ELEC_TYPE"]);
+        },
+    }).addTo(map);
+        
+         
+        
+    var countyLayer = L.geoJson(counties, {
+        style: function(feature){
+            return {
+                opacity: 1,
+                fillOpacity: 0,
+                color: '#7a7a52',
+                weight: 1,
+            }
+        },
+        
+    }).addTo(map);
+        
+    electricServiceLayer.bringToFront();
+        
+
+        
+    function getColor(name){
+        if (name=="Owen Electric Cooperative, Inc."){
+            return '#b0b3cf';
+        } else if (name=="Blue Grass Energy Cooperative Corp."){
+            return '#7f7f7f';
+        } else if (name=="Fleming-Mason Energy Cooperative"){
+            return '#8dc48b';
+        } else if (name=="Grayson R.E.C.C."){
+            return '#d6b6ce';
+        } else if (name=="Shelby Energy Cooperative, Inc."){
+            return '#a3d4a5';
+        } else if (name=="Clark Energy Cooprative, Inc."){
+            return '#cfa293';
+        } else if (name=="Meade County R.E.C.C."){
+            return '#98d6bb';
+        } else if (name=="Salt River Electric Cooperative"){
+            return '#9dbf9f';
+        } else if (name=="Licking Valley R.E.C.C."){
+            return '#cf99a3';
+        } else if (name=="Big Sandy R.E.C.C."){
+            return '#97c2b4';
+        } else if (name=="Kenergy Corp."){
+            return '#c791b1';
+        } else if (name=="Jackson Energy Cooperative"){
+            return '#af9bc9';
+        } else if (name=="Nolin R.E.C.C."){
+            return '#c2a6a5';
+        } else if (name=="Inter-County Energy Cooperative"){
+            return '#97bdcf';
+        } else if (name=="Jackson Purchase Energy Corporation"){
+            return '#bcd6ab';
+        } else if (name=="Farmers R.E.C.C."){
+            return'#cccc91';
+        } else if (name=="South Kentucky R.E.C.C."){
+            return '#abd0d4';
+        } else if (name=="Taylor County R.E.C.C."){
+            return '#cba5cc';
+        } else if (name=="Cumberland Valley Electric, Inc."){
+            return '#8b9dc4';
+        } else if (name=="Warren RECC"){
+            return '#b4cc93';
+        } else if (name=="Pennyrile RECC"){
+            return '#c2a98a';
+        } else if (name=="West Kentucky RECC"){
+            return '#d6beb4';
+        } else if (name=="Tri-County REMC"){
+            return '#b588bf';
+        } else if (name=="Hickman-Fulton Counties RECC"){
+            return '#9eaad7';
+        } else{
+            return '#c8c8ce';
         }
         
         
-        $(".radio-list input").on('change', function(e){
-            
-            resetStyle();
-            
-            var checked = $(this).attr('id');
-            
-            if (checked == 'agricultural') {
-                geoJsonLayers['agricultural'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['agricultural'].bringToFront();
-            } else if (checked =='business1'){
-                geoJsonLayers['business1'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['business1'].bringToFront();
-            } else if (checked == 'business2') {
-                geoJsonLayers['business2'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['business2'].bringToFront();
-            }else if (checked == 'business3') {
-                geoJsonLayers['business3'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['business3'].bringToFront();
-            }else if (checked == 'conservation') {
-                geoJsonLayers['conservation'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['conservation'].bringToFront();
-            } else if (checked=='historic'){
-                geoJsonLayers['historic'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['historic'].bringToFront();
-            } else if (checked =='hospitalmedical'){
-                geoJsonLayers['hospitalmedical'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['hospitalmedical'].bringToFront();
-            } else if (checked =='lightindustrial'){
-                geoJsonLayers['lightindustrial'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['lightindustrial'].bringToFront();
-            }else if (checked =='heavyindustrial'){
-                geoJsonLayers['heavyindustrial'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['heavyindustrial'].bringToFront();
-            } else if (checked == 'planneddevelopment') {
-                geoJsonLayers['planneddevelopment'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['planneddevelopment'].bringToFront();
-            }  else if (checked == 'residential') {
-                geoJsonLayers['residential1'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential1'].bringToFront();
-                geoJsonLayers['residential2'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential2'].bringToFront();
-                geoJsonLayers['residential3'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential3'].bringToFront();
-                geoJsonLayers['residential4'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential4'].bringToFront();
-                geoJsonLayers['residential5'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential5'].bringToFront();
-                geoJsonLayers['residential6'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential6'].bringToFront();
-                geoJsonLayers['residential7'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential7'].bringToFront();
-                geoJsonLayers['residential8'].setStyle({color:'yellow', weight: 3, fillOpacity: 0.8});
-                geoJsonLayers['residential8'].bringToFront();
-            } 
-            else if (checked=='reset'){
-                resetStyle();
-            }
-            
-            
-            
-            
-            
-            
-        })      
+    }
 
-        
+    
            
-        var floodLayer = L.geoJson(flood, {
-
-                style: function(feature){
-                    return {
-                        opacity: 0,
-                        fillColor: '#1f78b4',
-                        fillOpacity: 0.70,
-                    }
-                },
-
-         });
-        
-        
         
         var dataGroup = {
-            "100 Yr. Flood": floodLayer,
-            "Addresses":addressLabels,
+            "Electric Service Areas": electricServiceLayer
         }
         
        
-        L.control.layers(null, dataGroup,{collapsed: true, position: 'topleft'}).addTo(map);
-
+        L.control.layers(null, dataGroup,{collapsed: false, position: 'topleft'}).addTo(map);
+        
+        
 
 
     
