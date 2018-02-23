@@ -121,6 +121,12 @@
         li.owen{
             background-color: rgb(176,179,207);
         }
+/*
+        div.kftc.leaflet-control{
+            width: 15px;
+            right: 350px;
+        }
+*/
     
         
 
@@ -191,7 +197,7 @@
    
         
         var options = {
-            center: [37.6456, -84.7697],
+            center: [37.6456, -85.5],
             zoom: 8,
             maxZoom: 18,
             minZoom: 7,
@@ -265,6 +271,16 @@
            collapse: false
        }).addTo(map);
         
+          //add kftc logo as watermark
+//        var logo = L.control({position: 'bottomright'});
+//    
+//        logo.onAdd = function(map) {
+//                var image = L.DomUtil.create('div','kftc');
+//                image.innerHTML='<img src="http://www.kftc.org/sites/all/themes/kftc/logo.png" >';
+//                return image;
+//            },
+//            logo.addTo(map);
+//        
         
     
     var electricServiceLayer = L.geoJson(electricservice, {
