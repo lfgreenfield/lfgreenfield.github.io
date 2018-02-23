@@ -101,59 +101,12 @@
             display: block;   
             
         }
+/*
         .radio-list label#agricultural{
             color: rgb(5,196,102);
         }
-        .radio-list label#business1{
-            color: rgb(214,83,83);
-        }
-        .radio-list label#business2{
-            color: rgb(221,65,50);
-        }
-        .radio-list label#business3{
-            color: rgb(155,35,53);
-        }
-         .radio-list label#conservation{
-            color: rgb(83,170,214);
-        }
-        .radio-list label#historic{
-            color: rgb(242,95,16);
-        }
-        .radio-list label#hospitalmedical{
-            color: rgb(16,200,242);
-        }
-        .radio-list label#lightindustrial{
-            color: rgb(182,120,193);
-        }
-        .radio-list label#heavyindustrial{
-            color: rgb(118,11,140);
-        }
-        .radio-list label#planneddevelopment{
-            color: rgb(118,110,119);
-        }
-        .radio-list label#residential{
-            color: rgb(97,65,38);
-        }
-        .radio-list label#reset{
-/*            font-style: italic;*/
-            font-weight: bold;
-            font-size: 1.2em;
-        }
+*/
 
-        .button{
-            position: absolute;
-            z-index: 500;
-            right: 55px;
-            top: 2%;
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.9em;
-            padding: 15px 15x 15px;
-            box-shadow: 0 1px 5px rgba(0,4,72,.80);
-            background-color: rgba(252,252,252,1);
-     }
-        pI{
-            font-style: italic;
-        }
     
 
     </style>
@@ -193,7 +146,7 @@
         var bigmapheight = '100%';
         var smallmapheight = 650;
         var mapbreakwidth = 500;
-        var lowzoom = 7;
+        var lowzoom =6 ;
         var initialzoom;
         var newSearchTop = 75;
         var origSearchTop = '95%';
@@ -205,11 +158,11 @@
             initialzoom = lowzoom;
             $('#map').height(smallmapheight);
         }
-//        else {
-//            initialzoom = lowzoom;
-//            $('#map').height(smallmapheight);
-//        };
-//        
+        else {
+            initialzoom = highzoom;
+            $('#map').height(bigmapheight);
+        };
+        
         
         var map;
         var targetDiv = 'map';
@@ -299,21 +252,6 @@
     }).addTo(map);
         
          
-        
-//    var countyLayer = L.geoJson(counties, {
-//        style: function(feature){
-//            return {
-//                opacity: 1,
-//                fillOpacity: 0,
-//                color: '#7a7a52',
-//                weight: 1,
-//            }
-//        },
-//        
-//    }).addTo(map);
-        
-//    electricServiceLayer.bringToFront();
-        
 
         
     function getColor(name){
