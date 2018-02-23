@@ -277,11 +277,15 @@
                 fillOpacity: 0.95,
             }
         },
+    
         onEachFeature: function(feature, layer){
-            layer.bindPopup("<b>"+"Company: "+"</b>"+feature.properties["COMPANY_NA"]+"<br>"+"<b>"+"Type: "+"</b>"+feature.properties["ELEC_TYPE"]);
+            var content = "<b>"+"Company: "+"</b>"+feature.properties["COMPANY_NA"]+"<br>"+"<b>"+"Type: "+"</b>"+feature.properties["ELEC_TYPE"];
+
+            layer.bindPopup(content);
         },
     }).addTo(map);
         
+
          
 
         
