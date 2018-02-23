@@ -11,6 +11,7 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
    
 
 
@@ -32,6 +33,8 @@
      <script src="l.control.geosearch.js"></script>
     <script src="l.geosearch.provider.esri.js"></script>
     <script src="geojson-vt-dev.js"></script>
+    <script src="leaflet-legend.js"></script>
+    <script src="leaflet-legend.css"></script>
   
     
     
@@ -91,23 +94,35 @@
             overflow: auto;
        
         }
-        .radio-list {
+        .legend-list {
             font-size: 0.8em;
             font-family: 'Roboto', sans-serif;
             
         }
-        .radio-list label {
+        .legend-list label{
             position: relative;
             display: block;   
             
         }
-/*
-        .radio-list label#agricultural{
-            color: rgb(5,196,102);
+        .legend-list label#owen{
+            color: rgb(176,179,207);
         }
-*/
-
+            .button{
+            position: absolute;
+            z-index: 500;
+            right: 55px;
+            top: 2%;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9em;
+            padding: 15px 15x 15px;
+            box-shadow: 0 1px 5px rgba(0,4,72,.80);
+            background-color: rgba(252,252,252,1);
+        }
+        li.owen{
+            background-color: rgb(176,179,207);
+        }
     
+        
 
     </style>
     
@@ -115,21 +130,22 @@
 
 <body>
     
+    
+    <button class="button">Legend</button>
 
-
-<!--
+ 
     <div class='list-container' id="list" >
 
-
-       <form class= "radio-list">
-            <label id="agricultural" >Agricultural (A-1)</label>
-
-       </form>
+        <ul class="legend-list" style="list-style-type:none">
+            <li class="owen"><b>Owen Electric Co-op</b></li>
+            <li class="bigsandy"><b>Big Sandy Co-op</b></li>
+        </ul>
+  
 
 
     </div>
     
--->
+
     
     <div id='map'>   
 
@@ -138,6 +154,11 @@
     <script src ="ky_counties.js"></script>
     
     <script>
+        
+    $('.button').on('click', function() {
+        $('.list-container').toggle();
+  
+    });
         
                     
 
@@ -224,11 +245,11 @@
 //        console.log(bounds);
 //        
         
-        var southWest = L.latLng(35.496456056584165, -79.49707031250001),
-            northEast = L.latLng(39.73253798438173, -90.0439453125),
-            bounds = L.latLngBounds(southWest, northEast);
-        
-        map.setMaxBounds(bounds); 
+//        var southWest = L.latLng(35.496456056584165, -79.49707031250001),
+//            northEast = L.latLng(39.73253798438173, -90.0439453125),
+//            bounds = L.latLngBounds(southWest, northEast);
+//        
+//        map.setMaxBounds(bounds); 
 
 
   
@@ -244,7 +265,7 @@
            collapse: false
        }).addTo(map);
         
-
+        
     
     var electricServiceLayer = L.geoJson(electricservice, {
         style: function(feature){
