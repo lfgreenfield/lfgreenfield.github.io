@@ -144,9 +144,9 @@
         //mobile-friendly
         var highzoom = 8;
         var bigmapheight = '100%';
-        var smallmapheight = 650;
+        var smallmapheight = 700;
         var mapbreakwidth = 500;
-        var lowzoom =6 ;
+        var lowzoom =7;
         var initialzoom;
         var newSearchTop = 75;
         var origSearchTop = '95%';
@@ -173,7 +173,7 @@
             center: [37.6456, -84.7697],
             zoom: 8,
             maxZoom: 18,
-            minZoom: 6,
+            minZoom: 7,
             attributionControl: false,
             zoomControl: false,
 //            layers: [tiles, countyLabels],
@@ -219,6 +219,16 @@
         
         tiles.addTo(map);
         countyLabels.addTo(map);
+        
+//        var bounds = map.getBounds();
+//        console.log(bounds);
+//        
+        
+        var southWest = L.latLng(35.496456056584165, -79.49707031250001),
+            northEast = L.latLng(39.73253798438173, -90.0439453125),
+            bounds = L.latLngBounds(southWest, northEast);
+        
+        map.setMaxBounds(bounds); 
 
 
   
@@ -243,7 +253,7 @@
                 color: '#f5f5f0',
                 weight: 0.7,
                 fillColor: getColor(feature.properties["COMPANY_NA"]),
-                fillOpacity: 0.9,
+                fillOpacity: 0.95,
             }
         },
         onEachFeature: function(feature, layer){
