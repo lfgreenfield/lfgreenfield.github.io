@@ -297,12 +297,20 @@
         
          //add marker, we need to remove on next click, though
     map.on('click', function(e){
+        
+        //make marker from click
         var clickPoint = e.latlng;
         console.log(clickPoint);
         L.marker(clickPoint);
         marker = L.marker((clickPoint)).addTo(map);
         
-        testPoly(clickPoint, houseLayer);
+        //make lng, lat array to send 
+        var lng = clickPoint.lng;
+        var lat = clickPoint.lat;        
+        var point = [lng, lat];
+
+        //send point and feature layer to test function
+        testPoly(point, houseLayer);
         
     })
         
@@ -310,36 +318,22 @@
     }
 
   
-        function testPoly(clickPoint, houseLayer){
+        function testPoly(point, houseLayer){
         
-            console.log(houseLayer);
-        
-            //needs to be longitude, latitude
-            var coords = [-82.88635253906251, 38.565347844885466];
             var district;
             
             houseLayer.eachLayer(function(layer){
               
-                if (turf.inside(coords, layer.feature)== true){
+                if (turf.inside(point, layer.feature)== true){
                     console.log(layer.feature.properties);
+                    district = layer.feature.properties.DIST;
+           
                 }
                 
-//                if(turf.inside(coords, polyCoords)==true){
-//                    console.log("true");
-//                }
-//                if(turf.booleanPointInPolygon(coords, layer.feature)==true){
-//                   console.log(layer.feature);
-//                }
-                
-//                if(turf.inside(coords, layer.feature)==true){
-//                    
-//                        console.log("reached if");
-//                }
                 
             });
             
-            
-        
+            console.log(district);
             
             
         }
