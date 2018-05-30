@@ -285,40 +285,70 @@
        }).addTo(map);
         
 //        var clickCoords = [];
-        var marker;
+     
+          var houseLayer = L.geoJson(houseDistricts).addTo(map);
+        //var cdlayer
+        //var senatelayer
+         var marker; 
         
-        
-        
+        clickAction(houseLayer);
 
-    var houseLayer = L.geoJson(houseDistricts).addTo(map);
-    clickAction(houseLayer);
+    
         
-    function clickAction(houseLayer){
-        
-         //add marker, we need to remove on next click, though
-    map.on('click', function(e){
+   
+    //if clickaction, map goes here
+    function clickAction(){    
+       
+  
+                
+        //add marker, we need to remove on next click, though        
+        map.on('click', function(e){
         
         //make marker from click
-        var clickPoint = e.latlng;
-        console.log(clickPoint);
-        L.marker(clickPoint);
-        marker = L.marker((clickPoint)).addTo(map);
-        
-        //make lng, lat array to send 
-        var lng = clickPoint.lng;
-        var lat = clickPoint.lat;        
-        var point = [lng, lat];
+            var clickPoint = e.latlng;
+            console.log(clickPoint);
+            
+            if (marker != undefined){
+                map.removeLayer(marker);
+            }
+            
+            marker = L.marker((clickPoint)).addTo(map);
 
-        //send point and feature layer to test function
-        testPoly(point, houseLayer);
+            //make lng, lat array to send 
+            var lng = clickPoint.lng;
+            var lat = clickPoint.lat;        
+            var point = [lng, lat];
+
+            //send point and feature layer to test function
+            testPolyHouse(point, houseLayer);
+            //testPolySenate
+            //testPolyCD
         
-    })
+        })
         
         
+   }
+        
+    function searchAction(searchPoint){
+    
+        //houseLayer is accessible here!!
+        
+        var lng = searchPoint[0];
+        var lat = searchPoint[1];
+        var point = [lng, lat];
+        
+         if (marker != undefined){
+                map.removeLayer(marker);
+            }
+            
+        
+        marker = L.marker([lat,lng]).addTo(map);
+        
+        testPolyHouse(point, houseLayer);
     }
 
   
-        function testPoly(point, houseLayer){
+    function testPolyHouse(point, houseLayer){
         
             var district;
             

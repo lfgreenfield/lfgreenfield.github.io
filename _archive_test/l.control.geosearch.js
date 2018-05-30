@@ -11,12 +11,14 @@ L.GeoSearch.Result = function (x, y, label, bounds) {
     this.Y = y;
     this.Label = label;
     this.bounds = bounds;
+    
+    searchAction([x,y]);
 };
 
 L.Control.GeoSearch = L.Control.extend({
     options: {
         position: 'topcenter',
-        showMarker: true,
+        showMarker: false,
         retainZoomLevel: false,
         draggable: false
     },
@@ -26,7 +28,7 @@ L.Control.GeoSearch = L.Control.extend({
         searchLabel: 'Search for address ...',
         notFoundMessage: 'Sorry, that address could not be found.',
         messageHideDelay: 3000,
-        zoomLevel: 10
+        zoomLevel: 9
     },
 
     initialize: function (options) {
@@ -180,16 +182,20 @@ L.Control.GeoSearch = L.Control.extend({
     },
 
     _showLocation: function (location) {
+        
         if (this.options.showMarker == true) {
             if (typeof this._positionMarker === 'undefined') {
                 this._positionMarker = L.marker(
                     [location.Y, location.X],
                     {draggable: this.options.draggable}
-                ).addTo(this._map);
+                );
+                //.addTo(this.)map);
             }
             else {
                 this._positionMarker.setLatLng([location.Y, location.X]);
             }
+            
+//            searchAction(this._positionMarker);
         }
         if (!this.options.retainZoomLevel && location.bounds && location.bounds.isValid()) {
             this._map.fitBounds(location.bounds);
